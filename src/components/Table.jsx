@@ -5,16 +5,6 @@ import Tbody from './Tbody';
 export default function Table() {
   const value = useContext(MyContext);
   const { results } = value.data;
-  console.log(results);
-
-  // function ResultsLoading() {
-  //   if (results === undefined) {
-  //     return <tr><td>carregando</td></tr>;
-  //   }
-  //   return (
-  //     <Tbody results={ results } />
-  //   );
-  // }
 
   if (results === undefined) {
     return <span>Loading...</span>;
