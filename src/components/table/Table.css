@@ -1,0 +1,29 @@
+.table-container {
+  background: #303030;
+  border-collapse: collapse;
+  border-radius: 10px;
+  margin: 20px;
+  z-index: 999;
+}
+
+
+.table-container-header {
+  background: #eb5804;
+  color: #fefefe;
+  margin: 20px;
+}
+
+.table-container-header__item {
+  background: #eb5804;
+  border: 1px solid #eb5804;
+  color: #fefefe;
+  margin: 20px;
+}
+
+.table-container-body {
+  background: #303030;
+}
+
+.table-container-body__item {
+  background: #303030;
+}

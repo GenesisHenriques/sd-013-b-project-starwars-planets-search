@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Context from '../../context/Context';
+import './Table.css';
 
 export default function Body() {
   const { data } = useContext(Context);
@@ -39,9 +40,9 @@ export default function Body() {
    && Object.keys(data[0]).filter((key) => key !== 'residents');
 
   return (
-    <tbody>
+    <tbody className="table-container-body">
       { filterData().map((planet) => (
-        <tr key={ planet.name }>
+        <tr key={ planet.name } className="table-container-body__item">
           { getColumns.map((column) => <td key={ column }>{ planet[column] }</td>)}
         </tr>
       ))}

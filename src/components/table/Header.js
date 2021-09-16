@@ -3,20 +3,20 @@ import React from 'react';
 export default function Header() {
   return (
     <thead>
-      <tr>
-        <th>Name</th>
-        <th>Rotation Period</th>
-        <th>Orbital Period</th>
-        <th>Diameter</th>
-        <th>Climate</th>
-        <th>Gravity</th>
-        <th>Terrain</th>
-        <th>Surface Water</th>
-        <th>Population</th>
-        <th>Films</th>
-        <th>Created</th>
-        <th>Edited</th>
-        <th>Url</th>
+      <tr className="table-container-header">
+        <th className="table-container-header__item">Name</th>
+        <th className="table-container-header__item">Rotation Period</th>
+        <th className="table-container-header__item">Orbital Period</th>
+        <th className="table-container-header__item">Diameter</th>
+        <th className="table-container-header__item">Climate</th>
+        <th className="table-container-header__item">Gravity</th>
+        <th className="table-container-header__item">Terrain</th>
+        <th className="table-container-header__item">Surface Water</th>
+        <th className="table-container-header__item">Population</th>
+        <th className="table-container-header__item">Films</th>
+        <th className="table-container-header__item">Created</th>
+        <th className="table-container-header__item">Edited</th>
+        <th className="table-container-header__item">Url</th>
       </tr>
     </thead>
   );

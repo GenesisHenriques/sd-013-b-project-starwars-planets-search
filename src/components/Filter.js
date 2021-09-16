@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import Context from '../../context/Context';
+import Context from '../context/Context';
+import './Filter.css';
 
 const comparisonFilters = {
   column: 'population',
@@ -39,6 +40,17 @@ export default function Filter() {
     );
   };
 
+  const setColumns = () => {
+    const filterColumns = filterByNumericValues.map((filter) => filter.column);
+    let columnsFilter = columnFilterList;
+    filterColumns.forEach((column) => {
+      columnsFilter = columnsFilter.filter((option) => option !== column);
+    });
+    return columnsFilter;
+  };
+
+  const handleRepeatedColumns = setColumns();
+
   return (
     <div className="filter-container">
       <label
@@ -67,7 +79,7 @@ export default function Filter() {
             onChange={ handleChangeFilters }
           >
             {
-              columnFilterList
+              handleRepeatedColumns
                 .map((item, index) => <option key={ index }>{ item }</option>)
             }
           </select>
