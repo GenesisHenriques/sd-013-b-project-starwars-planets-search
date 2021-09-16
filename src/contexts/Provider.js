@@ -6,7 +6,12 @@ import fetchAPI from '../services/api';
 function Provider({ children }) {
   const [data, setData] = useState(false);
   const [filters, setFilter] = useState({
-    name: '',
+    nameFilter: '',
+    numbersFilter: {
+      columnFilter: '',
+      comparisonFilter: '',
+      valueFilter: 0,
+    },
   });
 
   const contextValue = {

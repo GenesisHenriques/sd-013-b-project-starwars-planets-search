@@ -16,9 +16,25 @@ export default function Table({ data }) {
   );
 
   const filteredData = data.filter((planet) => {
-    const planetName = planet.name.toLowerCase();
-    const filter = filters.name.toLowerCase();
-    return planetName.match(filter);
+    const { name } = planet;
+    const { nameFilter } = filters;
+    const { columnFilter, comparisonFilter, valueFilter } = filters.numbersFilter;
+    let numericMatch = true;
+
+    switch (comparisonFilter) {
+    case 'maior que':
+      numericMatch = planet[columnFilter] > valueFilter;
+      break;
+    case 'menor que':
+      numericMatch = planet[columnFilter] < valueFilter;
+      break;
+    case 'igual a':
+      numericMatch = planet[columnFilter] === valueFilter.toString();
+      break;
+    default:
+    }
+
+    return name.match(nameFilter) && numericMatch;
   });
 
   return (
