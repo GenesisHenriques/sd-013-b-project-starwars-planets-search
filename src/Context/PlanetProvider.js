@@ -8,12 +8,21 @@ function PlanetProvider(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [copyResults, setCopyResults] = useState([]);
+  const [allTypes, setAllTypes] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
+
+  const setOrderSort = (column, sort) => {
+    setFilters({ ...filters, order: { column, sort } });
+  };
 
   const setFilterName = (event) => {
     const { value } = event.target;
@@ -23,6 +32,18 @@ function PlanetProvider(props) {
   const sendFilterNumeric = (obj) => {
     const { filterByNumericValues } = filters;
     setFilters({ ...filters, filterByNumericValues: [...filterByNumericValues, obj] });
+  };
+
+  const deleteFilter = (arr) => {
+    setFilters({ ...filters, filterByNumericValues: arr });
+  };
+
+  const resetFilter = () => {
+    setFilters({ ...filters, filterByNumericValues: [] });
+  };
+
+  const addtype = (type) => {
+    setAllTypes([...allTypes, type]);
   };
 
   useEffect(() => {
@@ -50,7 +71,12 @@ function PlanetProvider(props) {
     setFilterName,
     setData,
     copyResults,
-    sendFilterNumeric };
+    sendFilterNumeric,
+    deleteFilter,
+    resetFilter,
+    allTypes,
+    addtype,
+    setOrderSort };
   const { children } = props;
 
   return (
