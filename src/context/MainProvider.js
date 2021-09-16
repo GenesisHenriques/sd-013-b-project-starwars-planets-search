@@ -7,9 +7,11 @@ import useFetch from '../hooks/useFetch';
 export default function MainProvider({ children }) {
   const [data, setDataPlanets] = useState([]);
   const [filters, setFilters] = useState({
+    dataFilter: [],
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{ column: '', comparison: '', value: '' }],
   });
 
   const { results } = useFetch(requestApiPlanets);
@@ -19,19 +21,34 @@ export default function MainProvider({ children }) {
     return planet;
   }) : []), [results]);
 
+  const handleFilter = useCallback((filterData) => {
+    setDataPlanets(filterData);
+  }, []);
+
   useEffect(() => {
     setDataPlanets(newData());
+    setFilters((oldState) => ({ ...oldState, dataFilter: newData() }));
   }, [newData]);
 
   function handleFilterByName(newFilter) {
     setFilters({ ...filters, filterByName: { name: newFilter } });
   }
 
+  function hadlerFilterByComparison(newFilter) {
+    setFilters({ ...filters, filterByNumericValues: newFilter });
+  }
+
+  const hadlerFilterData = useCallback((newArray) => {
+    setFilters((oldState) => ({ ...oldState, dataFilter: [...newArray] }));
+  }, []);
+
   const contextValue = {
     data,
-    setDataPlanets,
+    handleFilter,
     filters,
     handleFilterByName,
+    hadlerFilterByComparison,
+    hadlerFilterData,
   };
 
   return (

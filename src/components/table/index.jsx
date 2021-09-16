@@ -1,27 +1,21 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import MainContext from '../../context/MainContext';
+import useFilter from '../../hooks/useFilter';
 
 export default function Table() {
   const [headers, setHeaders] = useState();
-  const [planets, setPlanets] = useState([]);
-  const { data, filters } = useContext(MainContext);
+  const { data, filters: { dataFilter } } = useContext(MainContext);
+
+  useFilter();
 
   const getHeaders = useCallback(() => {
     const keys = data[0] && Object.keys(data[0]);
     setHeaders(keys);
   }, [data]);
 
-  const filterPlanets = useCallback(() => {
-    const { filterByName: { name: fitlterName } } = filters;
-    const planetsFilters = data.filter(({ name }) => (
-      name.toUpperCase().includes(fitlterName.toUpperCase())));
-    setPlanets(planetsFilters);
-  }, [data, filters]);
-
   useEffect(() => {
     getHeaders();
-    filterPlanets();
-  }, [filterPlanets, getHeaders]);
+  }, [getHeaders]);
 
   return (
     <table>
@@ -36,7 +30,7 @@ export default function Table() {
       </thead>
       <tbody>
         {
-          planets.map((planet) => (
+          dataFilter.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
