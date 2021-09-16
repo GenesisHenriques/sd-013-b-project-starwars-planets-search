@@ -1,10 +1,14 @@
 import React from 'react';
-import './App.css';
+import PlanetContext from './context/PlanetContext';
+import Table from './components/Table';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <PlanetContext.Provider>
+      <Table />
+    </PlanetContext.Provider>
   );
 }
-
 export default App;
+
+/* Atente para a sintaxe quando se utiliza um Consumer . Um componente consumer deve receber como children uma função. Essa função recebe como parâmetro o valor passado na prop value do Provider (nos exemplos acima, também chamamos o parâmetro da função de value , mas poderia ser qualquer nome) e deve retornar algo a ser renderizado. Esse ponto é muito importante, então certifique-se de compreendê-lo bem. */
