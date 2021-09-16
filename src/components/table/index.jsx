@@ -3,16 +3,25 @@ import MainContext from '../../context/MainContext';
 
 export default function Table() {
   const [headers, setHeaders] = useState();
-  const { data } = useContext(MainContext);
+  const [planets, setPlanets] = useState([]);
+  const { data, filters } = useContext(MainContext);
 
   const getHeaders = useCallback(() => {
     const keys = data[0] && Object.keys(data[0]);
     setHeaders(keys);
   }, [data]);
 
+  const filterPlanets = useCallback(() => {
+    const { filterByName: { name: fitlterName } } = filters;
+    const planetsFilters = data.filter(({ name }) => (
+      name.toUpperCase().includes(fitlterName.toUpperCase())));
+    setPlanets(planetsFilters);
+  }, [data, filters]);
+
   useEffect(() => {
     getHeaders();
-  }, [getHeaders]);
+    filterPlanets();
+  }, [filterPlanets, getHeaders]);
 
   return (
     <table>
@@ -27,7 +36,7 @@ export default function Table() {
       </thead>
       <tbody>
         {
-          data.map((planet) => (
+          planets.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

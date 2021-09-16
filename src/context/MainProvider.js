@@ -6,6 +6,11 @@ import useFetch from '../hooks/useFetch';
 
 export default function MainProvider({ children }) {
   const [data, setDataPlanets] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const { results } = useFetch(requestApiPlanets);
 
@@ -18,9 +23,15 @@ export default function MainProvider({ children }) {
     setDataPlanets(newData());
   }, [newData]);
 
+  function handleFilterByName(newFilter) {
+    setFilters({ ...filters, filterByName: { name: newFilter } });
+  }
+
   const contextValue = {
     data,
     setDataPlanets,
+    filters,
+    handleFilterByName,
   };
 
   return (
