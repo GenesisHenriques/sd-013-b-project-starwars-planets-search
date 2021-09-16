@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import QuestionsContext from './QuestionContext';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import StarwarsAPI from '../services/StarWarsAPI';
+import MyContext from './MyContext';
 
-function QuestionsProvider() {
-  const RetornoDaApi = StarwarsAPI();
-  const [data, setData] = useState(RetornoDaApi);
+function MyContextProvider({ children }) {
+  const [data, setData] = useState({});
+
+  async function getApiResponse() {
+    try {
+      const RetornoDaApi = await StarwarsAPI();
+
+      setData(RetornoDaApi);
+    } catch (error) {
+      setData(error);
+    }
+  }
+  useEffect(() => {
+    getApiResponse();
+  }, []);
 
   return (
-    <QuestionsContext.Provider value={ { data } }>
+    <MyContext.Provider value={ { data } }>
       {children}
-    </QuestionsContext.Provider>
+    </MyContext.Provider>
   );
 }
 
-export default QuestionsProvider;
+MyContextProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+export default MyContextProvider;
