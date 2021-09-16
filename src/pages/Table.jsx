@@ -4,17 +4,17 @@ import Input from '../components/Input';
 import './Table.css';
 
 function Table() {
-  const { data, filterByName, handleClickSearch } = useContext(PlanetsContext);
+  const { data, filterByName } = useContext(PlanetsContext);
   return (
     <fieldset>
       <Input />
-      <button
+      {/* <button
         data-testid="button-filter"
         onClick={ () => handleClickSearch(data) }
         type="button"
       >
         Button
-      </button>
+      </button> */}
       <table className="table">
         <thead>
           <tr>

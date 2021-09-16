@@ -23,7 +23,6 @@ function Provider({ children }) {
 
   useEffect(() => {
     setFilters({
-      ...filters,
       filterByNumericValues: {
         column: selectCollum,
         comparison: selectNumber,
@@ -38,6 +37,10 @@ function Provider({ children }) {
   //     return planetss.filter((element) => element.population)
   //       .filter((element) => element.population < value);
   //   }
+
+  //   else{
+  //     return
+  //   }
   //   // switch (choiceSearch) {
   //   // case 'menor que':
   //   //   console.log(choiceSearch);
@@ -50,7 +53,6 @@ function Provider({ children }) {
 
   useEffect(() => {
     setFilters({
-      ...filters,
       filterByName: { name: input },
     });
   }, [input]);
@@ -79,10 +81,10 @@ function Provider({ children }) {
     setSelectCollum,
     setSelectNumber,
     setNumber,
-    handleClickSearch,
-    selectCollum,
-    selectNumber,
-    inputNumber,
+    // handleClickSearch,
+    // selectCollum,
+    // selectNumber,
+    // inputNumber,
   };
 
   return (
