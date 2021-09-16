@@ -6,8 +6,8 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-    fetch('https://swapi.dev/api/planets')
+    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
+    // fetch('https://swapi.dev/api/planets')
       .then((response) => response.json())
       .then((response) => {
         setData(response.results);
