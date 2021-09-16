@@ -2,22 +2,31 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
+  const { data, input, setInput, arrFiltered } = useContext(PlanetsContext);
+  if (data === undefined) {
+    return <p>Loading...</p>;
+  }
+  const dataFinal = (arrFiltered === undefined) ? data.results : arrFiltered;
   return (
-    <table border="1">
-      <thead>
-        <tr>
-          {data === undefined
-            ? <th>Loading...</th>
-            : Object.keys(data.results[0])
+    <>
+      <div>
+        <input
+          data-testid="name-filter"
+          type="text"
+          value={ input }
+          onChange={ (e) => setInput(e.target.value) }
+        />
+      </div>
+      <table border="1">
+        <thead>
+          <tr>
+            {Object.keys(data.results[0])
               .filter((e) => e !== 'residents')
               .map((e, index) => <th key={ index }>{e}</th>)}
-        </tr>
-      </thead>
-      <tbody>
-        {data === undefined
-          ? <tr>Loading...</tr>
-          : data.results.map((e, index) => (
+          </tr>
+        </thead>
+        <tbody>
+          {dataFinal.map((e, index) => (
             <tr key={ index }>
               <td>{e.name}</td>
               <td>{e.rotation_period}</td>
@@ -33,8 +42,9 @@ function Table() {
               <td>{e.edited}</td>
               <td>{e.url}</td>
             </tr>))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </>
   );
 }
 
