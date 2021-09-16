@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import planetsAPI from '../services/planetsAPI';
-import PlanetContext from './PlanetContext';
+import PlanetContext from './PlanetsContext';
 
 function PlanetProvider(props) {
-  const { data, setData } = useState([]);
-  const { isLoading, setIsLoading } = useState(true);
-  const { loadError, setLoadError } = useState(false);
-
+  const [data, setdata] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   useEffect(() => {
-    const load = async () => {
+    const loading = async () => {
       try {
         setIsLoading(true);
         setLoadError(false);
-        const getPlanetsInfo = await planetsAPI();
-        setData(getPlanetsInfo.results);
+        const getInfoPlanets = await planetsAPI();
+        setdata(getInfoPlanets.results);
         setIsLoading(false);
       } catch (error) {
         setLoadError(true);
         setIsLoading(false);
       }
     };
-    load();
+    loading();
   }, []);
   const context = { data, isLoading, loadError };
   const { children } = props;

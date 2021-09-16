@@ -1,18 +1,13 @@
 import React from 'react';
 import './App.css';
-import PlanetProvider from './Context/PlanetProvider';
-import PlanetAPI from './services/planetsAPI';
 import Table from './Components/Table';
+import PlanetsProvider from './Context/PlanetProvider';
 
 function App() {
   return (
-    <PlanetProvider>
-      <div>
-        <span>Olá, App!</span>
-        <button type="button" onClick={ PlanetAPI }>Aperte aqui</button>
-      </div>
+    <PlanetsProvider>
       <Table />
-    </PlanetProvider>
+    </PlanetsProvider>
   );
 }
 
