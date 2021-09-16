@@ -1,14 +1,27 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 
 const SWContext = createContext({
   data: [],
+  filters: {
+    filterByName: {
+      name: '',
+    },
+  },
 });
 
 export const useSWContext = () => useContext(SWContext);
 
 export const SWProvider = ({ children }) => {
-  const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
+  const [filterByName, setFilterByName] = useState({ name: '' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,18 +29,37 @@ export const SWProvider = ({ children }) => {
 
       results.forEach((planet) => delete planet.residents);
 
-      setData(results);
+      setPlanets(results);
     };
     fetchData();
   }, []);
 
+  const handleNameFilterChange = useCallback((name) => {
+    setFilterByName({
+      name,
+    });
+  }, []);
+
+  const data = useMemo(() => planets.filter(({ name }) => {
+    const filter = new RegExp(filterByName.name, 'i');
+    return filter.test(name);
+  }), [planets, filterByName]);
+
+  const context = useMemo(() => ({
+    data,
+    filters: {
+      filterByName,
+    },
+    handleNameFilterChange,
+  }), [data, filterByName, handleNameFilterChange]);
+
   return (
-    <SWContext.Provider value={ { data } }>
+    <SWContext.Provider value={ context }>
       { children }
     </SWContext.Provider>
   );
 };
 
 SWProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
