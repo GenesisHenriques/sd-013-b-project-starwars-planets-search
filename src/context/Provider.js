@@ -4,6 +4,11 @@ import Context from './Context';
 
 export default function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   async function getPlanets() {
     try {
@@ -23,6 +28,8 @@ export default function Provider({ children }) {
   const contextValue = {
     data,
     getPlanets,
+    filters,
+    setFilters,
   };
 
   return (
