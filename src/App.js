@@ -3,8 +3,8 @@ import './App.css';
 
 function App() {
   return (
-    <span>Hello, App!</span>
-  );
+    <span>Hello!</span>
+  
 }
 
 export default App;
