@@ -5,6 +5,11 @@ import fetchPlanets from '../services/RequestPlanets';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     async function getPlanet() {
@@ -14,8 +19,15 @@ function StarWarsProvider({ children }) {
     getPlanet();
   }, []);
 
+  function handleChange({ target }) {
+    const { value } = target;
+    setFilters({ filterByName: { name: value } });
+  }
+
   const contextValue = {
     data,
+    filters,
+    handleChange,
   };
 
   return (
