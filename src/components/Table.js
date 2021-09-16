@@ -3,15 +3,16 @@ import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { data, fetchApi } = useContext(MyContext);
+  const { data, fetchApi, handleFilter } = useContext(MyContext);
 
   useEffect(() => {
     fetchApi();
   }, [fetchApi]);
 
   if (!Object.entries(data).length) return <div>Carregando...</div>;
-  console.log(data);
+
   const { results } = data;
+  const planets = handleFilter(results);
   return (
     <table>
       <thead>
@@ -23,7 +24,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          results.map((planet) => (
+          planets.map((planet) => (
             <tr key={ planet.name }>
               {
                 Object.values(planet).map((item, index) => <td key={ index }>{item}</td>)

@@ -5,25 +5,44 @@ import MyContext from './MyContext';
 import fetchPlanets from '../services';
 
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+const INITIAL_FILTER_STATE = {
+  filters: {
+    filterByName: {
+      name: '',
+    },
+  },
+};
 
 function MyProvider({ children }) {
   const [data, setData] = useState({});
-  const [name, setName] = useState('');
-
-  const handleChange = ({ target }) => {
-    setName(target.value);
-  };
+  const [filter, setFilter] = useState(INITIAL_FILTER_STATE);
 
   const fetchApi = useCallback(async () => {
     const response = await fetchPlanets(URL);
     response.results.forEach((element) => delete element.residents);
 
-    setData({ ...response });
+    setData(response);
   }, []);
+
+  const handleChange = ({ target }) => {
+    setFilter({ filters: { filterByName: { name: target.value } } });
+  };
+
+  const handleFilter = (planets) => {
+    const { filters: { filterByName: { name } } } = filter;
+    const regexName = new RegExp(name, 'i');
+    console.log(planets);
+    return planets.filter((planet) => planet.name.match(regexName));
+    // return planets;
+  };
 
   return (
     <div>
-      <MyContext.Provider value={ { data, fetchApi, name, handleChange } }>
+      <MyContext.Provider
+        value={
+          { data, fetchApi, filter, handleChange, handleFilter }
+        }
+      >
         {children}
       </MyContext.Provider>
     </div>
@@ -31,7 +50,7 @@ function MyProvider({ children }) {
 }
 
 MyProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default MyProvider;
