@@ -4,8 +4,8 @@ import MainContext from '../context/MainContext';
 
 function NumberFilter() {
   const { filterPlanetsByNumericValue } = useContext(MainContext);
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('bigger');
   const [value, setValue] = useState('');
 
   return (
@@ -14,6 +14,7 @@ function NumberFilter() {
         Filter By Amount Of:
         <select
           name="amount"
+          value={ column }
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
         >
@@ -30,6 +31,7 @@ function NumberFilter() {
         <select
           name="comparison"
           data-testid="comparison-filter"
+          value={ comparison }
           onChange={ (e) => setComparison(e.target.value) }
         >
           <option value="bigger">maior que</option>
@@ -42,6 +44,7 @@ function NumberFilter() {
       <input
         type="text"
         data-testid="value-filter"
+        value={ value }
         onChange={ (e) => {
           const regex = new RegExp(/[0-9]+/);
           if (regex.test(e.target.value)) {
@@ -56,7 +59,12 @@ function NumberFilter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => filterPlanetsByNumericValue(column, comparison, value) }
+        onClick={ () => {
+          filterPlanetsByNumericValue(column, comparison, value);
+          setColumn('population');
+          setComparison('bigger');
+          setValue('');
+        } }
       >
         Add Filter
       </button>

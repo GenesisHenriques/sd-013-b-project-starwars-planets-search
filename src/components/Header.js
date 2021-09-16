@@ -7,7 +7,7 @@ function Header() {
 
   useEffect(() => {
     fetchPlanets();
-  }, []);
+  }, [fetchPlanets]);
 
   return (
     <h1>StarWars Planets</h1>

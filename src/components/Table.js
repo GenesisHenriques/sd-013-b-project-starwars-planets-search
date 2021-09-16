@@ -13,7 +13,7 @@ function Table() {
   }
 
   return (
-    <table className="table">
+    <table>
       <thead>
         <tr>
           {Object.keys(results[0]).map((header, index) => (
@@ -31,7 +31,9 @@ function Table() {
           .map((planet, index) => (
             <tr key={ index }>
               {Object.values(planet).map((info, index2) => (
-                <td key={ index2 }>
+                <td
+                  key={ index2 }
+                >
                   {info}
                 </td>))}
             </tr>

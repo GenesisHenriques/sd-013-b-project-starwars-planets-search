@@ -1,14 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import MainContext from '../context/MainContext';
 
 function NameFilter() {
-  const [nameFilter, setNameFilter] = useState('');
   const { filterPlanetsByName } = useContext(MainContext);
-
-  useEffect(() => {
-    filterPlanetsByName(nameFilter);
-  }, [nameFilter]);
 
   return (
     <label htmlFor="name-filter">
@@ -16,7 +11,7 @@ function NameFilter() {
       <input
         type="text"
         data-testid="name-filter"
-        onChange={ (e) => setNameFilter(e.target.value) }
+        onChange={ (e) => filterPlanetsByName(e.target.value) }
       />
     </label>
   );

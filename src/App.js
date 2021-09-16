@@ -1,20 +1,22 @@
 import React from 'react';
 
+import MainProvider from './context/MainProvider';
+
 import Header from './components/Header';
 import NameFilter from './components/NameFilter';
+import NumberFilter from './components/NumberFilter';
 import Table from './components/Table';
 
 import './App.css';
-import NumberFilter from './components/NumberFilter';
 
 function App() {
   return (
-    <main>
+    <MainProvider>
       <Header />
       <NameFilter />
       <NumberFilter />
       <Table />
-    </main>
+    </MainProvider>
   );
 }
 
