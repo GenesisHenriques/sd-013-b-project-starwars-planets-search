@@ -1,11 +1,11 @@
 import React from 'react';
 import ResidentTable from '../components/ResidentTable';
-import NameFilter from '../components/NameFilter';
+import Filter from '../components/Filter';
 
 function Planets() {
   return (
     <div>
-      <NameFilter />
+      <Filter />
       <ResidentTable />
     </div>
   );

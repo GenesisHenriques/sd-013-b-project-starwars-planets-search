@@ -14,7 +14,15 @@ function NameFilter() {
   };
   return (
     <div>
-      <input type="text" data-testid="name-filter" onChange={ handleName } />
+      <label htmlFor="name-filter">
+        Filtrar por Nome
+        <input
+          type="text"
+          id="name-filter"
+          data-testid="name-filter"
+          onChange={ handleName }
+        />
+      </label>
     </div>
   );
 }
