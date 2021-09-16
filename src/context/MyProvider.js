@@ -41,34 +41,34 @@ function MyProvider({ children }) {
     });
   };
 
-  const filterPlanets = () => {
-    const { filterByName: { name = '' }, filterByNumericValues } = filters;
-    const regexName = new RegExp(name, 'i');
-
-    if (!filterByNumericValues.length) {
-      return allPlanets.filter((planet) => planet.name.match(regexName));
-    }
-
-    return filterByNumericValues.reduce((acc, { column, comparison, value }) => (
-      acc.filter((planet) => {
-        switch (comparison) {
-        case 'maior que':
-          return Number(planet[column]) > Number(value);
-        case 'menor que':
-          return Number(planet[column]) < Number(value);
-        case 'igual a':
-          return Number(planet[column]) === Number(value);
-        default:
-          return false;
-        }
-      })
-    ), allPlanets)
-      .filter((planet) => planet.name.match(regexName));
-  };
-
   useEffect(() => {
+    const filterPlanets = () => {
+      const { filterByName: { name = '' }, filterByNumericValues } = filters;
+      const regexName = new RegExp(name, 'i');
+
+      if (!filterByNumericValues.length) {
+        return allPlanets.filter((planet) => planet.name.match(regexName));
+      }
+
+      return filterByNumericValues.reduce((acc, { column, comparison, value }) => (
+        acc.filter((planet) => {
+          switch (comparison) {
+          case 'maior que':
+            return Number(planet[column]) > Number(value);
+          case 'menor que':
+            return Number(planet[column]) < Number(value);
+          case 'igual a':
+            return Number(planet[column]) === Number(value);
+          default:
+            return false;
+          }
+        })
+      ), allPlanets)
+        .filter((planet) => planet.name.match(regexName));
+    };
+
     setFilteredPlanets(filterPlanets());
-  }, [filters]);
+  }, [allPlanets, filters]);
 
   return (
     <div>
