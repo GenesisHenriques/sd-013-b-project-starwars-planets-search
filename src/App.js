@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
+import PageHome from './pages/PageHome';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <PageHome />
   );
 }
 
