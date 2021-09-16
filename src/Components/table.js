@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import MyContext from '../Context/MyContext';
+import inputFilter from '../Hooks/filter';
 
 function Table() {
-  const { newData } = useContext(MyContext);
-  const valueArray = Object.keys(newData[0]);
-  const planets = newData;
+  const { data } = useContext(MyContext);
+  const valueArray = Object.keys(data[0]);
+  const planets = inputFilter();
   return (
     <table>
       <tr>

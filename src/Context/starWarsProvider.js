@@ -5,7 +5,6 @@ import starWarsAPI from '../Services/StarwarsAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [newData, setNewData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     filterName: {
@@ -18,7 +17,6 @@ function StarWarsProvider({ children }) {
       const { results } = await starWarsAPI();
       results.map((object) => delete object.residents);
       setData(results);
-      setNewData(results);
       setLoading(false);
     }
     api();
@@ -26,8 +24,6 @@ function StarWarsProvider({ children }) {
 
   const store = {
     data,
-    newData,
-    setNewData,
     loading,
     filters,
     setFilters,
