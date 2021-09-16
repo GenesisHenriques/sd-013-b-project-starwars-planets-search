@@ -1,9 +1,13 @@
 import React from 'react';
 import './App.css';
+import TableContents from './components/TableContents';
 
 function App() {
   return (
-    <span className="main-container">Hello, App!</span>
+    <section className="main-container">
+      <span>Hello, App!</span>
+      <TableContents />
+    </section>
   );
 }
 
