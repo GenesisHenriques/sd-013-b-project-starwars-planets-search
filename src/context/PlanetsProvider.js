@@ -16,27 +16,44 @@ function Provider({ children }) {
       },
     ],
   });
+  const [arrayFiltered, setArrayFiltered] = useState([]);
   const [input, setInput] = useState('');
   const [selectCollum, setSelectCollum] = useState('');
   const [selectNumber, setSelectNumber] = useState('');
   const [inputNumber, setNumber] = useState(0);
+  const [switchh, setSwitch] = useState(false);
 
   useEffect(() => {
-    setFilters({
-      filterByNumericValues: {
-        column: selectCollum,
-        comparison: selectNumber,
-        value: inputNumber,
-      },
-    });
-  }, [selectCollum, selectNumber, inputNumber]);
+    const newObj = {
+      column: selectCollum,
+      comparison: selectNumber,
+      value: inputNumber,
+    };
+    setFilters((prevState) => ({
+      ...prevState.filters,
+      filterByName: { name: input },
+      filterByNumericValues: [{
+        ...newObj,
+      }],
+    }));
+  }, [input, selectCollum, selectNumber, inputNumber]);
 
-  // const handleClickSearch = (planetss, select, maq, value) => {
-  //   let teste = 0;
-  //   if (select === 'population' && maq === 'menor que') {
-  //     return planetss.filter((element) => element.population)
-  //       .filter((element) => element.population < value);
-  //   }
+  const handleClickSearch = (planets, select, maq, value) => {
+    setSwitch(true);
+    switch (maq) {
+    case 'maior que':
+      setArrayFiltered(planets.filter((element) => element[select] > Number(value)));
+      break;
+    case 'menor que':
+      setArrayFiltered(planets.filter((element) => element[select] <= value));
+      break;
+    case 'igual a':
+      setArrayFiltered(planets.filter((element) => element[select] === value));
+      break;
+    default:
+      return planets;
+    }
+  };
 
   //   else{
   //     return
@@ -51,11 +68,14 @@ function Provider({ children }) {
   //   // }
   // };
 
-  useEffect(() => {
-    setFilters({
-      filterByName: { name: input },
-    });
-  }, [input]);
+  // useEffect(() => {
+  //   if (input !== '') {
+  //     setFilters((prevState) => ({
+  //       ...prevState.filters,
+  //       filterByName: { name: input },
+  //     }));
+  //   }
+  // }, [input]);
 
   const filterByName = (planets) => {
     const { filterByName: { name } } = filters;
@@ -81,10 +101,12 @@ function Provider({ children }) {
     setSelectCollum,
     setSelectNumber,
     setNumber,
-    // handleClickSearch,
-    // selectCollum,
-    // selectNumber,
-    // inputNumber,
+    handleClickSearch,
+    selectCollum,
+    selectNumber,
+    inputNumber,
+    arrayFiltered,
+    switchh,
   };
 
   return (

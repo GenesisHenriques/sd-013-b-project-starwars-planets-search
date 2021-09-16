@@ -4,7 +4,7 @@ import PlanetsContext from '../context/PlanetsContext';
 function Input() {
   const filterColum = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-  const filterNumber = ['maior que', 'menor que', 'igual a'];
+  const filterNumber = ['escolhe', 'maior que', 'menor que', 'igual a'];
   const { setInput, setSelectCollum, setSelectNumber,
     setNumber } = useContext(PlanetsContext);
   return (

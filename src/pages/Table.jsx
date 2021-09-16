@@ -2,15 +2,23 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import Input from '../components/Input';
 import './Table.css';
+import Filtered from '../components/Filter';
 
 function Table() {
-  const { data, filterByName } = useContext(PlanetsContext);
+  const { data, filterByName, handleClickSearch, selectCollum,
+    selectNumber, inputNumber, switchh } = useContext(PlanetsContext);
+  if (data === undefined) {
+    return <p>Loading...</p>;
+  }
+  const filteredByName = filterByName(data);
+  // const dataFinal = arrayFiltered === undefined ? data : arrayFiltered;
+
   return (
     <fieldset>
       <Input />
       <button
         data-testid="button-filter"
-        onClick={ () => handleClickSearch(data) }
+        onClick={ () => handleClickSearch(data, selectCollum, selectNumber, inputNumber) }
         type="button"
       >
         Button
@@ -26,7 +34,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.length !== 0 && filterByName(data).map((element) => (
+          {switchh === false ? filteredByName.map((element) => (
             <tr key={ data.name }>
               <td className="tr">{element.name}</td>
               <td className="tr">{element.rotation_period}</td>
@@ -42,7 +50,7 @@ function Table() {
               <td className="tr">{element.edited}</td>
               <td className="tr">{element.url}</td>
             </tr>
-          )) }
+          )) : <Filtered />}
         </tbody>
       </table>
     </fieldset>
