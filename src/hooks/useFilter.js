@@ -25,15 +25,16 @@ const useFilter = () => {
         .includes(name.toUpperCase())
     )));
 
-    arrayFiltered = filterByNumericValues.map((filter) => {
-      const { column, comparison, value } = filter;
-      return (
-        arrayFiltered
-          .filter((planet) => functionComparison(comparison, planet[column], value))
-      );
-    });
+    arrayFiltered = filterByNumericValues.length > 0
+      ? filterByNumericValues.map((filter) => {
+        const { column, comparison, value } = filter;
+        return (
+          arrayFiltered
+            .filter((planet) => functionComparison(comparison, planet[column], value))
+        );
+      })[0] : arrayFiltered;
 
-    hadlerFilterData(arrayFiltered[0]);
+    hadlerFilterData(arrayFiltered);
   }, [data, filterByNumericValues, hadlerFilterData, name]);
 
   useEffect(() => {

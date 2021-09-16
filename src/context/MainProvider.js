@@ -11,7 +11,7 @@ export default function MainProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [{ column: '', comparison: '', value: '' }],
+    filterByNumericValues: [],
   });
 
   const { results } = useFetch(requestApiPlanets);
@@ -35,10 +35,15 @@ export default function MainProvider({ children }) {
   }
 
   function hadlerFilterByComparison(newFilter) {
-    setFilters({ ...filters, filterByNumericValues: newFilter });
+    setFilters((oldState) => (
+      {
+        ...oldState,
+        filterByNumericValues: [...oldState.filterByNumericValues, newFilter],
+      }
+    ));
   }
 
-  const hadlerFilterData = useCallback((newArray) => {
+  const hadlerFilterData = useCallback((newArray = []) => {
     setFilters((oldState) => ({ ...oldState, dataFilter: [...newArray] }));
   }, []);
 

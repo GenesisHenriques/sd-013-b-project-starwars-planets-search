@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const optionsSelect = [
-  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-];
-
-export default function Column({ setColumn }) {
+export default function Column({ setColumn, optionsSelect }) {
   return (
     <label htmlFor="filterNumbers">
       Filtrar Por:
@@ -29,4 +25,5 @@ export default function Column({ setColumn }) {
 
 Column.propTypes = {
   setColumn: PropTypes.func.isRequired,
+  optionsSelect: PropTypes.arrayOf(String).isRequired,
 };
