@@ -2,6 +2,12 @@ import React, { useState, useContext } from 'react';
 
 import MainContext from '../context/MainContext';
 
+const columnFilters = ['population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water'];
+
 function NumberFilter() {
   const { filterPlanetsByNumericValue } = useContext(MainContext);
   const [column, setColumn] = useState('population');
@@ -18,11 +24,9 @@ function NumberFilter() {
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation-period">rotation-period</option>
-          <option value="surface_water">surface_water</option>
+          {columnFilters.map((filter) => (
+            <option key={ filter } value={ filter }>{filter}</option>
+          ))}
         </select>
       </label>
 
@@ -34,9 +38,9 @@ function NumberFilter() {
           value={ comparison }
           onChange={ (e) => setComparison(e.target.value) }
         >
-          <option value="bigger">maior que</option>
-          <option value="smaller">menor que</option>
-          <option value="equal">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
 
       </label>

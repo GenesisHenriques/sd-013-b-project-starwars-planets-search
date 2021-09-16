@@ -21,7 +21,6 @@ function MainProvider({ children }) {
     const result = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const response = await result.json();
     response.results.forEach((obj) => delete obj.residents);
-    console.log(response);
     setData(response);
   }, []);
 
