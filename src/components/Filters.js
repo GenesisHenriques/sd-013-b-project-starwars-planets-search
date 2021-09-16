@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import MyContext from '../context/MyContext';
 
 import { OPTIONS_COLUMN, OPTION_COMPARISON } from '../data';
+import Input from './Input';
+import Select from './Select';
 
 function Filters() {
   const {
@@ -10,7 +12,9 @@ function Filters() {
     handleChange,
     handleClick,
   } = useContext(MyContext);
-  const [column, setColumn] = useState('population');
+  const [column, setColumn] = useState('');
+  const [columns, setColumns] = useState(OPTIONS_COLUMN);
+  const [counterFilters, setCounterFilters] = useState(0);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
@@ -26,70 +30,45 @@ function Filters() {
     setValue(target.value);
   };
 
+  useEffect(() => {
+    setColumns((prevState) => prevState.filter((element) => element !== column));
+  }, [column, counterFilters]);
+
+  const handleButton = () => {
+    handleClick({ column, comparison, value });
+    setCounterFilters((prevState) => prevState + 1);
+  };
+
   return (
     <div>
-      <label htmlFor="name">
-        Filter by name:
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={ name }
-          onChange={ handleChange }
-          autoComplete="off"
-          data-testid="name-filter"
-        />
-      </label>
-      <label htmlFor="column">
-        <select
-          name="column"
-          onChange={ handleColumn }
-          id="column"
-          data-testid="column-filter"
-        >
-          {
-            OPTIONS_COLUMN.map((option) => (
-              <option key={ option }>
-                {option}
-              </option>
-            ))
-          }
-        </select>
-      </label>
-      <label htmlFor="comparison">
-        <select
-          name="comparison"
-          onChange={ handleComparison }
-          id="comparison"
-          data-testid="comparison-filter"
-        >
-          {
-            OPTION_COMPARISON.map((option) => (
-              <option
-                key={ option }
-                value={ option }
-              >
-                {option}
-              </option>
-            ))
-          }
-        </select>
-      </label>
-      <label htmlFor="value">
-        <input
-          type="number"
-          name="value"
-          id="value"
-          placeholder="0"
-          onChange={ handleValue }
-          autoComplete="off"
-          data-testid="value-filter"
-        />
-      </label>
+      <Input
+        text="Filter by name:"
+        type="text"
+        name="name"
+        value={ name }
+        onchange={ handleChange }
+      />
+      <Select
+        name="column"
+        onChange={ handleColumn }
+        options={ columns }
+      />
+      <Select
+        name="comparison"
+        onChange={ handleComparison }
+        options={ OPTION_COMPARISON }
+      />
+      <Input
+        type="number"
+        name="value"
+        value={ name }
+        placeholder="0"
+        onchange={ handleValue }
+      />
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => handleClick({ column, comparison, value }) }
+        onClick={ handleButton }
       >
         Filtrar
       </button>
