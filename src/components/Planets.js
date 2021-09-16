@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PlanetsTable from '../components/PlanetsTable';
+import PlanetsTable from './PlanetsTable';
 import { useProvider } from '../context/PlanetProvider';
 import FilterPlanetsByNumber from './FilterPlanetsByNumber';
 
@@ -8,7 +8,6 @@ function Planets() {
   const { filters, setFilters } = useProvider();
   const { filterByNumericValues, order } = filters;
   const minusOne = -1;
-  
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
@@ -83,25 +82,27 @@ function Planets() {
   function filterData(rows) {
     const { filterByName: { name } } = filters;
     const results = [];
-    const minusOne = -1;
 
     if (filterByNumericValues.length > 0) {
       filterByNumericValues.forEach((filter) => {
         const { column, comparison, value } = filter;
         switch (comparison) {
-          case 'maior que':
-            results.push(rows.filter((row) => (
-              row.name.toLowerCase().indexOf(name.toLowerCase()) > minusOne && parseInt(row[column], 0) > parseInt(value, 0))));
-            break;
-          case 'menor que':
-            results.push(rows.filter((row) => (
-              row.name.toLowerCase().indexOf(name.toLowerCase()) > minusOne && parseInt(row[column], 0) < parseInt(value, 0))));
-            break;
-          case 'igual a':
-            results.push(rows.filter((row) => (
-              row.name.toLowerCase().indexOf(name.toLowerCase()) > minusOne && parseInt(row[column], 0) === parseInt(value, 0))));
-            break;
-          default:
+        case 'maior que':
+          results.push(rows.filter((row) => (
+            row.name.toLowerCase().indexOf(name.toLowerCase())
+            > minusOne && parseInt(row[column], 0) > parseInt(value, 0))));
+          break;
+        case 'menor que':
+          results.push(rows.filter((row) => (
+            row.name.toLowerCase().indexOf(name.toLowerCase())
+            > minusOne && parseInt(row[column], 0) < parseInt(value, 0))));
+          break;
+        case 'igual a':
+          results.push(rows.filter((row) => (
+            row.name.toLowerCase().indexOf(name.toLowerCase())
+            > minusOne && parseInt(row[column], 0) === parseInt(value, 0))));
+          break;
+        default:
         }
       });
       if (results[0] && results[1]) {
