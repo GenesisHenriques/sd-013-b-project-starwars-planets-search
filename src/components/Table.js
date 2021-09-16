@@ -10,7 +10,7 @@ function Table() {
   }, [fetchApi]);
 
   if (!Object.entries(data).length) return <div>Carregando...</div>;
-
+  console.log(data);
   const { results } = data;
   return (
     <table>
