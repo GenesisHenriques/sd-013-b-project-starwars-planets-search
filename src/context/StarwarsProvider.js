@@ -1,0 +1,35 @@
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import StarWarContext from './StarWarsContext';
+
+const PlanetsUrlApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
+function StarwarsProvider({ children }) {
+  const [planets, setPlanets] = useState([]);
+
+  function fetchApi() {
+    fetch(PlanetsUrlApi)
+      .then((response) => response.json())
+      .then((result) => setPlanets([...result.results]));
+  }
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
+  const contextValue = {
+    planets,
+  };
+
+  return (
+    <StarWarContext.Provider value={ contextValue }>
+      {children}
+    </StarWarContext.Provider>
+  );
+}
+
+StarwarsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default StarwarsProvider;
