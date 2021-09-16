@@ -1,3 +1,9 @@
+html {
+  background-color: #131313;
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
 }
@@ -5,6 +11,23 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.table {
+  border: 3px solid rgb(80, 119, 204);
+}
+
+.table-th {
+  border: 1px solid rgb(80, 119, 204);
+  color: rgb(216, 180, 20);
+}
+
+.table-td {
+  background-color: #294774;
+  border: 1px solid rgb(80, 119, 204);
+  color: white;
+  padding: 2px;
+  text-align: center;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
