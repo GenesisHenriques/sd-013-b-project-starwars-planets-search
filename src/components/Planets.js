@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PlanetsTable from '../components/PlanetsTable';
 import { useProvider } from '../context/PlanetProvider';
+import FilterPlanetsByNumber from './FilterPlanetsByNumber';
 
 function Planets() {
   const [data, setData] = useState([]);
@@ -14,7 +15,31 @@ function Planets() {
 
   function filterData(rows) {
     const { filterByName: { name } } = filters;
+    const { filterByNumericValues } = filters;
     const minusOne = -1;
+
+    if (filterByNumericValues.length > 0) {
+      const { column, comparison, value } = filterByNumericValues[0];
+      switch (comparison) {
+      case 'maior que':
+        return rows.filter((row) => (
+          row.name.toLowerCase().indexOf(name.toLowerCase() > minusOne)
+          && parseInt(row[column], 0) > parseInt(value, 0)
+        ));
+      case 'menor que':
+        return rows.filter((row) => (
+          row.name.toLowerCase().indexOf(name.toLowerCase() > minusOne)
+          && parseInt(row[column], 0) < parseInt(value, 0)
+        ));
+      case 'igual a':
+        return rows.filter((row) => (
+          row.name.toLowerCase().indexOf(name.toLowerCase() > minusOne)
+          && parseInt(row[column], 0) === parseInt(value, 0)
+        ));
+      default:
+      }
+    }
+
     return rows.filter((row) => (
       row.name.toLowerCase().indexOf(name.toLowerCase()) > minusOne
     ));
@@ -35,6 +60,7 @@ function Planets() {
           }) }
         />
       </label>
+      <FilterPlanetsByNumber />
       <PlanetsTable dataTable={ filterData(data) } />
     </div>
   );
