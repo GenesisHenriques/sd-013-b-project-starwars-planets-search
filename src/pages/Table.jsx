@@ -8,13 +8,13 @@ function Table() {
   return (
     <fieldset>
       <Input />
-      {/* <button
+      <button
         data-testid="button-filter"
         onClick={ () => handleClickSearch(data) }
         type="button"
       >
         Button
-      </button> */}
+      </button>
       <table className="table">
         <thead>
           <tr>
