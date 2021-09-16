@@ -5,10 +5,17 @@ import getPlanetsApi from '../services/getPlanetsApi';
 
 const Provider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [filterName, setFilterName] = useState('');
 
   const contextValue = {
     data,
     setData,
+    filters: {
+      filterByName: {
+        name: filterName,
+      },
+    },
+    setFilterName,
   };
 
   const fetchPlanets = async () => {
