@@ -1,9 +1,17 @@
 import React from 'react';
+import Provider from './context/Provider';
 import './App.css';
+import FilterName from './components/FilterName';
+import PlanetApi from './components/PlanetApi';
+import FilterValue from './components/FilterValue';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <Provider>
+      <FilterName />
+      <FilterValue />
+      <PlanetApi />
+    </Provider>
   );
 }
 
