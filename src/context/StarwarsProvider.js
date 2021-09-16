@@ -6,6 +6,13 @@ const PlanetsUrlApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 function StarwarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [search, setSearch] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   function fetchApi() {
     fetch(PlanetsUrlApi)
@@ -19,6 +26,8 @@ function StarwarsProvider({ children }) {
 
   const contextValue = {
     planets,
+    search,
+    setSearch,
   };
 
   return (
