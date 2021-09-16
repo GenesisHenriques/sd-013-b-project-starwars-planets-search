@@ -12,7 +12,6 @@ export default function ComparisonSelect({ change, value }) {
         value={ value }
         onChange={ change }
       >
-        <option value=""> </option>
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
@@ -20,7 +19,6 @@ export default function ComparisonSelect({ change, value }) {
     </label>
   );
 }
-
 ComparisonSelect.propTypes = {
   change: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
