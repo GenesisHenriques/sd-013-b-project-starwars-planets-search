@@ -27,7 +27,12 @@ const Table = () => {
   function renderTableRow(planet) {
     const renderFilms = (films) => (
       <ul>
-        {films.map((film, index) => <li key={ index }><a href={ film }>{ film }</a></li>)}
+        {films.map((film, index) => (
+          <li key={ index }>
+            <a href={ film } target="blank">
+              { film }
+            </a>
+          </li>))}
       </ul>
     );
     return (
