@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import Context from '../contexts/Context';
 
 export default function Table({ data }) {
+  const { filters } = useContext(Context);
   const headers = Object.keys(data[0]);
   const mapPlanet = (planet, index) => (
     <tr key={ index }>
@@ -13,6 +15,12 @@ export default function Table({ data }) {
     </tr>
   );
 
+  const filteredData = data.filter((planet) => {
+    const planetName = planet.name.toLowerCase();
+    const filter = filters.name.toLowerCase();
+    return planetName.match(filter);
+  });
+
   return (
     <table>
       <thead>
@@ -21,7 +29,7 @@ export default function Table({ data }) {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => mapPlanet(planet, index))}
+        {filteredData.map((planet, index) => mapPlanet(planet, index))}
       </tbody>
     </table>
   );

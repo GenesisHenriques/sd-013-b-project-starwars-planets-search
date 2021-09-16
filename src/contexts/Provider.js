@@ -5,10 +5,14 @@ import fetchAPI from '../services/api';
 
 function Provider({ children }) {
   const [data, setData] = useState(false);
+  const [filters, setFilter] = useState({
+    name: '',
+  });
 
   const contextValue = {
     data,
-    setData,
+    filters,
+    setFilter,
   };
   useEffect(() => {
     fetchAPI(setData);
