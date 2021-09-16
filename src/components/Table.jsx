@@ -49,7 +49,7 @@ const Table = () => {
         <td>{renderFilms(planet.films)}</td>
         <td>{planet.created}</td>
         <td>{planet.edited}</td>
-        <td>{planet.url}</td>
+        <td><a href={ planet.url } target="blank">{planet.url}</a></td>
       </tr>
     );
   }
