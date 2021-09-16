@@ -3,23 +3,13 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
   const { contextValue } = useContext(PlanetsContext);
-  const { filters, filters: { filterByName: { name } }, setFilters } = contextValue;
+  const { filters: { filterByName: { name } } } = contextValue;
   let { data } = contextValue;
 
   if (name) data = data.filter((planet) => planet.name.toLowerCase().includes(name));
 
-  function handleFilter({ target: { value } }) {
-    setFilters({
-      ...filters,
-      filterByName: {
-        name: value,
-      },
-    });
-  }
-
   return (
     <div>
-      <input type="text" data-testid="name-filter" onChange={ handleFilter } />
       <table>
         <tbody>
           <tr>
