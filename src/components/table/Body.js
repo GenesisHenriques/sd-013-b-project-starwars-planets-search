@@ -4,7 +4,7 @@ import Context from '../../context/Context';
 export default function Body() {
   const { data } = useContext(Context);
   const { filters } = useContext(Context);
-  const { filterByName: { name } } = filters;
+  const { filterByName: { name }, filterByNumericValues } = filters;
 
   const filterData = () => {
     let planetsData = [...data];
@@ -16,6 +16,19 @@ export default function Body() {
       const lowerCaseName = name.toLowerCase();
       planetsData = planetsData
         .filter((planet) => planet.name.toLowerCase().includes(lowerCaseName));
+    }
+
+    if (filterByNumericValues.length) {
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        if (comparison === 'maior que') {
+          planetsData = planetsData.filter((planet) => +planet[column] > +value);
+        } else if (comparison === 'menor que') {
+          planetsData = planetsData.filter((planet) => +planet[column] < +value);
+        } else {
+          planetsData = planetsData.filter((planet) => +planet[column] === +value);
+        }
+      });
+      return planetsData;
     }
 
     return planetsData;
