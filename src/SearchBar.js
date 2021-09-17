@@ -59,6 +59,24 @@ function SearchBar() {
     });
   };
 
+  const handleClickSort = () => {
+    const sortValue = document.querySelector('input[name="sort"]:checked').value;
+    const sortColumn = document.getElementById('sort-select').value;
+    console.log(sortColumn);
+    setSearch({
+      filters: {
+        ...search.filters,
+        filterByNumericValues: [
+          ...search.filters.filterByNumericValues,
+        ],
+        order: {
+          column: sortColumn,
+          sort: sortValue,
+        },
+      },
+    });
+  };
+
   return (
     <div>
       <label htmlFor="search-input">
@@ -111,6 +129,48 @@ function SearchBar() {
         type="button"
       >
         Search
+      </button>
+      <label htmlFor="sort-select">
+        Ordenação:
+        <select data-testid="column-sort" name="sort" id="sort-select">
+          <option value="name">name</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="climate">climate</option>
+          <option value="gravity">gravity</option>
+          <option value="terrain">terrain</option>
+          <option value="surface_water">surface_water</option>
+          <option value="population">population</option>
+        </select>
+      </label>
+      <label htmlFor="ascendente">
+        <input
+          defaultChecked
+          value="ASC"
+          data-testid="column-sort-input-asc"
+          type="radio"
+          name="sort"
+          id="ascendente"
+        />
+        Ascendente
+      </label>
+      <label htmlFor="decrescente">
+        <input
+          value="DESC"
+          data-testid="column-sort-input-desc"
+          type="radio"
+          name="sort"
+          id="decrescente"
+        />
+        Decrescente
+      </label>
+      <button
+        onClick={ handleClickSort }
+        type="button"
+        data-testid="column-sort-button"
+      >
+        Ordenar
       </button>
       {
         filterByNumericValues.length > 0

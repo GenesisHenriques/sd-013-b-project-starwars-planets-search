@@ -7,7 +7,7 @@ import SearchBar from './SearchBar';
 function App() {
   return (
     <StarWarsProvider>
-      <h1>Star Wars Planets</h1>
+      <h1>StarWars Planets Search</h1>
       <SearchBar />
       <PlanetsTable />
     </StarWarsProvider>

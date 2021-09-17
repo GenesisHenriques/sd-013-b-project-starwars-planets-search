@@ -10,8 +10,13 @@ const INITIAL_STATE = {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   },
 };
+
 function StarwarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [search, setSearch] = useState(INITIAL_STATE);

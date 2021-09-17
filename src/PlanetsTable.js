@@ -4,8 +4,9 @@ import StarWarsContext from './context/StarWarsContext';
 function PlanetsTable() {
   const {
     planets,
-    search: { filters: { filterByNumericValues, filterByName: { name } } },
+    search: { filters: { order, filterByNumericValues, filterByName: { name } } },
   } = useContext(StarWarsContext);
+
   return (
     <table>
       <thead>
@@ -41,9 +42,39 @@ function PlanetsTable() {
             }
             return true;
           }))
+          .sort((first, second) => {
+            if (Number.isNaN(
+              parseFloat(first[order.column]) - parseFloat(
+                second[order.column],
+              ),
+            ) !== true) {
+              if (order.sort === 'ASC') {
+                return parseFloat(first[order.column]) - parseFloat(second[order.column]);
+              } if (order.sort === 'DESC') {
+                return parseFloat(second[order.column]) - parseFloat(first[order.column]);
+              }
+            }
+            const MENOS_1 = -1;
+            if (order.sort === 'ASC') {
+              if (first[order.column] > second[order.column]) {
+                return 1;
+              } if (first[order.column] < second[order.column]) {
+                return MENOS_1;
+              }
+              return 0;
+            }
+            if (order.sort === 'DESC') {
+              if (first[order.column] < second[order.column]) {
+                return 1;
+              } if (first[order.column] > second[order.column]) {
+                return MENOS_1;
+              }
+            }
+            return 0;
+          })
           .map((planet, index) => (
             <tr key={ index }>
-              <td>{planet.name}</td>
+              <td data-testid="planet-name">{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
               <td>{planet.diameter}</td>
