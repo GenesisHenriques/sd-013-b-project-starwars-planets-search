@@ -8,7 +8,9 @@ function Api() {
 
   useEffect(() => {
     async function fetchData() {
-      const planetsPromise = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+      const planetsPromise = await fetch(
+        'https://swapi-trybe.herokuapp.com/api/planets/',
+      );
       const planetsResulsts = await planetsPromise.json();
       setData([...planetsResulsts.results]);
     }
