@@ -17,7 +17,7 @@ function MyProvider({ children }) {
     // https://swapi.dev/api/planets
 
     // const fetchApiPlanets = () => {
-    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
+    fetch('https://swapi.dev/api/planets')
       .then((response) => response.json())
       .then((response) => {
         response.results.forEach((obj) => delete obj.residents);

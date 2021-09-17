@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { data, filters, filterByNamePlanet } = useContext(MyContext);
+  const { data, filters } = useContext(MyContext);
 
   const { filterByName: { name } } = filters;
 
@@ -15,16 +15,6 @@ function Table() {
   return (
     <div>
       <p>Tabela</p>
-      <label htmlFor="filterName">
-        <input
-          type="text"
-          id="filterName"
-          data-testid="name-filter"
-          onChange={ ({ target }) => filterByNamePlanet(target.value) }
-          value={ name }
-        />
-      </label>
-
       <table>
         <thead>
           <tr>
