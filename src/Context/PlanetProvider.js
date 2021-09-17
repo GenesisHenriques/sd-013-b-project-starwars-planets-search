@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import planetsAPI from '../services/planetsAPI';
 import PlanetsContext from './PlanetsContext';
 
-function PlanetProvider(props) {
+function PlanetsProvider(props) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -26,7 +26,7 @@ function PlanetProvider(props) {
 
   const setFilterName = (event) => {
     const { value } = event.target;
-    setFilters({ ...filters, filteByName: { name: value.toLowerCase() } });
+    setFilters({ ...filters, filterByName: { name: value.toLowerCase() } });
   };
 
   const sendFilterNumeric = (obj) => {
@@ -87,8 +87,8 @@ function PlanetProvider(props) {
   );
 }
 
-PlanetProvider.propTypes = {
+PlanetsProvider.propTypes = {
   children: PropTypes.node,
 }.isRequired;
 
-export default PlanetProvider;
+export default PlanetsProvider;
