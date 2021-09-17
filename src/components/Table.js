@@ -25,7 +25,6 @@ export default function Table({ data }) {
         comparisonFilter,
         valueFilter } = filters.numbersFilter[index];
 
-      // console.log(valueFilter);
       const convertedColumn = Number(planet[columnFilter]);
       const convertedValue = Number(valueFilter);
 
