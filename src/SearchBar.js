@@ -1,6 +1,14 @@
 import React, { useContext } from 'react';
 import StarWarsContext from './context/StarWarsContext';
 
+const OPTIONS_COLUMN = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function SearchBar() {
   const { search, setSearch } = useContext(StarWarsContext);
 
@@ -31,12 +39,13 @@ function SearchBar() {
           },
         ],
       },
-
     });
-    columnValue.value = 'population';
+    columnValue.value = '';
     selectComparisonValue.value = 'maior que';
     textValue.value = '';
   };
+
+  const { filters: { filterByNumericValues } } = search;
 
   return (
     <div>
@@ -52,15 +61,22 @@ function SearchBar() {
       </label>
       <label htmlFor="select-colum">
         <select
+          marked="column"
           data-testid="column-filter"
           name="column"
           id="select-colum"
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {
+            OPTIONS_COLUMN.filter((option) => filterByNumericValues
+              .every((filter) => !filter.column.includes(option)))
+              .map((filterColumn) => (
+                <option
+                  key={ filterColumn }
+                  value={ filterColumn }
+                >
+                  {filterColumn}
+                </option>))
+          }
         </select>
       </label>
       <label htmlFor="select-comparison">
