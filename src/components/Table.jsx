@@ -8,8 +8,6 @@ function Table() {
   if (data === undefined) {
     return <h3>Carregando...</h3>;
   }
-  console.log(`console no Table: ${data}`);
-  console.log(name);
 
   return (
     <div>

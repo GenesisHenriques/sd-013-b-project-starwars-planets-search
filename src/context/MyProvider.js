@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function MyProvider({ children }) {
+  // ESTADOS -------------------------------
   const [data, setData] = useState();
   const [filters, setFilters] = useState({
     filterByName: {
@@ -10,13 +11,15 @@ function MyProvider({ children }) {
     },
     filterByNumericValues: [
       {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
+        column: '',
+        comparison: '',
+        value: '',
       },
     ],
   });
+  // -------------------------------------------
 
+  // FETCH PARA API ---------------------------------------
   const fetchApiPlanets = useCallback(async () => {
     // API DO PROJETO = https://swapi-trybe.herokuapp.com/api/planets/
 
@@ -34,6 +37,9 @@ function MyProvider({ children }) {
     // };
   }, []);
 
+  // ----------------------------------------------------------
+
+  // FUNÇAO FILTRA NOME:
   const filterByNamePlanet = (valueName) => {
     setFilters({
       ...filters,
@@ -43,9 +49,20 @@ function MyProvider({ children }) {
     });
   };
 
-  // const filterByValuesPlanet = (values) => {
+  // FUNÇAO FILTRA VALORES:
+  const filterByValuesPlanet = (name, value) => {
+    const filterByNumericValuesFIRST = filters.filterByNumericValues[0];
+    setFilters({
+      ...filters,
+      filterByNumericValues[0]:
+        ...filters.filterByNumericValues,
+        {
+          [name]: value,
+        },
+    });
 
-  // };
+    console.log(filters);
+  };
 
   return (
     <MyContext.Provider
@@ -53,7 +70,8 @@ function MyProvider({ children }) {
         data,
         filters,
         fetchApiPlanets,
-        filterByNamePlanet } }
+        filterByNamePlanet,
+        filterByValuesPlanet } }
     >
       {children}
     </MyContext.Provider>
