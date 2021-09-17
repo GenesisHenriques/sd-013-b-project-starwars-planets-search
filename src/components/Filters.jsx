@@ -1,8 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import MyContext from '../context/MyContext';
 
 function Filters() {
-  const { data, filterByNamePlanet, filterByValuesPlanet } = useContext(MyContext);
+  const {
+    data, filterByNamePlanet,
+    filters, setFilters } = useContext(MyContext);
+
+  const [filtersObj, setFiltersObj] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  });
+
+  const handleFilters = ({ target }) => {
+    const { name, value } = target;
+    setFiltersObj({ ...filtersObj, [name]: value });
+  };
 
   // esse if é para que de o filter de colunas usando data funcione, pois o fetch demora um pouco:
   if (data === undefined) {
@@ -27,8 +40,7 @@ function Filters() {
           name="column"
           id="column"
           data-testid="column-filter"
-          onClick={ ({ target }) => filterByValuesPlanet(target.name, target.value) }
-          // onChange={ ({ target }) => console.log(target.value) }
+          onClick={ handleFilters }
         >
           {
             Object.keys(data.results[0]).map((columns, index) => (
@@ -49,7 +61,7 @@ function Filters() {
           name="comparison"
           id="comparison"
           data-testid="comparison-filter"
-          onClick={ ({ target }) => filterByValuesPlanet(target.name, target.value) }
+          onClick={ handleFilters }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -64,11 +76,21 @@ function Filters() {
           name="value"
           id="value"
           data-testid="value-filter"
-          onChange={ ({ target }) => filterByValuesPlanet(target.name, target.value) }
+          onChange={ handleFilters }
         />
       </label>
 
-      <button type="button" data-testid="button-filter">Filtrar</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        // onClick={ filterByValuesPlanet(filtersObj) }
+        onClick={ () => setFilters(
+          { ...filters, filterByNumericValues: [filtersObj] },
+        ) }
+      >
+        Filtrar
+
+      </button>
 
     </form>
   );

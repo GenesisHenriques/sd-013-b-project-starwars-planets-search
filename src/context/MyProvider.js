@@ -9,13 +9,7 @@ function MyProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
   // -------------------------------------------
 
@@ -49,29 +43,25 @@ function MyProvider({ children }) {
     });
   };
 
-  // FUNÇAO FILTRA VALORES:
-  const filterByValuesPlanet = (name, value) => {
-    const filterByNumericValuesFIRST = filters.filterByNumericValues[0];
-    setFilters({
-      ...filters,
-      filterByNumericValues[0]:
-        ...filters.filterByNumericValues,
-        {
-          [name]: value,
-        },
-    });
+  // // FUNÇAO FILTRA VALORES:
+  // const filterByValuesPlanet = (filtersObj) => {
+  //   setFilters({
+  //     ...filters,
+  //     filterByNumericValues: [filtersObj],
+  //   });
 
-    console.log(filters);
-  };
+  //   console.log(filters);
+  // };
 
   return (
     <MyContext.Provider
       value={ {
         data,
         filters,
+        setFilters,
         fetchApiPlanets,
         filterByNamePlanet,
-        filterByValuesPlanet } }
+      } }
     >
       {children}
     </MyContext.Provider>
