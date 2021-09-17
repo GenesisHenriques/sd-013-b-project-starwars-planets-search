@@ -6,7 +6,7 @@ const Search = () => {
   const [text, setText] = useState('');
   const planets = useContext(PlanetsContext);
 
-  // console.log(planets);
+  console.log('aa', planets);
 
   const changeHandler = (e) => {
     setText(e.target.value);

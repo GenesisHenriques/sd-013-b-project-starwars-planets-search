@@ -1,20 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './App.css';
 
-import { PlanetsContext } from './contexts/PlanetsProvider';
-import Search from './components/Search';
+import PlanetsContext from './contexts/PlanetsContext';
+// import Search from './components/Search';
 
 import testData from './testData';
 
 function App() {
   const planets = useContext(PlanetsContext) || { state: { data: testData } };
+  const { count, results } = planets.state.data;
+  const [text, setText] = useState('');
 
-  console.log(planets);
+  let filteredPlanets;
+
+  if (planets.state.filters) {
+    const { name } = planets.state.filters.filterByName;
+
+    filteredPlanets = results.filter((el) => el.name.includes(name));
+  }
+
+  const changeHandler = (e) => {
+    setText(e.target.value);
+    planets.setState({ ...planets.state,
+      filters: {
+        filterByName: {
+          name: e.target.value,
+        },
+      },
+    });
+    // planets.addFilter(e.target.value);
+  };
+
+  // console.log(planets);
 
   fetch('');
   return (
     <>
-      <Search />
+      {/* <Search /> */}
+      <input
+        data-testid="name-filter"
+        onChange={ changeHandler }
+        type="text"
+        value={ text }
+      />
       <table style={ { width: '100%' } }>
         <thead>
           <tr>
@@ -34,8 +62,8 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          { planets.state.data.count > 0 && (
-            planets.state.data.results.map((el, i) => (
+          { count > 0 && (
+            (filteredPlanets || planets.state.data.results).map((el, i) => (
               <tr key={ i }>
                 <td>{el.name}</td>
                 <td>{el.rotation_period}</td>
