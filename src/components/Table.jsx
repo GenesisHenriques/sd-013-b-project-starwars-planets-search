@@ -14,7 +14,7 @@ function Table() {
     setColumn,
     setComparison,
   } = useContext(PlanetsContext);
-  if (arrFiltered === undefined) {
+  if (!arrFiltered) {
     return <p>Loading...</p>;
   }
   return (

@@ -4,7 +4,7 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState();
-  const [text, setText] = useState();
+  const [text, setText] = useState('');
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [number, setNumber] = useState('0');
@@ -37,7 +37,7 @@ function PlanetsProvider({ children }) {
   }
 
   useEffect(() => {
-    if (data !== undefined) {
+    if (data) {
       setArrFiltered(data.results);
     }
   }, [data]);
@@ -53,9 +53,6 @@ function PlanetsProvider({ children }) {
   }
 
   function handleClick() {
-    if (text !== undefined) {
-      setText('');
-    }
     newColumnFilter();
     concatFilter();
     let filtered = [];
@@ -76,8 +73,9 @@ function PlanetsProvider({ children }) {
   }, [text]);
 
   useEffect(() => {
-    if (text !== undefined) {
-      const filtered = data.results.filter((e) => e.name.includes(text));
+    if (data) {
+      const filtered = data.results.filter(({ name }) => name.toLowerCase()
+        .includes(text.toLowerCase()));
       setArrFiltered(filtered);
     }
   }, [text, data]);
