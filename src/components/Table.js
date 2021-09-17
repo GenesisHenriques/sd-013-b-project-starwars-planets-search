@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { Context } from '../context/Provider';
+import Filters from './Filters';
+import TableBody from './TableBody';
 
 const Table = () => {
   const { planets } = useContext(Context);
@@ -7,24 +9,10 @@ const Table = () => {
     return <div>Carregando...</div>;
   }
   return (
-    <table>
-      <thead>
-        <tr>
-          { Object.keys(planets[0]).map((item, index) => (
-            <th key={ index }>{ item }</th>))}
-        </tr>
-      </thead>
-      <tbody>
-        { planets.map((planet, index) => (
-          <tr key={ index }>
-            { Object.values(planet).map((item) => (
-              <td key={ item }>
-                { item }
-              </td>
-            ))}
-          </tr>))}
-      </tbody>
-    </table>
+    <div>
+      <Filters />
+      <TableBody />
+    </div>
   );
 };
 
