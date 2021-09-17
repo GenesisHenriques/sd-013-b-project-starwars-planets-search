@@ -4,7 +4,7 @@ import StarWarsContext from './context/StarWarsContext';
 function PlanetsTable() {
   const {
     planets,
-    search: { filters: { filterByName: { name } } },
+    search: { filters: { filterByNumericValues, filterByName: { name } } },
   } = useContext(StarWarsContext);
   return (
     <table>
@@ -12,7 +12,7 @@ function PlanetsTable() {
         <tr>
           <th>Nome</th>
           <th>Tempo de Rotação</th>
-          <th>Perioto de Orbita</th>
+          <th>Periodo de Orbita</th>
           <th>Diametro</th>
           <th>Clima</th>
           <th>Gravidade</th>
@@ -28,6 +28,19 @@ function PlanetsTable() {
       <tbody>
         {planets.filter((planet) => planet.name.toLowerCase()
           .includes(name.toLowerCase()))
+          .filter((planet) => filterByNumericValues.every((searchColumn) => {
+            if (searchColumn.comparison === 'maior que') {
+              return parseFloat(planet[
+                searchColumn.column]) > parseFloat(searchColumn.value);
+            } if (searchColumn.comparison === 'menor que') {
+              return parseFloat(planet[
+                searchColumn.column]) < parseFloat(searchColumn.value);
+            } if (searchColumn.comparison === 'igual a') {
+              return parseFloat(planet[
+                searchColumn.column]) === parseFloat(searchColumn.value);
+            }
+            return true;
+          }))
           .map((planet, index) => (
             <tr key={ index }>
               <td>{planet.name}</td>

@@ -4,15 +4,17 @@ import StarWarContext from './StarWarsContext';
 
 const PlanetsUrlApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
+const INITIAL_STATE = {
+  filters: {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  },
+};
 function StarwarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [search, setSearch] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  });
+  const [search, setSearch] = useState(INITIAL_STATE);
 
   function fetchApi() {
     fetch(PlanetsUrlApi)
