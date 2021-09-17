@@ -1,15 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
-import PlanetsContext from './contexts/PlanetsContext';
+// import PlanetsContext from './contexts/PlanetsContext';
 // import Search from './components/Search';
 
 import testData from './testData';
 
+const INITIAL_STATE = {
+  data: testData,
+};
+
 function App() {
-  const planets = useContext(PlanetsContext) || { state: { data: testData } };
-  const { count, results } = planets.state.data;
+  // const planets = useContext(PlanetsContext) || { state: { data: testData } };
   const [text, setText] = useState('');
+  ///
+  const [state, setState] = useState(INITIAL_STATE);
+
+  // console.log(state);
+  useEffect(() => {
+    global.fetch('https://swapi-trybe.herokuapp.com/api/planets/?page=1')
+      .then((res) => res.json())
+      .then((resData) => {
+        console.log(resData);
+        setState((s) => ({ ...s, data: resData }));
+      });
+  }, []);
+
+  const planets = { state, setState };
+  const { count, results } = planets.state.data;
+
+  ///
 
   let filteredPlanets;
 
