@@ -5,9 +5,16 @@ import MainContext from '../context/MainContext';
 import './Table.css';
 
 function Table() {
-  const { data: { results },
-    filters: { filterByName: { name },
-      filterByNumericValues } } = useContext(MainContext);
+  const {
+    data: { results },
+    filters: {
+      filterByName: { name },
+      filterByNumericValues,
+      order: {
+        column,
+        sort,
+      } },
+  } = useContext(MainContext);
 
   const [filteredResults, setFilteredResults] = useState([]);
 
@@ -40,7 +47,7 @@ function Table() {
     filterByNumericValues
       .forEach((filter) => setFilteredResults((prevState) => prevState
         .filter((planet) => setNumericFilter(filter, planet))));
-  }, [filterByNumericValues]);
+  }, [filterByNumericValues, results]);
 
   if (results.length === 0) {
     return <p>Carregando...</p>;
@@ -60,14 +67,24 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filteredResults.map((planet, index) => (
+        {/* Referência para o sort: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value */
+        /* Ajuda do Gabs e do Cestari na descoberta da função '+' e 'isNan' */}
+        {filteredResults.sort((a, b) => {
+          if (Number.isNaN(+(a[column]))) {
+            if (sort === 'ASC') {
+              return a[column].localeCompare(b[column]);
+            } return b[column].localeCompare(a[column]);
+          }
+          if (sort === 'ASC') {
+            return Number(a[column]) - Number(b[column]);
+          } return Number(b[column]) - Number(a[column]);
+        }).map((planet, index) => (
           <tr key={ index }>
-            {Object.values(planet).map((info, index2) => (
-              <td
-                key={ index2 }
-              >
-                {info}
-              </td>))}
+            {Object.values(planet).map((info, index2) => {
+              if (index2 === 0) {
+                return <td data-testid="planet-name" key={ info }>{info}</td>;
+              } return (<td key={ index2 }>{info}</td>);
+            })}
           </tr>
         ))}
       </tbody>

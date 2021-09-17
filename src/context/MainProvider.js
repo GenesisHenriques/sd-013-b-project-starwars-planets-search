@@ -8,6 +8,10 @@ const filtersInitialState = {
     name: '',
   },
   filterByNumericValues: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 function MainProvider({ children }) {
@@ -55,6 +59,16 @@ function MainProvider({ children }) {
     });
   }
 
+  function setSortFilter(column, sort) {
+    setFilters({
+      ...filters,
+      order: {
+        column,
+        sort,
+      },
+    });
+  }
+
   return (
     <MainContext.Provider
       value={ {
@@ -63,7 +77,9 @@ function MainProvider({ children }) {
         fetchPlanets,
         filterPlanetsByName,
         filterPlanetsByNumericValue,
-        removeFilter } }
+        removeFilter,
+        setSortFilter,
+      } }
     >
       {children}
     </MainContext.Provider>
