@@ -5,10 +5,29 @@ function Table() {
   const { state } = useContext(PlanetsContext);
 
   function table() {
-    if (state) return console.log(state);
-    // pegar o state.results
-    // criar um array com filter excluindo a residentes
-    // fazer o map de um array aqui para popular a tabela
+    // if (state) return console.log(state.results); // funcionou
+    if (state) {
+      // return console.log(results);
+      return (
+        state.map((item) => (
+          <tr key={ item.name }>
+            <td>{ item.name }</td>
+            <td>{ item.rotation_period }</td>
+            <td>{ item.orbital_period }</td>
+            <td>{ item.diameter }</td>
+            <td>{ item.climate }</td>
+            <td>{ item.gravity }</td>
+            <td>{ item.terrain }</td>
+            <td>{ item.surface_water }</td>
+            <td>{ item.population }</td>
+            <td>{ item.films }</td>
+            <td>{ item.created }</td>
+            <td>{ item.edited }</td>
+            <td>{ item.url }</td>
+          </tr>
+        ))
+      );
+    }
   }
 
   return (
@@ -24,10 +43,10 @@ function Table() {
           <th>terrain</th>
           <th>surface_water</th>
           <th>population</th>
-          <th>residents</th>
           <th>films</th>
           <th>created</th>
           <th>edited</th>
+          <th>url</th>
         </tr>
       </thead>
       <tbody>

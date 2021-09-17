@@ -4,12 +4,13 @@ import PlanetsContext from './PlanetsContext';
 import getPlanets from '../services/API';
 
 function PlanetsProvider({ children }) {
-  const [state, setState] = useState({});
+  const [state, setState] = useState([]);
 
+  // Summer Paulinha me deu essa dica
   useEffect(() => {
     async function requestGetPlanets() {
       const data = await getPlanets();
-      setState(data);
+      setState(data.results);
     }
 
     requestGetPlanets();
