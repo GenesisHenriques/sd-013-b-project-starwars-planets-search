@@ -21,6 +21,31 @@ export default function MyProvider({ children }) {
     });
   }, [search]);
 
+  useEffect(() => {
+    if (filters.filterByNumericValues !== undefined) {
+      const { column, value, comparison } = filters.filterByNumericValues[0];
+      switch (comparison) {
+      case 'maior que': {
+        const result = data.filter((filter) => Number(filter[column]) > Number(value));
+        setFiltered(result);
+        break;
+      }
+      case 'menor que': {
+        const result = data.filter((filter) => Number(filter[column]) < Number(value));
+        setFiltered(result);
+        break;
+      }
+      case 'igual a': {
+        const result = data.filter((filter) => Number(filter[column]) === Number(value));
+        setFiltered(result);
+        break;
+      }
+      default:
+        console.log('default');
+      }
+    }
+  }, [filters, data]);
+
   async function fetchDataApi() {
     const urlDataStarWars = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const request = await fetch(urlDataStarWars).then((dataRe) => dataRe.json());
@@ -47,6 +72,7 @@ export default function MyProvider({ children }) {
     setSearch,
     filtered,
     filters,
+    setFilters,
   };
 
   return (
