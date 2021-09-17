@@ -1,25 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import PlanetsContext from '../context/PlanetsContext';
 
 import PlanetRow from './PlanetRow';
 
 function Table() {
-  const { data, headers, filters } = useContext(PlanetsContext);
-  const { results: planets } = data;
-  const { name } = filters.filterByName;
-
-  const [filteredPlanets, setFilteredPlanets] = useState([]);
-
-  useEffect(() => {
-    if (planets) {
-      setFilteredPlanets(
-        planets.filter(({ name: planetName }) => (
-          planetName.toLowerCase().includes(name.toLowerCase())
-        )),
-      );
-    }
-  }, [name, planets]);
+  const { filteredPlanets, headers } = useContext(PlanetsContext);
 
   return (
     <table>
@@ -41,7 +27,3 @@ function Table() {
 }
 
 export default Table;
-
-// climate, created, diameter, edited, films, gravity, name,
-// orbital_period, population, rotation_period, surface_water,
-// terrain, url
