@@ -1,12 +1,12 @@
 import React from 'react';
-import useStarwarsApi from '../hooks/useStarwarsApi';
+import Table from '../components/Table';
+// import useStarwarsApi from '../hooks/useStarwarsApi';
 
 function Home() {
-  useStarwarsApi();
   return (
     <div>
-      <h1>oi</h1>
-      {/* <button type="button" onClick={() => test}>teste</button> */}
+      <header><h1>Starwars</h1></header>
+      <Table />
 
     </div>
   );

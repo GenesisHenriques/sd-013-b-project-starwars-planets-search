@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
 import Home from './pages/Home';
-// import { Switch } from '.react-router-dom';
+import PlanetsProvider from './context/PlanetsProvider';
 
 function App() {
   return (
-    <Home />
+    <PlanetsProvider>
+      <Home />
+
+    </PlanetsProvider>
   );
 }
 
