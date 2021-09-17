@@ -5,23 +5,17 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState();
   const [text, setText] = useState();
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState();
-  const [number, setNumber] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [number, setNumber] = useState('0');
   const [arrFiltered, setArrFiltered] = useState();
+  const [filterByName, setFilterByName] = useState({});
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [filters, setFilters] = useState({});
   const [colunmFilter, setColunmFilter] = useState([
     'population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water',
   ]);
-  const [filterByName, setFilterByName] = useState({
-    name: '',
-  });
-  const [filterByNumericValues, setFilterByNumericValues] = useState([{
-    column: '',
-    comparison: '',
-    value: '',
-  }]);
-  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     setFilters({
@@ -48,19 +42,22 @@ function PlanetsProvider({ children }) {
     }
   }, [data]);
 
-  useEffect(() => {
-    setFilterByNumericValues({
-      column,
-      comparison,
-      value: number,
-    });
-  }, [column, comparison, number]);
+  function concatFilter() {
+    setFilterByNumericValues([
+      ...filterByNumericValues,
+      {
+        column,
+        comparison,
+        value: number,
+      }]);
+  }
 
   function handleClick() {
     if (text !== undefined) {
       setText('');
     }
     newColumnFilter();
+    concatFilter();
     let filtered = [];
     if (comparison === 'maior que') {
       filtered = data.results.filter((e) => Number((e[column]) > Number(number)));

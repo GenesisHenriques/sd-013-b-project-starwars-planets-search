@@ -33,7 +33,6 @@ function Table() {
           data-testid="comparison-filter"
           onChange={ (e) => setComparison(e.target.value) }
         >
-          <option value="">Selecione</option>
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
