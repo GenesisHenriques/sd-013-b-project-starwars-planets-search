@@ -2,17 +2,29 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { data } = useContext(MyContext);
+  const { data, filters, filterByNamePlanet } = useContext(MyContext);
+
+  const { filterByName: { name } } = filters;
 
   if (data === undefined) {
     return <h3>Carregando...</h3>;
   }
-
   console.log(data);
+  console.log(name);
 
   return (
     <div>
       <p>Tabela</p>
+      <label htmlFor="filterName">
+        <input
+          type="text"
+          id="filterName"
+          data-testid="name-filter"
+          onChange={ ({ target }) => filterByNamePlanet(target.value) }
+          value={ name }
+        />
+      </label>
+
       <table>
         <thead>
           <tr>
@@ -25,15 +37,16 @@ function Table() {
         </thead>
         <tbody>
           {
-            data.results.map((rowsPlanet, index0) => (
-              <tr key={ index0 }>
-                {Object.values(rowsPlanet).map((info, index1) => (
-                  <td key={ index1 }>
-                    {info}
-                  </td>
-                ))}
-              </tr>
-            ))
+            data.results.filter((filterN) => filterN.name.includes(name))
+              .map((rowsPlanet, index0) => (
+                <tr key={ index0 }>
+                  {Object.values(rowsPlanet).map((info, index1) => (
+                    <td key={ index1 }>
+                      {info}
+                    </td>
+                  ))}
+                </tr>
+              ))
           }
         </tbody>
       </table>

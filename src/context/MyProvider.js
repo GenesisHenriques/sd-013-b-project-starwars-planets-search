@@ -4,6 +4,11 @@ import MyContext from './MyContext';
 
 function MyProvider({ children }) {
   const [data, setData] = useState();
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const fetchApiPlanets = useCallback(async () => {
     // API DO PROJETO = https://swapi-trybe.herokuapp.com/api/planets/
@@ -21,8 +26,23 @@ function MyProvider({ children }) {
     // };
   }, []);
 
+  const filterByNamePlanet = (valueName) => {
+    setFilters({
+      ...filters,
+      filterByName: {
+        name: valueName,
+      },
+    });
+  };
+
   return (
-    <MyContext.Provider value={ { data, fetchApiPlanets } }>
+    <MyContext.Provider
+      value={ {
+        data,
+        filters,
+        fetchApiPlanets,
+        filterByNamePlanet } }
+    >
       {children}
     </MyContext.Provider>
   );
