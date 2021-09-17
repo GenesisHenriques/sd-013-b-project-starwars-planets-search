@@ -3,12 +3,20 @@ import Context from '../context/Context';
 
 function SelectFilter() {
   const { setCompareFilter } = useContext(Context);
-  const [column, setColumn] = useState('population');
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const [column, setColumn] = useState(options[0]);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
   const handleClick = () => {
     setCompareFilter([{ column, comparison, value }]);
+    setOptions((prevOptions) => prevOptions.filter((option) => option !== column));
   };
 
   return (
@@ -19,11 +27,13 @@ function SelectFilter() {
         data-testid="column-filter"
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          options.map((option) => (
+            <option key={ option }>
+              {option}
+            </option>
+          ))
+        }
       </select>
       <select
         data-testid="comparison-filter"
