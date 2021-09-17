@@ -40,12 +40,24 @@ function SearchBar() {
         ],
       },
     });
-    columnValue.value = '';
     selectComparisonValue.value = 'maior que';
     textValue.value = '';
   };
 
   const { filters: { filterByNumericValues } } = search;
+
+  const handleClickFilter = ({ target }) => {
+    const withOutObjectDeleted = filterByNumericValues
+      .filter((filterColumn) => filterColumn.column !== target.name);
+    setSearch({
+      filters: {
+        ...search.filters,
+        filterByNumericValues: [
+          ...withOutObjectDeleted,
+        ],
+      },
+    });
+  };
 
   return (
     <div>
@@ -100,6 +112,21 @@ function SearchBar() {
       >
         Search
       </button>
+      {
+        filterByNumericValues.length > 0
+        && filterByNumericValues.map(({ column, comparison, value }, index) => (
+          <div key={ index } data-testid="filter">
+            {`${column} | ${comparison} | ${value} `}
+            <button
+              name={ column }
+              onClick={ handleClickFilter }
+              type="button"
+            >
+              X
+            </button>
+          </div>
+        ))
+      }
     </div>
   );
 }
