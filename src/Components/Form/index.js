@@ -3,12 +3,30 @@ import planetsContext from '../../context/planetsContext';
 
 function Form() {
   const { name, comparison } = useContext(planetsContext);
+  const { filters: { filterByNumericValues: filtro } } = useContext(planetsContext);
   const [dropdown, setDropdown] = useState({
     column: 'population',
     comparison: 'maior que',
     value: 0,
   });
-  console.log(dropdown);
+  console.log(dropdown, filtro);
+  const [last, setLast] = useState();
+
+  function renderOptions() {
+    const listOptions = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    return listOptions.map((option) => {
+      if (last !== option) {
+        return <option value={ option }>{option}</option>;
+      }
+      return null;
+    });
+  }
 
   return (
     <form>
@@ -27,11 +45,9 @@ function Form() {
           data-testid="column-filter"
           onChange={ ({ target }) => setDropdown({ ...dropdown, column: target.value }) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {
+            renderOptions()
+          }
         </select>
       </label>
       <label htmlFor="drop2">
@@ -59,7 +75,7 @@ function Form() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => comparison(dropdown) }
+        onClick={ () => { comparison(dropdown); setLast(dropdown.column); } }
       >
         Add Filter
       </button>

@@ -71,6 +71,7 @@ function PlanetsProvider({ children }) {
           name: '',
         },
         filterByNumericValues: [
+          ...filters.filterByNumericValues,
           {
             column,
             comparison,
