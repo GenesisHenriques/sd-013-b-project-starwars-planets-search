@@ -13,6 +13,7 @@ function StarProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
     dataFiltered: [],
   });
 
@@ -22,6 +23,12 @@ function StarProvider({ children }) {
 
   const handleFilterName = useCallback((name) => {
     setFilters((prevState) => ({ ...prevState, filterByName: { name } }));
+  }, []);
+
+  const handleFilterNumeric = useCallback((select) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: [...prevState.filterByNumericValues, select] }));
   }, []);
 
   const getPlanets = () => {
@@ -35,6 +42,7 @@ function StarProvider({ children }) {
     filters,
     handleSetData,
     handleFilterName,
+    handleFilterNumeric,
   };
 
   useEffect(() => {

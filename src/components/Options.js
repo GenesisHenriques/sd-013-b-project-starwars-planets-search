@@ -1,24 +1,83 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarContext from '../context/StarContext';
+import Button from '../selectors/Button';
+import InputText from '../selectors/InputText';
+import Select from '../selectors/Select';
 
 function Options() {
-  const { handleFilterName } = useContext(StarContext);
+  const COLUMN_FILTER = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
-  const hanldeChange = ({ target: { value } }) => {
+  const COMPARE_FILTER = ['maior que', 'menor que', 'igual a'];
+
+  const [selectedColumn, setSelectedColumn] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '0',
+  });
+
+  const { handleFilterName, handleFilterNumeric } = useContext(StarContext);
+
+  const handleChange = ({ target: { value } }) => {
     handleFilterName(value);
+  };
+
+  const handleSelectColumn = ({ target: { name, value } }) => {
+    setSelectedColumn((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleClick = () => {
+    handleFilterNumeric(selectedColumn);
+  };
+
+  const selectionOne = {
+    selectColumn: handleSelectColumn,
+    selectedColumn,
+    filterColumn: COLUMN_FILTER,
+  };
+
+  const selectionTwo = { handleSelectColumn,
+    selectColumn: handleSelectColumn,
+    selectedColumn,
+    filterColumn: COMPARE_FILTER,
   };
 
   return (
     <div>
-      <label htmlFor="search-input">
-        Pesquisar
-        <input
-          id="search-input"
-          type="text"
-          onChange={ hanldeChange }
-          data-testid="name-filter"
-        />
-      </label>
+      <InputText
+        id="search-input"
+        name="name-filter"
+        type="text"
+        onChange={ handleChange }
+        dataTestId="name-filter"
+      />
+      <br />
+      <Select
+        selection={ selectionOne }
+        name="column"
+        dataTestId="column-filter"
+      />
+      <Select
+        selection={ selectionTwo }
+        name="comparison"
+        dataTestId="comparison-filter"
+      />
+      <InputText
+        id="value-input"
+        name="value"
+        type="number"
+        onChange={ handleSelectColumn }
+        dataTestId="value-filter"
+      />
+      <Button
+        dataTestId="button-filter"
+        onClick={ handleClick }
+      >
+        Adicionar Filtro
+      </Button>
     </div>
   );
 }

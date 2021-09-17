@@ -51,8 +51,8 @@ function Table() {
             <td>{ climate }</td>
             <td>{ gravity }</td>
             <td>{ terrain }</td>
-            <td>{ population }</td>
             <td>{ surfaceWater }</td>
+            <td>{ population }</td>
             <td>{ films }</td>
             <td>{ created }</td>
             <td>{ edited }</td>
