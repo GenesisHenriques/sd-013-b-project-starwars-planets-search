@@ -2,11 +2,12 @@ import React from 'react';
 import Provider from './context/Provider';
 import './App.css';
 import Table from './components/Table';
+import Inputs from './components/Inputs';
 
 function App() {
   return (
     <Provider>
-      <span>Hello, App!</span>
+      <Inputs />
       <Table />
     </Provider>
   );
