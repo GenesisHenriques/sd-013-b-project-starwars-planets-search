@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { useSWContext } from '../../context';
+import FiltersList from '../FiltersList';
 import Select from './Select';
 
 const FiltersForm = () => {
@@ -63,6 +64,9 @@ const FiltersForm = () => {
         <button data-testid="button-filter" type="button" onClick={ handleClick }>
           Add Filter
         </button>
+        <div>
+          <FiltersList />
+        </div>
       </fieldset>
 
     </>
