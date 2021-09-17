@@ -14,7 +14,9 @@ const SWContext = createContext({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   },
+  numericSelectorOptions: [],
 });
 
 export const useSWContext = () => useContext(SWContext);
@@ -22,6 +24,7 @@ export const useSWContext = () => useContext(SWContext);
 export const SWProvider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,18 +43,57 @@ export const SWProvider = ({ children }) => {
     });
   }, []);
 
-  const data = useMemo(() => planets.filter(({ name }) => {
+  const handleNumericValuesFilterChange = useCallback((column, comparison, value) => {
+    setFilterByNumericValues((prev) => [
+      ...prev,
+      {
+        column,
+        comparison,
+        value,
+      },
+    ]);
+  }, []);
+
+  const handleNumericValueFilter = useCallback((planet) => filterByNumericValues
+    .reduce((conjuntion, { column, comparison, value }) => {
+      switch (comparison) {
+      case 'maior que':
+        return conjuntion && (parseInt(planet[column], 10) > parseInt(value, 10));
+      case 'menor que':
+        return conjuntion && (parseInt(planet[column], 10) < parseInt(value, 10));
+      default:
+        return conjuntion && (parseInt(planet[column], 10) === parseInt(value, 10));
+      }
+    }, true), [filterByNumericValues]);
+
+  const data = useMemo(() => planets.filter((planet) => {
     const filter = new RegExp(filterByName.name, 'i');
-    return filter.test(name);
-  }), [planets, filterByName]);
+    return filter.test(planet.name) && handleNumericValueFilter(planet);
+  }), [planets, filterByName.name, handleNumericValueFilter]);
+
+  const numericSelectorOptions = useMemo(() => {
+    const options = [
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+    return options;
+  }, []);
 
   const context = useMemo(() => ({
     data,
     filters: {
       filterByName,
+      filterByNumericValues,
     },
+    numericSelectorOptions,
     handleNameFilterChange,
-  }), [data, filterByName, handleNameFilterChange]);
+    handleNumericValuesFilterChange,
+  }),
+  [data,
+    filterByName,
+    filterByNumericValues,
+    handleNameFilterChange,
+    handleNumericValuesFilterChange,
+    numericSelectorOptions]);
 
   return (
     <SWContext.Provider value={ context }>
