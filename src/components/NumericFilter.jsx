@@ -7,12 +7,13 @@ export default function NumericFilter() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('100000');
-
-  const firstSelectOptions = ['population',
+  const [firstSelectOptions, alterFirstSelectOptions] = useState([
+    'population',
     'orbital_period',
     'diameter',
     'rotation_period',
-    'surface_water'];
+    'surface_water']);
+
   const secondSelectOptions = ['maior que', 'menor que', 'igual a'];
 
   const optionsMap = (array) => (
@@ -21,7 +22,9 @@ export default function NumericFilter() {
 
   const handleClick = () => {
     setNumericFilter((prevState) => [...prevState, { column, comparison, value }]);
-    firstSelectOptions.pop(column);
+    const filterOptions = firstSelectOptions.filter((option) => option !== column);
+    alterFirstSelectOptions(filterOptions);
+    setColumn(filterOptions[0]);
   };
 
   return (
