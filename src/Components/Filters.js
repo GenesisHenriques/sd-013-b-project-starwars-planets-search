@@ -3,7 +3,7 @@ import PlanetsContext from '../Context/PlanetsContext';
 
 function Filters() {
   const context = useContext(PlanetsContext);
-  const { filters, setFilterByName, sendFilterNumeric } = context;
+  const { filters, setFilterName, sendFilterNumeric } = context;
   //   const { filterByNumericValues } = filters;
   const { name } = filters.filterByName;
   const [types, setFilterTypes] = useState(['population',
@@ -44,7 +44,7 @@ function Filters() {
       <input
         type="text"
         data-testid="name-filter"
-        onChange={ setFilterByName }
+        onChange={ setFilterName }
         value={ name }
       />
       <select

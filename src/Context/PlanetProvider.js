@@ -7,7 +7,7 @@ function PlanetsProvider(props) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
-  const [copyResults, setCopyResults] = useState([]);
+  const [copyResults, setcopyResults] = useState([]);
   const [allTypes, setAllTypes] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: {
@@ -53,7 +53,7 @@ function PlanetsProvider(props) {
         setLoadError(false);
         const getInfoPlanets = await planetsAPI();
         setData(getInfoPlanets.results);
-        setCopyResults(getInfoPlanets.results);
+        setcopyResults(getInfoPlanets.results);
         setIsLoading(false);
       } catch (error) {
         setLoadError(true);
