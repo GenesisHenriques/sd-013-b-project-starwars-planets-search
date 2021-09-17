@@ -6,8 +6,8 @@ export default function Provider({ children }) {
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [actualFilter, setActualFilter] = useState({
-    column: 'population',
-    comparison: 'maior que',
+    column: '',
+    comparison: '',
     value: 0,
   });
   const [filters, setFilters] = useState({

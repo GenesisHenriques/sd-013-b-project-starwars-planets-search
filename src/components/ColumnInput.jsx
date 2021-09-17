@@ -17,10 +17,7 @@ export default function ColumnInput() {
   };
 
   const handleChange = ({ target }) => {
-    setActualFilter({
-      ...actualFilter,
-      column: target.value,
-    });
+    setActualFilter({ ...actualFilter, column: target.value });
   };
 
   return (
