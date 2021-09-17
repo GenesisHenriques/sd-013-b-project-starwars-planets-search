@@ -6,10 +6,9 @@ export default function FilterTable(results) {
   // const { name } = value.filters.filterByName;
   const { filterByNumericValues } = value.filters;
 
-  const newArray = filterByNumericValues.map((objFilter) => results.filter((objResult) => {
+  let newArray = filterByNumericValues.map((objFilter) => results.filter((objResult) => {
     const chave = objFilter.colum;
     const valor = objFilter.value;
-    console.log(objResult);
     const comparacao = objFilter.comparsion;
     if (comparacao === 'maior que') {
       return objFilter.value < objResult[chave];
@@ -20,7 +19,12 @@ export default function FilterTable(results) {
     }
     return objFilter.value === objResult[chave];
   }));
-
-  console.log(newArray);
-  return newArray[0];
+  let Retorno = [...newArray];
+  newArray = [];
+  const UltimoIndexRetorno = Retorno.length-1;
+  
+  
+  // console.log(newArray);
+  console.log(Retorno);
+  return Retorno[UltimoIndexRetorno];
 }
