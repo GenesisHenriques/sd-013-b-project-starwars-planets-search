@@ -5,7 +5,9 @@ import ApifetchPlanets from '../Services/ApifetchPlanets';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const contextValue = { data, setData };
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [search, setSearch] = useState([]);
+  const contextValue = { data, setData, filters, setFilters, search, setSearch };
 
   const fetchPlanets = async () => {
     const api = await ApifetchPlanets();
@@ -25,8 +27,9 @@ function Provider({ children }) {
   );
 }
 
+// Foi pesquisado qual props clhiden deveria receber: https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children.
 Provider.propTypes = {
-  children: PropTypes.objectOf,
-}.isRequired;
+  children: PropTypes.node.isRequired,
+};
 
 export default Provider;

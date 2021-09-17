@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from '../Contexts/AppContext';
 
 function Table() {
-  const { data } = useContext(AppContext);
+  const { search } = useContext(AppContext);
 
   return (
     <table>
@@ -21,7 +21,7 @@ function Table() {
         <th>Edited</th>
         <th>Url</th>
       </tr>
-      { data.map((infoPlanet) => (
+      { search.map((infoPlanet) => (
         <tr key={ infoPlanet.name }>
           <td>{ infoPlanet.name }</td>
           <td>{ infoPlanet.rotation_period }</td>
