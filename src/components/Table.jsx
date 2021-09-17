@@ -5,18 +5,69 @@ import MyContext from './MyContext';
 function Table() {
   const { data } = useContext(MyContext);
   const [filters, setFilters] = useState({
-    filterByName: { name: '' },
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
   });
 
-  function filterMovie({ target }) {
-    setFilters({ filterByName: { name: target.value } });
+  /* links que me ajudaram nas funções de filtragem:
+  https://www.youtube.com/watch?v=d1r0aK5awWk
+  https://stackoverflow.com/questions/62116449/saving-object-in-react-usestate
+  https://dev.to/asimdahall/simple-search-form-in-react-using-hooks-42pg
+  */
+
+  function filterPlanet({ target }) {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+  }
+
+  function filterPlanets({ target }) {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        {
+          ...filters.filterByNumericValues[0],
+          [target.name]: target.value,
+        },
+      ],
+    });
   }
 
   function showFilteredPlanets(dado) {
     const {
       filterByName: { name },
     } = filters;
-    return dado.filter((planet) => planet.name.toLowerCase().includes(name));
+    return dado.filter(
+      (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+    );
+  }
+
+  function showFilteredPlanetsSelect(dado) {
+    const { filterByNumericValues } = filters;
+    if (filterByNumericValues[0].comparison === 'maior') {
+      return dado.filter(
+        (planet) => planet.filterByNumericValues[0].column
+          > Number(filterByNumericValues[0].value),
+      );
+    }
+    if (filterByNumericValues[0].comparison === 'menor') {
+      return dado.filter(
+        (planet) => planet.filterByNumericValues[0].column
+          < Number(filterByNumericValues[0].value),
+      );
+    }
+    if (filterByNumericValues[0].comparison === 'igual') {
+      return dado.filter(
+        (planet) => planet.filterByNumericValues[0].column
+          === Number(filterByNumericValues[0].value),
+      );
+    }
   }
 
   return (
@@ -26,7 +77,35 @@ function Table() {
         type="text"
         placeholder="Search planet"
         value={ filters.filterByName.name }
-        onChange={ filterMovie }
+        onChange={ filterPlanet }
+      />
+      <select
+        name="column"
+        data-testid="column-filter"
+        onChange={ filterPlanets }
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        name="comparison"
+        data-testid="comparison-filter"
+        onChange={ filterPlanets }
+      >
+        <option value="maior">maior que</option>
+        <option value="menor">menor que</option>
+        <option value="igual">igual</option>
+      </select>
+      <input
+        name="value"
+        data-testid="value-filter"
+        type="number"
+        placeholder="type a number"
+        value={ filters.filterByNumericValues[0].value }
+        onChange={ filterPlanets }
       />
       <table>
         <tr>
