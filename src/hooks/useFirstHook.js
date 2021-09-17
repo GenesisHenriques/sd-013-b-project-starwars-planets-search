@@ -14,7 +14,7 @@ const useFirstHook = () => {
             {
               column: 'population',
               comparison: 'maior que',
-              value: '100000',
+              value: '0',
             },
           ],
         },
@@ -28,7 +28,9 @@ const useFirstHook = () => {
     if (!state.api || state.api.length < 1) {
       apiFetch();
     }
-    // console.log('hello', state);
+    // console.clear();
+    // console.log('useFirstHook', state);
+    // console.log('useFirstHook', state.filters.filterByNumericValues);
   });
 
   return [state, setState];

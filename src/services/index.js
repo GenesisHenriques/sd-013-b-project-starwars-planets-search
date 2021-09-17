@@ -20,7 +20,63 @@ const filterByPlanetName = (param, param2, { target }) => {
     ...param,
     [a]: target.value === '' ? null : filter,
     filters:
-        { filterByName: { name: target.value === '' ? null : target.value } },
+    {
+      filterByName: { name: target.value === '' ? null : target.value },
+      ...param.filters,
+    },
+  };
+};
+
+const filterByNumericValues = (param) => {
+  const { filterByNumericValues: [{ column, comparison, value }] } = param.filters;
+  const comparing = (element, toCompare, thisValue) => {
+    switch (toCompare) {
+    case 'maior que':
+      return Number(element) > thisValue;
+    case 'menor que':
+      return Number(element) < thisValue;
+    case 'igual a':
+      return element === thisValue;
+    default:
+      return null;
+    }
+  };
+  if (column && comparison && value) {
+    const filter = param.api
+      .filter((e) => comparing(e[column], comparison, value));
+    console.clear();
+    console.log('on ', filter);
+    console.log('on ', column, comparison, value);
+    return {
+      ...param,
+      api: filter,
+    };
+  }
+  console.clear();
+  console.log('off ', column, comparison, value, param);
+  return {
+    ...param,
+  };
+};
+
+const onChangeValues = (param, { target }) => {
+  const { filters: { filterByName, filterByNumericValues: values } } = param;
+  // console.clear();
+  // console.log(target.value);
+  return {
+    ...param,
+    filters:
+    {
+      filterByName: {
+        name: filterByName.name,
+      },
+      filterByNumericValues: [
+        {
+          ...values[0],
+          [target.name]: target.value,
+        },
+      ],
+    },
   };
 };
 
@@ -36,6 +92,8 @@ const services = {
   byTargetValue,
   fetchApi,
   filterByPlanetName,
+  filterByNumericValues,
+  onChangeValues,
 };
 
 export default services;
