@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
+import Initial from './Components/Initial';
+import PlanetsProvider from './context/planetsProvider';
 
 function App() {
   return (
-    <span>Hello, Appa!</span>
+    <PlanetsProvider>
+      <Initial />
+
+    </PlanetsProvider>
   );
 }
 
