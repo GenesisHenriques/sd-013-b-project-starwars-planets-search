@@ -4,6 +4,9 @@ import TableContext from './TableContext';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [dataFiltered, setDataFiltered] = useState([]);
+
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   useEffect(() => {
@@ -11,12 +14,32 @@ function TableProvider({ children }) {
       const response = await fetch(url);
       const { results } = await response.json();
       setData(results);
+      setDataFiltered(results);
     }
     fetchAPI();
   }, []);
 
+  useEffect(() => {
+    const { filterByName: { name } } = filters;
+    const search = data
+      .filter((selectedPlanet) => selectedPlanet.name.toLowerCase()
+        .includes(name));
+    setDataFiltered(search);
+  }, [filters, data]);
+
+  function handleChangeFiltered({ target }) {
+    setFilters({ filterByName: { name: target.value.toLocaleLowerCase() } });
+  }
+
   return (
-    <TableContext.Provider value={ data }>
+    <TableContext.Provider
+      value={ {
+        handleChangeFiltered,
+        data,
+        filters,
+        dataFiltered,
+      } }
+    >
       {children}
     </TableContext.Provider>
   );

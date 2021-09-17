@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
 
 function Table() {
-  const data = useContext(TableContext);
+  const { dataFiltered } = useContext(TableContext);
+
   return (
     <table>
       <thead>
@@ -24,7 +25,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          data && data.map((starWar) => (
+          dataFiltered && dataFiltered.map((starWar) => (
             <tr key={ starWar.name }>
               <td>{ starWar.name }</td>
               <td>{ starWar.rotation_period }</td>
