@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
+import PlanetsTable from './Pages/PlanetsTable';
 
 function App() {
   return (
-    // #VQV
-    <span>Hello, App!</span>
+    <PlanetsTable />
   );
 }
 
