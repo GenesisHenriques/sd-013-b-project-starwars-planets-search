@@ -10,7 +10,9 @@ export default function Filter() {
     comparison: 'maior que',
     value: '',
   });
-  const { filters, setFilters, comparisonArr, setComparisonArr } = useContext(Context);
+  const { filters,
+    setFilters, comparisonArr, setComparisonArr,
+    filterPos, setFilterPos, setFiltered } = useContext(Context);
 
   const columnsResult = columns
     .filter((filter, index) => filter !== comparisonArr[index]);
@@ -26,14 +28,32 @@ export default function Filter() {
         { ...filters,
           filterByNumericValues: [filterNumeric] },
       );
+      setFilterPos(filterPos + 1);
       setComparisonArr([...comparisonArr, filterNumeric.column]);
       return undefined;
     }
     setComparisonArr([...comparisonArr, filterNumeric.column]);
+    setFilterPos(filterPos + 1);
     return setFilters(
       { ...filters,
         filterByNumericValues: [...filters.filterByNumericValues, filterNumeric] },
     );
+  };
+
+  const removeFilter = ({ target }) => {
+    console.log(target.id);
+    const newArr = [...filters.filterByNumericValues];
+    newArr.splice(target.id, 1);
+    if (newArr.length === 0) {
+      setFilters({ filterByName: {
+        name: '',
+      } });
+      setFiltered();
+      setFilterPos(filterPos - 1);
+      return false;
+    }
+    setFilters({ ...filters, filterByNumericValues: [...newArr] });
+    setFilterPos(filterPos - 1);
   };
 
   return (
@@ -71,6 +91,20 @@ export default function Filter() {
       >
         Filtrar
       </button>
+      <div>
+        { filters.filterByNumericValues
+          && filters.filterByNumericValues.map((button, index) => (
+            <button
+              key={ button }
+              id={ index }
+              type="button"
+              data-testid="filter"
+              onClick={ removeFilter }
+            >
+              X
+            </button>
+          )) }
+      </div>
     </div>
   );
 }

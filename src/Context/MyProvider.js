@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Context from './MyContext';
 
 export default function MyProvider({ children }) {
+  const MENOS_UM = -1;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filtered, setFiltered] = useState();
   const [search, setSearch] = useState();
+  const [filterPos, setFilterPos] = useState(MENOS_UM);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -22,9 +24,17 @@ export default function MyProvider({ children }) {
     });
   }, [search]);
 
+  async function fetchDataApi() {
+    const urlDataStarWars = 'https://swapi-trybe.herokuapp.com/api/planets/';
+    const request = await fetch(urlDataStarWars).then((dataRe) => dataRe.json());
+    const result = request.results.filter((dataResult) => delete dataResult.residents);
+    setData(result);
+  }
+
+  // Hook filtragem byNumeric
   useEffect(() => {
     if (filters.filterByNumericValues !== undefined) {
-      const { column, value, comparison } = filters.filterByNumericValues[0];
+      const { column, value, comparison } = filters.filterByNumericValues[filterPos];
       switch (comparison) {
       case 'maior que': {
         const result = data.filter((filter) => Number(filter[column]) > Number(value));
@@ -45,20 +55,15 @@ export default function MyProvider({ children }) {
         console.log('default');
       }
     }
-  }, [filters, data]);
+  }, [filters, data, filterPos]);
 
-  async function fetchDataApi() {
-    const urlDataStarWars = 'https://swapi-trybe.herokuapp.com/api/planets/';
-    const request = await fetch(urlDataStarWars).then((dataRe) => dataRe.json());
-    const result = request.results.filter((dataResult) => delete dataResult.residents);
-    setData(result);
-  }
-
+  // Hook ComponentDidMount para chamada da API
   useEffect(() => {
     fetchDataApi();
     setLoading(true);
   }, []);
 
+  // Hook ComponentDidUpdate para filtragem pelo input
   useEffect(() => {
     if (search !== undefined) {
       const result = data.filter((planet) => planet.name.includes(search));
@@ -76,6 +81,9 @@ export default function MyProvider({ children }) {
     setFilters,
     comparisonArr,
     setComparisonArr,
+    filterPos,
+    setFilterPos,
+    setFiltered,
   };
 
   return (
