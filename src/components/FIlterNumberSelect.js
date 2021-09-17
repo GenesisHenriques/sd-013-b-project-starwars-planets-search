@@ -3,7 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 
 const handleChange = ({ target: { name, value } }, setFilter, filters) => {
   const newArr = [...filters.filterByNumericValues];
-  newArr[0][name] = value;
+  newArr[newArr.length - 1][name] = value;
   setFilter({ ...filters, filterByNumericValues: newArr });
 };
 
@@ -61,7 +61,6 @@ export default function FilterNumberSelect() {
   const [columnParams, setColumn] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
   );
-  // const [currentFilter, setCurrentFIlter] = useState(0);
 
   function handleClick() {
     const comparisons = {
@@ -73,14 +72,21 @@ export default function FilterNumberSelect() {
         (planet, filter) => Number(planet[filter.column]) === Number(filter.value)),
     };
 
-    const newArr = filterByNumericValues.map((filter) => data.filter(
+    filterByNumericValues.map((filter) => data.filter(
       (planet) => comparisons[filter.comparison](planet, filter),
-    ));
-    setPlanets(...newArr);
+    ))
+      .map((item) => setPlanets(item));
+
     const newColumn = columnParams.filter(
-      (item) => filterByNumericValues[0].column !== item,
+      (item) => filterByNumericValues[filterByNumericValues.length - 1].column !== item,
     );
     setColumn(newColumn);
+    setFilter({ ...filters,
+      filterByNumericValues: [...filterByNumericValues, {
+        column: newColumn[0],
+        comparison: 'maior que',
+        value: '100000',
+      }] });
   }
 
   return (
@@ -90,7 +96,7 @@ export default function FilterNumberSelect() {
       {valueFilter(filters, setFilter)}
       <button
         type="button"
-        onClick={ handleClick }
+        onClick={ columnParams.length && handleClick }
         data-testid="button-filter"
       >
         Filter
