@@ -20,3 +20,5 @@ function FilterText() {
 }
 
 export default FilterText;
+
+// Requisito 2 feito com ajuda do link https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/
