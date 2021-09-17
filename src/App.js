@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Provider from './context/Provider';
-import Table from './components/Table';
+import Table from './components/Table/Table';
 
 function App() {
   return (
