@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 
 const Select = () => {
@@ -15,10 +15,23 @@ const Select = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [newOptions, setNewOptions] = useState([]);
 
   const setFilterByNumericValues = () => {
     setFilter([...filterByNumericValues, { column, comparison, value }]);
   };
+
+  useEffect(() => {
+    const createNewOptions = () => {
+      if (filterByNumericValues.length) {
+        const [, ...newArray] = optionsArray;
+        setNewOptions(newArray);
+      } else {
+        setNewOptions(optionsArray);
+      }
+    };
+    createNewOptions();
+  }, [filterByNumericValues.length]);
 
   return (
     <form>
@@ -31,7 +44,7 @@ const Select = () => {
           data-testid="column-filter"
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          { optionsArray.map((option) => (
+          { newOptions.map((option) => (
             <option key={ option } value={ option }>{ option }</option>
           )) }
         </select>
