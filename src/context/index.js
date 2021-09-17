@@ -75,8 +75,10 @@ export const SWProvider = ({ children }) => {
     const options = [
       'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
-    return options;
-  }, []);
+    return options
+      .filter((option) => !filterByNumericValues
+        .some(({ column }) => column === option));
+  }, [filterByNumericValues]);
 
   const context = useMemo(() => ({
     data,
