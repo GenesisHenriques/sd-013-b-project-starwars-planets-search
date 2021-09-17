@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
-import Context from './context/Context';
+import Provider from './context/Provider';
+import Table from './components/Table';
 
 function App() {
-  const global = useContext(Context);
-  console.log(global);
-
   return (
-
-    <span>Hello, App !!!</span>
-
+    <Provider>
+      <Table />
+    </Provider>
   );
 }
 
