@@ -5,6 +5,7 @@ import fetchPlanetsApi from '../helpers/fecthPlanetsApi';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState();
+  // const [dataFiltered, setFiltered] = useState();
   // const [loading, setLoading] = useState(false);
 
   const dataValue = {

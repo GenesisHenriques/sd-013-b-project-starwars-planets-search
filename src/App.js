@@ -7,7 +7,6 @@ function App() {
   return (
     <PlanetsProvider>
       <Home />
-
     </PlanetsProvider>
   );
 }
