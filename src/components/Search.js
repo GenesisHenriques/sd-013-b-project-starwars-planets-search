@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { PlanetsContext } from '../contexts/PlanetsProvider';
+// import { PlanetsContext } from '../contexts/PlanetsProvider';
 
 const Search = () => {
   const [text, setText] = useState('');
