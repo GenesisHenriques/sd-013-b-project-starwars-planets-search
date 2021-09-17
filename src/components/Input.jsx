@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import RemoveFilter from './RemoveFilter';
 
 function Input() {
   const filterColum = ['population',
@@ -49,7 +48,6 @@ function Input() {
           onChange={ ({ target }) => setNumber(target.value) }
         />
       </label>
-      {verifyLength() === true && <RemoveFilter />}
     </div>
   );
 }
