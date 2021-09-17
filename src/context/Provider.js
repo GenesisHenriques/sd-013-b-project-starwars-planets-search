@@ -6,10 +6,17 @@ const Context = createContext();
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filterName, setFilterName] = useState([]);
 
   const context = {
     data,
     setData,
+    filters: {
+      filterByName: {
+        name: filterName,
+      },
+    },
+    setFilterName,
   };
 
   const fetchPlanets = async () => {

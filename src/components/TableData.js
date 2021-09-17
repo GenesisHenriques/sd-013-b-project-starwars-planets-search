@@ -3,10 +3,15 @@ import { Context } from '../context/Provider';
 
 function TableData() {
   const { data } = useContext(Context);
+  const { filters } = useContext(Context);
+  // const [filterNameText, setFilterNameText] = useState('')
   return (
     <tbody>
-      {
-        data.map((planet) => (
+      {data
+        .filter((planet) => planet.name.toLowerCase().includes(
+          filters.filterByName.name.toLowerCase(),
+        ))
+        .map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
@@ -22,8 +27,7 @@ function TableData() {
             <td>{planet.edited}</td>
             <td>{planet.url}</td>
           </tr>
-        ))
-      }
+        ))}
     </tbody>
   );
 }
