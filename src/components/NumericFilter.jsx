@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import Context from '../utils/Context';
 
 export default function NumericFilter() {
-  const { setNumericFilter } = useContext(Context);
+  const { filterByNumericValues, setNumericFilter } = useContext(Context);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('100000');
@@ -25,6 +25,15 @@ export default function NumericFilter() {
     const filterOptions = firstSelectOptions.filter((option) => option !== column);
     alterFirstSelectOptions(filterOptions);
     setColumn(filterOptions[0]);
+  };
+
+  const handleDelete = ({ target }) => {
+    const { name } = target;
+    const newFilter = filterByNumericValues
+      .filter((eachFilter) => eachFilter.column !== name);
+    setNumericFilter(newFilter);
+    const newOptions = [...firstSelectOptions, name];
+    alterFirstSelectOptions(newOptions);
   };
 
   return (
@@ -56,6 +65,17 @@ export default function NumericFilter() {
       >
         Adicionar Filtro
       </button>
+      { filterByNumericValues.map((filter) => (
+        <div key={ filter.column } data-testid="filter">
+          <p>
+            {/* `${filter.column} ${filter.comparison} ${filter.value}` */}
+            { filter.column }
+            {filter.comparison}
+            {filter.value}
+          </p>
+          <button type="button" name={ filter.column } onClick={ handleDelete }>X</button>
+        </div>
+      )) }
     </div>
   );
 }
