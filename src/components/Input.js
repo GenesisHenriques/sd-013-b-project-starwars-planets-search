@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Input({ text, type, name, value, onchange, placeholder }) {
+function Input({ type, name, value, onchange, placeholder }) {
   return (
     <label htmlFor={ name }>
-      {text}
       <input
+        className={ `input input-${name}` }
         type={ type }
         name={ name }
         id={ name }
@@ -20,17 +20,11 @@ function Input({ text, type, name, value, onchange, placeholder }) {
 }
 
 Input.propTypes = {
-  text: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onchange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
-};
-
-Input.defaultProps = {
-  text: '',
-  placeholder: '',
+  placeholder: PropTypes.string.isRequired,
 };
 
 export default Input;

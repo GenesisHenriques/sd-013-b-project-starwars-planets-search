@@ -5,6 +5,7 @@ function Select({ name, onChange, options }) {
   return (
     <label htmlFor={ name }>
       <select
+        className="select"
         name={ name }
         onChange={ onChange }
         id={ name }

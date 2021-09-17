@@ -17,7 +17,8 @@ function Table() {
       <thead>
         <tr>
           {
-            Object.keys(results[0]).map((key) => <th key={ key }>{ key }</th>)
+            Object.keys(results[0])
+              .map((key) => <th key={ key }>{ key.replace('_', ' ') }</th>)
           }
         </tr>
       </thead>

@@ -40,38 +40,41 @@ function Filters() {
   };
 
   return (
-    <div>
+    <div className="form">
       <Input
-        text="Filter by name:"
         type="text"
         name="name"
         value={ name }
+        placeholder="Search name"
         onchange={ handleChange }
       />
-      <Select
-        name="column"
-        onChange={ handleColumn }
-        options={ columns }
-      />
-      <Select
-        name="comparison"
-        onChange={ handleComparison }
-        options={ OPTION_COMPARISON }
-      />
-      <Input
-        type="number"
-        name="value"
-        value={ name }
-        placeholder="0"
-        onchange={ handleValue }
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ handleButton }
-      >
-        Filtrar
-      </button>
+      <div>
+        <Select
+          name="column"
+          onChange={ handleColumn }
+          options={ columns }
+        />
+        <Select
+          name="comparison"
+          onChange={ handleComparison }
+          options={ OPTION_COMPARISON }
+        />
+        <Input
+          type="number"
+          name="value"
+          value={ value }
+          placeholder="0"
+          onchange={ handleValue }
+        />
+        <button
+          className="btn"
+          type="button"
+          data-testid="button-filter"
+          onClick={ handleButton }
+        >
+          Filtrar
+        </button>
+      </div>
     </div>
   );
 }
