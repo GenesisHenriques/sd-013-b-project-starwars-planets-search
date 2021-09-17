@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import MainContext from '../context/MainContext';
 
@@ -9,10 +9,18 @@ const columnFilters = ['population',
   'surface_water'];
 
 function NumberFilter() {
-  const { filterPlanetsByNumericValue } = useContext(MainContext);
+  const { filterPlanetsByNumericValue,
+    filters: { filterByNumericValues } } = useContext(MainContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('bigger');
   const [value, setValue] = useState('');
+  const [updatedColumns, setUpdatedColumns] = useState(columnFilters);
+
+  useEffect(() => {
+    filterByNumericValues
+      .forEach((filter) => setUpdatedColumns((prevState) => prevState
+        .filter((updatedColumn) => updatedColumn !== filter.column)));
+  }, [filterByNumericValues]);
 
   return (
     <div>
@@ -24,7 +32,7 @@ function NumberFilter() {
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
         >
-          {columnFilters.map((filter) => (
+          {updatedColumns.map((filter) => (
             <option key={ filter } value={ filter }>{filter}</option>
           ))}
         </select>
