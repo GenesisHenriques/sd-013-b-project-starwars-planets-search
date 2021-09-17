@@ -9,6 +9,10 @@ function PlanetsProvider({ children }) {
   const [comparison, setComparison] = useState();
   const [number, setNumber] = useState('');
   const [arrFiltered, setArrFiltered] = useState();
+  const [colunmFilter, setColunmFilter] = useState([
+    'population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [filterByName, setFilterByName] = useState({
     name: '',
   });
@@ -21,18 +25,22 @@ function PlanetsProvider({ children }) {
 
   useEffect(() => {
     setFilters({
-      filterByName: {
-        name: text,
-      },
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value: number,
-        },
-      ],
+      filterByName,
+      filterByNumericValues,
     });
-  }, [text, column, comparison, number]);
+  }, [filterByName, filterByNumericValues]);
+
+  function newColumnFilter() {
+    setFilterByNumericValues([
+      {
+        column,
+        comparison,
+        value: number,
+      },
+    ]);
+    const newFilter = colunmFilter.filter((e) => e !== column);
+    setColunmFilter(newFilter);
+  }
 
   useEffect(() => {
     if (data !== undefined) {
@@ -52,6 +60,7 @@ function PlanetsProvider({ children }) {
     if (text !== undefined) {
       setText('');
     }
+    newColumnFilter();
     let filtered = [];
     if (comparison === 'maior que') {
       filtered = data.results.filter((e) => Number((e[column]) > Number(number)));
@@ -93,14 +102,16 @@ function PlanetsProvider({ children }) {
     filters,
     arrFiltered,
     text,
-    setText,
     column,
-    setColumn,
-    comparison,
-    setComparison,
     number,
-    setNumber,
+    comparison,
+    colunmFilter,
+    setColunmFilter,
     handleClick,
+    setText,
+    setColumn,
+    setComparison,
+    setNumber,
   };
   return (
     <PlanetsContext.Provider value={ obj }>

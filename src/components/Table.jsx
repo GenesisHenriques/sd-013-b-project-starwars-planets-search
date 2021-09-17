@@ -5,18 +5,18 @@ function Table() {
   const {
     data,
     text,
-    setText,
     arrFiltered,
     number,
-    setNumber,
+    colunmFilter,
     handleClick,
+    setNumber,
+    setText,
     setColumn,
     setComparison,
   } = useContext(PlanetsContext);
   if (arrFiltered === undefined) {
     return <p>Loading...</p>;
   }
-  const dataFinal = arrFiltered;
   return (
     <>
       <div>
@@ -27,12 +27,7 @@ function Table() {
           onChange={ (e) => setText(e.target.value) }
         />
         <select data-testid="column-filter" onChange={ (e) => setColumn(e.target.value) }>
-          <option value="">Selecione</option>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {colunmFilter.map((e, index) => <option key={ index } value={ e }>{e}</option>)}
         </select>
         <select
           data-testid="comparison-filter"
@@ -66,7 +61,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {dataFinal.map((e, index) => (
+          {arrFiltered.map((e, index) => (
             <tr key={ index }>
               <td>{e.name}</td>
               <td>{e.rotation_period}</td>
