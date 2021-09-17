@@ -42,7 +42,7 @@ function PlanetsProvider(props) {
     setFilters({ ...filters, filterByNumericValues: [] });
   };
 
-  const addtype = (type) => {
+  const addType = (type) => {
     setAllTypes([...allTypes, type]);
   };
 
@@ -75,7 +75,7 @@ function PlanetsProvider(props) {
     deleteFilter,
     resetFilter,
     allTypes,
-    addtype,
+    addType,
     setOrderSort };
   const { children } = props;
 
