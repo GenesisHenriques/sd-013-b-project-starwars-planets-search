@@ -5,30 +5,21 @@ import PlanetsContext from '../context/PlanetsContext';
 import Select from './Select';
 
 const NumericFilters = () => {
-  const { setNumericFilter } = useContext(PlanetsContext);
-
-  const columnOptions = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
-
-  const comparisonOptions = ['maior que', 'menor que', 'igual a'];
+  const {
+    setNumericFilter,
+    columnOptions,
+    comparisonOptions,
+    filteredColumns,
+  } = useContext(PlanetsContext);
 
   const [column, setColumn] = useState(columnOptions[0]);
   const [comparison, setComparison] = useState(comparisonOptions[0]);
   const [value, setValue] = useState('');
-  const [filteredColumns, setFilteredColumns] = useState(columnOptions);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setNumericFilter({ column, comparison, value });
-    setFilteredColumns(filteredColumns.filter(
-      (columnName) => columnName !== column,
-    ));
   };
 
   return (

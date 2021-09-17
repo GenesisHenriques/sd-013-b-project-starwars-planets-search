@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import NumericFilters from './NumericFilters';
+import ActiveFilters from './ActiveFilters';
 
 import PlanetsContext from '../context/PlanetsContext';
 
@@ -19,6 +20,7 @@ function Filters() {
         />
       </div>
       <NumericFilters />
+      <ActiveFilters />
     </div>
   );
 }

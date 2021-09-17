@@ -9,10 +9,21 @@ const initialFilters = {
   filterByNumericValues: [],
 };
 
+const columnOptions = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
+const comparisonOptions = ['maior que', 'menor que', 'igual a'];
+
 // eu não faço ideia do que tô fazendo
 function PlanetsProvider({ children }) {
   const [data, setData] = useState({});
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [filteredColumns, setFilteredColumns] = useState(columnOptions);
   const [filters, setFilter] = useState(initialFilters);
   const [headers, setHeaders] = useState([]);
 
@@ -39,6 +50,26 @@ function PlanetsProvider({ children }) {
       ...filters,
       filterByNumericValues: [...filterByNumericValues, numericFilter],
     });
+    setFilteredColumns(
+      filteredColumns.filter(
+        (columnName) => columnName !== numericFilter.column,
+      ),
+    );
+  };
+
+  const removeNumericFilter = (filterColumn) => {
+    const { filterByNumericValues } = filters;
+
+    setFilter({
+      ...filters,
+      filterByNumericValues: filterByNumericValues.filter(
+        ({ column }) => column !== filterColumn,
+      ),
+    });
+    setFilteredColumns([
+      ...filteredColumns,
+      filterColumn,
+    ]);
   };
 
   const applyNameFilter = (array, name) => (
@@ -60,10 +91,7 @@ function PlanetsProvider({ children }) {
         const columnValue = Number(planet[column]);
         const comparisonValue = Number(value);
 
-        return comparisonTable[comparison](
-          columnValue,
-          comparisonValue,
-        );
+        return comparisonTable[comparison](columnValue, comparisonValue);
       });
     });
 
@@ -93,11 +121,15 @@ function PlanetsProvider({ children }) {
   return (
     <PlanetsContext.Provider
       value={ {
+        columnOptions,
+        comparisonOptions,
         filteredPlanets,
+        filteredColumns,
         headers,
         filters,
         setNameFilter,
         setNumericFilter,
+        removeNumericFilter,
       } }
     >
       {children}
