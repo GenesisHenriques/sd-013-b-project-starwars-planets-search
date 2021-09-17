@@ -13,7 +13,7 @@ function Options() {
   const [selectedColumn, setSelectedColumn] = useState({
     column: 'population',
     comparison: 'maior que',
-    value: '0',
+    value: '',
   });
 
   const { handleFilterName, handleFilterNumeric } = useContext(StarContext);

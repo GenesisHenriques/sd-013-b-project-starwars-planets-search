@@ -9,13 +9,6 @@ function useSearchPlanets() {
     handleSetData,
   } = useContext(StarContext);
 
-  const setFilterName = useCallback(() => {
-    const newData = data.filter((planet) => (
-      planet.name.toUpperCase().includes(name.toUpperCase())
-    ));
-    handleSetData(newData);
-  }, [data, handleSetData, name]);
-
   const comparison = (filter, planet) => {
     switch (filter.comparison) {
     case 'maior que':
@@ -30,11 +23,20 @@ function useSearchPlanets() {
   };
 
   const setFilterSelect = useCallback(() => {
-    const newData = data.filter((planet) => filterByNumericValues
-      .every((filter) => comparison(filter, planet)));
+    if (filterByNumericValues.length > 0) {
+      const newData = data.filter((planet) => filterByNumericValues
+        .every((filter) => comparison(filter, planet)));
 
-    handleSetData(newData);
+      handleSetData(newData);
+    }
   }, [data, filterByNumericValues, handleSetData]);
+
+  const setFilterName = useCallback(() => {
+    const newData = data.filter((planet) => (
+      planet.name.toUpperCase().includes(name.toUpperCase())
+    ));
+    handleSetData(newData);
+  }, [data, handleSetData, name]);
 
   useEffect(() => {
     setFilterName();
