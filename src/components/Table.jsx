@@ -17,7 +17,6 @@ export default function Table() {
 
     if (filterByNumericValues.length) {
       filterByNumericValues.forEach(({ column, comparison, value }) => {
-
         if (comparison === 'igual a') {
           filteredPlanets = filteredPlanets.filter((planet) => (
             planet[column] === value));
@@ -32,8 +31,6 @@ export default function Table() {
             planet[column] > Number(value)));
         }
       });
-      // const { column, comparison, value } = filterByNumericValues[0];
-
     }
 
     return filteredPlanets;
