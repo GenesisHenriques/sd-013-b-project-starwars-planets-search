@@ -3,6 +3,7 @@ import Column from './components/Column';
 import Comparison from './components/Comparison';
 import Value from './components/Value';
 import MainContext from '../../context/MainContext';
+import DropAscDsc from './components/DropAscDsc';
 
 export default function Selects() {
   const [column, setColumn] = useState('population');
@@ -46,7 +47,7 @@ export default function Selects() {
   }
 
   return (
-    <form>
+    <form onSubmit={ (e) => e.preventDefault() }>
       <Column setColumn={ setColumn } optionsSelect={ optionsSelect } />
       <Comparison setComparison={ setComparison } />
       <Value setValue={ setValue } />
@@ -67,7 +68,7 @@ export default function Selects() {
       >
         Filtrar
       </button>
-
+      <DropAscDsc />
     </form>
 
   );
