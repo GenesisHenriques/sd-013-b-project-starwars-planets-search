@@ -2,16 +2,18 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function TableBody() {
-  const { data } = useContext(PlanetContext);
+  const { data, filters: { filter: { name } } } = useContext(PlanetContext);
+
+  const filtredData = data.filter((planet) => planet.name.includes(name));
 
   return (
     <tbody>
-      {data.map((planet) => {
+      {filtredData.map((planet, index) => {
         const values = Object.values(planet);
         return (
-          <tr key={ planet.name }>
-            {values.map((value) => (
-              <td key={ value }>{ value }</td>
+          <tr key={ index }>
+            {values.map((value, index2) => (
+              <td key={ index2 }>{ value }</td>
             ))}
           </tr>
         );

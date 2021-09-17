@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 
 import PlanetContext from '../context/PlanetContext';
 import Table from '../component/Table';
+import Filter from '../component/Filter';
 
 function Main() {
   const { setPlanets } = useContext(PlanetContext);
@@ -15,7 +16,7 @@ function Main() {
           delete planet.residents;
         });
         setPlanets(results);
-        console.log('test');
+        console.log('Renderizou');
       } catch (error) {
         setPlanets(error);
       }
@@ -24,7 +25,10 @@ function Main() {
   }, [setPlanets]);
 
   return (
-    <Table />
+    <>
+      <Filter />
+      <Table />
+    </>
   );
 }
 
