@@ -11,17 +11,32 @@ function Table() {
       inputNumber,
       setToggleSearch,
       filteredArray,
+      setFilters,
     } = useContext(PlanetsContext);
   if (data === undefined) {
     return <p>Loading...</p>;
   }
+  const handleClick = () => {
+    const newObj = {
+      column: selectCollum,
+      comparison: selectNumber,
+      value: inputNumber,
+    };
+    /* Source: https://stackoverflow.com/questions/40359800/how-to-toggle-boolean-state-of-react-component */
+    setToggleSearch((prevState) => !prevState);
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: [
+        ...prevState.filterByNumericValues.concat(newObj),
+      ],
+    }));
+  };
   return (
     <fieldset>
       <Input />
       <button
         data-testid="button-filter"
-        /* Source: https://stackoverflow.com/questions/40359800/how-to-toggle-boolean-state-of-react-component */
-        onClick={ () => setToggleSearch((prevState) => !prevState) }
+        onClick={ () => handleClick() }
         type="button"
       >
         Button

@@ -23,19 +23,12 @@ function PlanetsProvider({ children }) {
   const [toggleSearch, setToggleSearch] = useState(false);
 
   useEffect(() => {
-    const newObj = {
-      column: selectCollum,
-      comparison: selectNumber,
-      value: inputNumber,
-    };
     setFilters((prevState) => ({
       ...prevState.filters,
       filterByName: { name: input },
-      filterByNumericValues: [{
-        ...newObj,
-      }],
+      filterByNumericValues: [],
     }));
-  }, [input, selectCollum, selectNumber, inputNumber]);
+  }, [input]);
 
   const verifyLength = () => {
     if (selectNumber !== '' && inputNumber !== 0) {
@@ -45,9 +38,8 @@ function PlanetsProvider({ children }) {
   };
 
   const filteredArray = (planets, select, maq, value) => {
-    const { filterByName: { name } } = filters;
-    if (name !== '') {
-      const filterName = planets.filter((element) => element.name.includes(name));
+    if (input !== '') {
+      const filterName = planets.filter((element) => element.name.includes(input));
       return filterName;
     }
     if (toggleSearch) {
@@ -80,6 +72,7 @@ function PlanetsProvider({ children }) {
     data,
     selectCollum,
     selectNumber,
+    filters,
     inputNumber,
     setInput,
     setSelectCollum,
@@ -88,6 +81,7 @@ function PlanetsProvider({ children }) {
     verifyLength,
     setToggleSearch,
     filteredArray,
+    setFilters,
   };
 
   return (
