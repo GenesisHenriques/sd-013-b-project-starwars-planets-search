@@ -5,7 +5,11 @@ import MyContext from './MyContext';
 
 function MyContextProvider({ children }) {
   const [data, setData] = useState({});
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  // const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [filters, setFilters] = useState(
+    { filterByName: { name: '' },
+      filterByNumericValues: [] },
+  );
 
   async function getApiResponse() {
     try {
@@ -21,7 +25,13 @@ function MyContextProvider({ children }) {
   }, []);
 
   return (
-    <MyContext.Provider value={ { data, filters, setFilters } }>
+    <MyContext.Provider
+      value={ {
+        data,
+        filters,
+        setFilters,
+      } }
+    >
       {children}
     </MyContext.Provider>
   );
