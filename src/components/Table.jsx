@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import fetchAPI from '../service/serviceAPI';
+import React, { useContext } from 'react';
+import Context from '../context/context';
+// import fetchAPI from '../service/serviceAPI';
 
 function Table() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const planets = await fetchAPI();
-      setData(planets.results);
-    };
-    fetch();
-  }, []);
-
+  const { data } = useContext(Context);
   return (
     <div className="table">
       <table>
