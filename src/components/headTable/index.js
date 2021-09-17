@@ -13,6 +13,7 @@ export default function HeadTable() {
     <thead>
       <tr>
         {
+          // Tabelas - https://www.delftstack.com/pt/howto/javascript/create-table-javascript/#:~:text=Para%20criar%20um%20elemento%20HTML,createElement('table')%20.
           keys.map((key) => (
             <th key={ key }>{ key }</th>
           ))

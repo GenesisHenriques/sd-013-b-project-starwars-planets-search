@@ -30,9 +30,15 @@ const Provider = ({ children }) => {
     keepPlanets();
   }, []);
 
-  useEffect(() => {
-    console.log(filter);
-  });
+  // Essa parte estava entrando em um loop muito doido, fiz esse codigo em outro lugar
+  // Crédito ao Rodrigo que me ajudou tirando uma dúvida
+
+  // useEffect(() => {
+  //   console.log(filter);
+  //   const newData = data.filter((planet) => planet.name.includes(filter));
+  //   console.log(newData);
+  //   //setData(newData);
+  // });
 
   return (
     <PlanetsContext.Provider value={ contextPlanets }>
