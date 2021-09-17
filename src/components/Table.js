@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import StarContext from '../context/StarContext';
+import useSearchPlanets from '../hooks/useSearchPlanets';
 
 function Table() {
-  const { data, isLoading } = useContext(StarContext);
+  useSearchPlanets();
+  const { data: { isLoading }, filters: { dataFiltered } } = useContext(StarContext);
   return (
     <table>
       <caption>Star Wars Planets Serach</caption>
@@ -26,7 +28,7 @@ function Table() {
       <tbody>
         {
           isLoading
-        && data.map(({
+        && dataFiltered.map(({
           name,
           rotation_period: rotationPeriod,
           orbital_period: orbitalPeriod,
