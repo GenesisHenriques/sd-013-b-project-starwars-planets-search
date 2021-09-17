@@ -4,6 +4,13 @@ import planetsContext from './planetsContext';
 
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState();
+  /* const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
+  */
+  const [filtered, setFiltered] = useState();
 
   useEffect(() => {
     async function getData() {
@@ -14,12 +21,21 @@ function PlanetsProvider({ children }) {
     getData();
   }, []);
 
-  const contexto = {
+  function setName(name) {
+    const temp = planets.filter(
+      (planet) => (planet.name.toLowerCase()).includes(name.toLowerCase()),
+    );
+    setFiltered(temp);
+  }
+
+  const obj = {
     data: planets,
+    name: (name) => setName(name),
+    filtered,
   };
 
   return (
-    <planetsContext.Provider value={ contexto }>
+    <planetsContext.Provider value={ obj }>
       {children}
     </planetsContext.Provider>
   );
