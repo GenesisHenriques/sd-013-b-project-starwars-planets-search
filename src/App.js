@@ -13,7 +13,6 @@ const INITIAL_STATE = {
 function App() {
   // const planets = useContext(PlanetsContext) || { state: { data: testData } };
   const [text, setText] = useState('');
-  ///
   const [state, setState] = useState(INITIAL_STATE);
 
   // console.log(state);
