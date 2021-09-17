@@ -2,13 +2,18 @@ import React, { useCallback, useContext } from 'react';
 import MainContext from '../../context/MainContext';
 
 export default function SearchBar() {
-  const { handleFilterByName } = useContext(MainContext);
+  const { handleFilterByName, data } = useContext(MainContext);
 
   const handleChange = useCallback(
     ({ target }) => {
-      handleFilterByName(target.value);
+      const arrayFiltered = data.filter(((planet) => (
+        planet.name
+          .toUpperCase()
+          .includes(target.value.toUpperCase())
+      )));
+      handleFilterByName(target.value, arrayFiltered);
     },
-    [handleFilterByName],
+    [data, handleFilterByName],
   );
 
   return (

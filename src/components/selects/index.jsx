@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Column from './components/Column';
 import Comparison from './components/Comparison';
 import Value from './components/Value';
@@ -12,19 +12,7 @@ export default function Selects() {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
 
-  const { hadlerFilterByComparison } = useContext(MainContext);
-
-  const verification = useCallback(() => {
-    const index = optionsSelect.indexOf(column);
-    optionsSelect.splice(index, 1);
-  }, [column, optionsSelect]);
-
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    const obj = { column, comparison, value };
-    hadlerFilterByComparison(obj);
-    verification();
-  }, [column, comparison, hadlerFilterByComparison, value, verification]);
+  const { hadlerFilterByComparison, hadlerClearFilter } = useContext(MainContext);
 
   useEffect(() => {
     setOptionsSelect([
@@ -32,19 +20,54 @@ export default function Selects() {
     ]);
   }, []);
 
+  const verification = () => {
+    const index = optionsSelect.indexOf(column);
+    optionsSelect.splice(index, 1);
+  };
+
+  const resetValues = () => {
+    setColumn(optionsSelect[0]);
+    setComparison('maior que');
+    setValue('0');
+  };
+
+  const handleFilter = () => {
+    const obj = { column, comparison, value };
+    hadlerFilterByComparison(obj);
+    verification();
+    resetValues();
+  };
+
+  function handleClearFilter() {
+    hadlerClearFilter();
+    setOptionsSelect([
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ]);
+  }
+
   return (
-    <form
-      onSubmit={ (e) => handleSubmit(e) }
-    >
+    <form>
       <Column setColumn={ setColumn } optionsSelect={ optionsSelect } />
       <Comparison setComparison={ setComparison } />
       <Value setValue={ setValue } />
+      <div data-testid="filter">
+        <button
+          type="button"
+          data-testid="filter"
+          onClick={ handleClearFilter }
+        >
+          X
+        </button>
+      </div>
+
       <button
-        type="submit"
+        type="button"
         data-testid="button-filter"
+        onClick={ handleFilter }
       >
         Filtrar
       </button>
+
     </form>
 
   );

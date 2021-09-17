@@ -1,12 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import MainContext from '../../context/MainContext';
-import useFilter from '../../hooks/useFilter';
 
 export default function Table() {
   const [headers, setHeaders] = useState();
   const { data, filters: { dataFilter } } = useContext(MainContext);
-
-  useFilter();
 
   const getHeaders = useCallback(() => {
     const keys = data[0] && Object.keys(data[0]);
