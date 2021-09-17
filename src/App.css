@@ -1,4 +1,6 @@
-.App {
+body {
+  background-color: #303030;
+  color: #fff;
   text-align: center;
 }
 
