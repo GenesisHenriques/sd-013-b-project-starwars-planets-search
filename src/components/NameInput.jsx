@@ -1,11 +1,8 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
-import useFilter from '../hooks/useFilter';
 
 export default function NameInput() {
   const { filters, setFilters } = useContext(Context);
-  const [handleFilter] = useFilter();
-
   const handleChange = ({ target }) => {
     setFilters({
       ...filters,
@@ -13,7 +10,6 @@ export default function NameInput() {
         name: target.value,
       },
     });
-    handleFilter();
   };
 
   return (

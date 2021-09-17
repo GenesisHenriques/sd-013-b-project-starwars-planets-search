@@ -2,34 +2,35 @@ import { useContext } from 'react';
 import Context from '../context/Context';
 
 export default function useFilter() {
-  const { data, filters } = useContext(Context);
-  const { name } = filters.filterByName;
-  const { column, comparison, value } = filters.filterByNumericValues[0];
-  const { filterActive } = filters;
+  const { data, planets, setPlanets, filters } = useContext(Context);
+  const { filterByNumericValues } = filters;
 
+  // teste
   const handleFilter = () => {
-    let planets = [...data];
-
-    if (data.length) {
-      planets = data.filter((planet) => (
-        planet.name.includes(name.toLowerCase())
+    if (planets.length) {
+      const teste = planets.filter((planet) => (
+        planet.name.toLowerCase().includes(filters.filterByNumericValues.name.toLowerCase())
       ));
-
-      if (comparison === 'igual a' && filterActive) {
-        planets = [...data];
-        planets = planets.filter((planet) => planet[column] === value);
-      }
-      if (comparison === 'menor que' && filterActive) {
-        planets = [...data];
-        planets = planets.filter((planet) => planet[column] < Number(value));
-      }
-      if (comparison === 'maior que' && filterActive) {
-        planets = [...data];
-        planets = planets.filter((planet) => planet[column] > Number(value));
-      }
+      return teste;
     }
+    return [];
 
-    return planets;
+    // if (filterByNumericValues.length) {
+    //   const { column, comparison, value } = filterByNumericValues[0];
+
+    //   if (comparison === 'igual a') {
+    //     setPlanets(data.filter((planet) => planet[column] === value));
+    //     return;
+    //   }
+
+    //   if (comparison === 'menor que') {
+    //     setPlanets(data.filter((planet) => planet[column] < Number(value)));
+    //     return;
+    //   }
+    //   if (comparison === 'maior que') {
+    //     setPlanets(data.filter((planet) => planet[column] > Number(value)));
+    //   }
+    // }
   };
 
   return [handleFilter];

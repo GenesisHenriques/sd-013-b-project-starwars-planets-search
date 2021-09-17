@@ -1,16 +1,13 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 
-export default function ComparisonInput() {
-  const { filters, setFilters } = useContext(Context);
+export default function ValueInput() {
+  const { actualFilter, setActualFilter } = useContext(Context);
 
   const handleChange = ({ target }) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: [{
-        ...filters.filterByNumericValues[0],
-        value: target.value,
-      }],
+    setActualFilter({
+      ...actualFilter,
+      value: target.value,
     });
   };
 

@@ -6,13 +6,14 @@ import NameInput from './NameInput';
 import ValueInput from './ValueInput';
 
 export default function Inputs() {
-  const { filters, setFilters } = useContext(Context);
+  const { actualFilter, filters, setFilters } = useContext(Context);
 
-  const handleClick = () => {
-    setFilters({
-      ...filters,
-      filterActive: true,
-    });
+  const newFilter = {
+    ...filters,
+    filterByNumericValues: [
+      ...filters.filterByNumericValues,
+      actualFilter,
+    ],
   };
 
   return (
@@ -24,7 +25,7 @@ export default function Inputs() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ handleClick }
+        onClick={ () => setFilters(newFilter) }
       >
         Filtrar
       </button>

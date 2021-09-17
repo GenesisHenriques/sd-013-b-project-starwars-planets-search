@@ -4,18 +4,15 @@ import Context from './Context';
 
 export default function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
+  const [actualFilter, setActualFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
   const [filters, setFilters] = useState({
-    filterByName: {
-      name: '',
-    },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: 0,
-      },
-    ],
-    filterActive: false,
+    filterByName: { name: '' },
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -23,17 +20,28 @@ export default function Provider({ children }) {
       .then((response) => response.json())
       .then((response) => {
         setData(response.results);
+        setPlanets(response.results);
       })
       .catch((error) => console.log(error));
   }, []);
 
+  const contextValue = {
+    data,
+    planets,
+    setPlanets,
+    actualFilter,
+    setActualFilter,
+    filters,
+    setFilters,
+  };
+
   return (
-    <Context.Provider value={ { data, filters, setFilters } }>
+    <Context.Provider value={ contextValue }>
       { children }
     </Context.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: PropTypes.object,
-}.isRequired;
+  children: PropTypes.node.isRequired,
+};

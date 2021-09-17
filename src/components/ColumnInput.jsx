@@ -2,25 +2,30 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 export default function ColumnInput() {
-  const { filters, setFilters } = useContext(Context);
+  const { actualFilter, setActualFilter,
+    filters: { filterByNumericValues } } = useContext(Context);
 
   const options = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
 
+  const removeUsedOptions = () => {
+    filterByNumericValues.forEach(({ column }) => {
+      options.splice(options.indexOf(column), 1);
+    });
+    return options;
+  };
+
   const handleChange = ({ target }) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: [{
-        ...filters.filterByNumericValues[0],
-        column: target.value,
-      }],
+    setActualFilter({
+      ...actualFilter,
+      column: target.value,
     });
   };
 
   return (
     <select data-testid="column-filter" onChange={ handleChange }>
-      {options.map((option) => (
+      {removeUsedOptions().map((option) => (
         <option key={ option } value={ option }>{ option }</option>
       ))}
     </select>
