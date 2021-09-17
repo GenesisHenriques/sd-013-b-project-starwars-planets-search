@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import fetchPlanets from '../utils/getPlanetsAPI';
 import PlanetContext from './Context';
 
-function PlanetsProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(false);
+function PlanetProvider({ children }) {
+  const [isLoading, setIsLoading] = useState(false); // no loading until await
   const [planetInfo, setPlanetInfo] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [planetList, setPlanetList] = useState([]);
 
   async function getPlanetData() {
-    const planetData = await fetchPlanets();
-    setPlanetInfo(planetData);
+    const allPlanets = await fetchPlanets();
+    setPlanetInfo(allPlanets);
     setIsLoading(true);
   }
 
@@ -17,7 +19,20 @@ function PlanetsProvider({ children }) {
     getPlanetData();
   }, []);
 
-  const value = { planetInfo, isLoading };
+  useEffect(() => {
+    const { filterByName: { name } } = filters;
+    const filtered = planetInfo.filter((planet) => planet.name.includes(name) && planet);
+    setPlanetList(filtered);
+  }, [planetInfo, filters]);
+
+  const value = {
+    data: planetInfo,
+    planets: planetList,
+    isLoading,
+    filters,
+    setFilters,
+  };
+
   return (
     <PlanetContext.Provider value={ value }>
       {children}
@@ -25,8 +40,8 @@ function PlanetsProvider({ children }) {
   );
 }
 
-PlanetsProvider.propTypes = {
+PlanetProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default PlanetsProvider;
+export default PlanetProvider;
