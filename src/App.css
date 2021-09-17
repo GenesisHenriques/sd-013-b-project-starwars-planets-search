@@ -5,11 +5,13 @@
 table {
   border: 1px solid black;
 }
+
 table th {
   background-color: rgba(75, 75, 109, 0.698);
   border: 1px solid black;
-  color: #fff;
+  color: white;
 }
+
 table td {
   background-color: #f0f0f0;
   border: 1px solid black;
