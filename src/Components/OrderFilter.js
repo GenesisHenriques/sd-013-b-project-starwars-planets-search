@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
 import {
@@ -56,7 +55,7 @@ function OrderFilter() {
   useEffect(() => {
     setOrderSort(orderBy, orderForm);
     getOrderForm();
-  }, [data, getOrderForm, orderBy, orderForm, setOrderSort]);
+  }, [data, orderBy, orderForm]);
 
   return (
     <div className="App">
@@ -79,7 +78,7 @@ function OrderFilter() {
           onChange={ (event) => setOrderForm(event.target.value) }
           id="asc"
           defaultChecked
-          name="ordeBy"
+          name="orderBy"
           value="ASC"
         />
       </label>
@@ -90,18 +89,17 @@ function OrderFilter() {
           type="radio"
           onChange={ (event) => setOrderForm(event.target.value) }
           id="desc"
-          defaultChecked
           name="ordeBy"
           value="DESC"
         />
-        <button
-          type="button"
-          onClick={ getOrderForm }
-          data-testid="column-sort-button"
-        >
-          Order Columns
-        </button>
       </label>
+      <button
+        type="button"
+        onClick={ getOrderForm }
+        data-testid="column-sort-button"
+      >
+        Order Columns
+      </button>
     </div>
   );
 }
