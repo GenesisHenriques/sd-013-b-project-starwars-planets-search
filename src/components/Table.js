@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-function makeTableHead(data) {
-  if (data) {
+function makeTableHead(planets) {
+  if (planets.length) {
     return (
       <thead>
         <tr>
-          {Object.keys(data[0]).map((info) => (
+          {Object.keys(planets[0]).map((info) => (
             <th key={ info }>
               {info}
             </th>
@@ -17,12 +17,12 @@ function makeTableHead(data) {
   }
 }
 
-function makeTableBody(data) {
-  if (data) {
-    const keys = Object.keys(data[0]);
+function makeTableBody(planets) {
+  if (planets.length) {
+    const keys = Object.keys(planets[0]);
     return (
       <tbody>
-        {data.map((planet, index) => (
+        {planets.map((planet, index) => (
           <tr key={ index }>
             {keys.map((key) => (
               <td key={ key }>
@@ -37,11 +37,12 @@ function makeTableBody(data) {
 }
 
 export default function Table() {
-  const { data } = useContext(PlanetsContext);
+  const { planets } = useContext(PlanetsContext);
+
   return (
     <table>
-      {makeTableHead(data)}
-      {makeTableBody(data)}
+      {makeTableHead(planets)}
+      {makeTableBody(planets)}
     </table>
   );
 }
