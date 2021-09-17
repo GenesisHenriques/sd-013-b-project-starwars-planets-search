@@ -16,6 +16,10 @@ function Options() {
     value: '',
   });
 
+  const [optionColumn, setoptionColumn] = useState([
+    ...COLUMN_FILTER,
+  ]);
+
   const { handleFilterName, handleFilterNumeric } = useContext(StarContext);
 
   const handleChange = ({ target: { value } }) => {
@@ -31,12 +35,19 @@ function Options() {
 
   const handleClick = () => {
     handleFilterNumeric(selectedColumn);
+
+    const { column } = selectedColumn;
+    const index = optionColumn.indexOf(column);
+
+    const newOption = [...optionColumn];
+    newOption.splice(index, 1);
+    setoptionColumn(newOption);
   };
 
   const selectionOne = {
     selectColumn: handleSelectColumn,
     selectedColumn,
-    filterColumn: COLUMN_FILTER,
+    filterColumn: optionColumn,
   };
 
   const selectionTwo = { handleSelectColumn,
