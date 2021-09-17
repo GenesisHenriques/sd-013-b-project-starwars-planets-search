@@ -10,6 +10,11 @@ const byTargetValue = (param, param2, param3) => {
   };
 };
 
+const eraseFilters = (param) => ({
+  ...param,
+  api: param.fullApi,
+});
+
 const filterByPlanetName = (param, param2, { target }) => {
   const [[a]] = Object.entries(param).filter(([, e]) => e === param2);
   const filter = param2.filter(({ name }) => name.toLowerCase()
@@ -42,18 +47,18 @@ const filterByNumericValues = (param) => {
     }
   };
   if (column && comparison && value) {
-    const filter = param.api
+    const filter = param.fullApi
       .filter((e) => comparing(e[column], comparison, value));
-    console.clear();
-    console.log('on ', filter);
-    console.log('on ', column, comparison, value);
+    // console.clear();
+    // console.log('on ', filter);
+    // console.log('on ', column, comparison, value);
     return {
       ...param,
       api: filter,
     };
   }
-  console.clear();
-  console.log('off ', column, comparison, value, param);
+  // console.clear();
+  // console.log('off ', column, comparison, value, param);
   return {
     ...param,
   };
@@ -88,12 +93,14 @@ const fetchApi = async () => {
 };
 
 const services = {
+  eraseFilters,
   byKey,
   byTargetValue,
   fetchApi,
   filterByPlanetName,
   filterByNumericValues,
   onChangeValues,
+
 };
 
 export default services;

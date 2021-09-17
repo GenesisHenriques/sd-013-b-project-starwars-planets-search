@@ -4,6 +4,7 @@ import func from '../services';
 const useFirstHook = () => {
   const globalState = {
     api: null,
+    fullApi: null,
     bob: 'bob1',
     filters:
         {
@@ -23,7 +24,11 @@ const useFirstHook = () => {
 
   useEffect(() => {
     const apiFetch = async () => {
-      setState({ ...state, api: await func.fetchApi() });
+      setState({
+        ...state,
+        api: await func.fetchApi(),
+        fullApi: await func.fetchApi(),
+      });
     };
     if (!state.api || state.api.length < 1) {
       apiFetch();
