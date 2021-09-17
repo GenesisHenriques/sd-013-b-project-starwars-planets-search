@@ -6,10 +6,31 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
+  const [searchText, setSearchText] = useState('');
+
+  const filterPlanets = (planets) => {
+    const { filterByName: { name } } = filters;
+    const filterByText = planets
+      .filter((planet) => planet.name.includes(name));
+    return filterByText;
+  };
+
+  useEffect(() => {
+    setFilters({
+      ...filters,
+      filterByName: {
+        name: searchText,
+      },
+    });
+  }, [searchText]);
 
   useEffect(() => {
     const getApi = async () => {
-      setLoading(true);
       const getPlanets = await fetchPlanets();
       const result = await getPlanets.results;
       result.forEach((obj) => delete obj.residents);
@@ -22,6 +43,9 @@ function PlanetsProvider({ children }) {
   const context = {
     isLoading,
     data,
+    searchText,
+    setSearchText,
+    filterPlanets,
   };
 
   return (
