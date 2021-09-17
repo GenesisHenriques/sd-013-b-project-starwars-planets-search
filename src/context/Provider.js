@@ -5,6 +5,7 @@ import Context from './Context';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filterName, setFilterName] = useState('');
+  const [compareFilter, setCompareFilter] = useState([]);
 
   const contextValues = {
     data,
@@ -12,8 +13,10 @@ function Provider({ children }) {
       filterByName: {
         name: filterName,
       },
+      filterByNumericValues: compareFilter,
     },
     setFilterName,
+    setCompareFilter,
   };
 
   const getPlanets = async () => {

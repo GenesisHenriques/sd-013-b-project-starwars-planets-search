@@ -1,15 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Context from '../context/Context';
 
 function Table() {
   const { data, filters } = useContext(Context);
+  const [filterData, setFilterData] = useState([]);
   const { name } = filters.filterByName;
+  const { filterByNumericValues } = filters;
   let headers = [];
   if (data.length > 0) headers = Object.keys(data[0]);
 
-  const dataFilteredByName = (nameInput) => (
-    data.filter((planet) => planet.name.toLowerCase().includes(nameInput))
-  );
+  const dataFilteredByName = (nameInput) => {
+    if (filterData.length > 0) return filterData;
+    return data.filter((planet) => planet.name.toLowerCase().includes(nameInput));
+  };
+
+  useEffect(() => {
+    filterByNumericValues.forEach(({ comparison, column, value }) => {
+      setFilterData(data.filter((planet) => {
+        if (comparison === 'maior que') return Number(planet[column]) > Number(value);
+        if (comparison === 'menor que') return Number(planet[column]) < Number(value);
+        return Number(planet[column]) === Number(value);
+      }));
+    });
+  }, [filterByNumericValues, data]);
 
   return (
     <table>
