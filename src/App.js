@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
+import FiltersHeader from './components/FiltersHeader';
 import Table from './components/Table';
 import PlanetsProvider from './context/PlanetsProvider';
 
 function App() {
   return (
     <PlanetsProvider>
-      <div>
+      <div className="App">
+        <FiltersHeader />
         <Table />
       </div>
     </PlanetsProvider>
@@ -14,31 +16,3 @@ function App() {
 }
 
 export default App;
-
-// { name,
-// rotation_period,
-// orbital_period,
-// diameter,
-// climate,
-// gravity,
-// terrain,
-// surface_water,
-// population,
-// residents,
-// films,
-// created,
-// edited }
-
-// ['Name',
-// 'Rotation Period',
-// 'Orbital Period',
-// 'Diameter',
-// 'Climate',
-// 'Gravity',
-// 'Terrain',
-// 'Surface Water',
-// 'Population',
-// 'Residents',
-// 'Films',
-// 'Created',
-// 'Edited']

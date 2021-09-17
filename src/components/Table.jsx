@@ -1,36 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-class Table extends React.Component {
-  componentDidMount() {
-    const { getPlanets } = this.context;
-    getPlanets();
-  }
+function Table() {
+  const { data, filters: { filterByName } } = useContext(PlanetsContext);
 
-  render() {
-    const { data } = this.context;
-    return (
-      <table>
-        { console.log(data) }
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Rotation Period</th>
-            <th>Orbital Period</th>
-            <th>Diameter</th>
-            <th>Climate</th>
-            <th>Gravity</th>
-            <th>Terrain</th>
-            <th>Surface Water</th>
-            <th>Population</th>
-            <th>Residents</th>
-            <th>Films</th>
-            <th>Created</th>
-            <th>Edited</th>
-          </tr>
-        </thead>
-        <tbody>
-          { data.map((
+  return (
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Rotation Period</th>
+          <th>Orbital Period</th>
+          <th>Diameter</th>
+          <th>Climate</th>
+          <th>Gravity</th>
+          <th>Terrain</th>
+          <th>Surface Water</th>
+          <th>Population</th>
+          <th>Residents</th>
+          <th>Films</th>
+          <th>Created</th>
+          <th>Edited</th>
+        </tr>
+      </thead>
+      <tbody>
+        { data
+          .filter(({ name }) => name.toLowerCase().includes(filterByName.name))
+          .map((
             { name,
               rotation_period: rotation,
               orbital_period: orbital,
@@ -62,12 +58,9 @@ class Table extends React.Component {
               <td>{ edited }</td>
             </tr>
           )) }
-        </tbody>
-      </table>
-    );
-  }
+      </tbody>
+    </table>
+  );
 }
-
-Table.contextType = PlanetsContext;
 
 export default Table;
