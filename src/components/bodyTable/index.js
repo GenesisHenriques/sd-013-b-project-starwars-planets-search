@@ -2,13 +2,16 @@ import React, { useContext } from 'react';
 import PlanetsContexts from '../../context/PlanetsContext';
 
 export default function BodyTable() {
-  const { data, filters: { filterByName: { name } } } = useContext(PlanetsContexts);
+  const { data, filters } = useContext(PlanetsContexts);
+  const { name } = filters.filterByName;
+  const { column, comparison, value } = filters.filterByNumericValues;
 
   const getNewData = (filter) => {
     // Essa função filtra com base no 'filters' que eu estou trazndo do stado global
     const newData = data.filter((planet) => planet.name.includes(filter));
     return newData;
   };
+
 
   return (
     <tbody>
