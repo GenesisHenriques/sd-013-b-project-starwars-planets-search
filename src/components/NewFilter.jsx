@@ -1,35 +1,21 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import NewFilter from './NewFilter';
 
-function Input() {
+function NewFilter() {
   const filterColum = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
   const filterNumber = ['escolhe', 'maior que', 'menor que', 'igual a'];
-  const { setInput, setSelectCollum, setSelectNumber,
-    setNumber, verifyLength, selectCollum } = useContext(PlanetsContext);
+  const { setSelectCollum, setSelectNumber,
+    setNumber, selectCollum } = useContext(PlanetsContext);
   return (
     <div>
-      <label htmlFor="name">
-        Filtrar por nome:
-        <input
-          name="name"
-          data-testid="name-filter"
-          type="text"
-          onChange={ ({ target }) => setInput(target.value) }
-        />
-      </label>
       <label htmlFor="colum filter">
         Colum filter:
         <select
-          data-testid="column-filter"
           onChange={ ({ target }) => setSelectCollum(target.value) }
         >
-          {verifyLength() === true ? filterColum
-            .filter((element) => element !== selectCollum)
-            .map((element, index) => <option key={ index }>{element}</option>)
-            : filterColum
-              .map((element, index) => <option key={ index }>{element}</option>)}
+          {filterColum.filter((element) => element !== selectCollum)
+            .map((element) => <option key={ element }>{element}</option>)}
         </select>
       </label>
       <label htmlFor="number">
@@ -49,9 +35,8 @@ function Input() {
           onChange={ ({ target }) => setNumber(target.value) }
         />
       </label>
-      {verifyLength() === true && <NewFilter />}
     </div>
   );
 }
 
-export default Input;
+export default NewFilter;

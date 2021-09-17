@@ -10,7 +10,7 @@ function Provider({ children }) {
     },
     filterByNumericValues: [
       {
-        column: '',
+        column: 'population',
         comparison: '',
         value: '',
       },
@@ -18,7 +18,7 @@ function Provider({ children }) {
   });
   const [arrayFiltered, setArrayFiltered] = useState([]);
   const [input, setInput] = useState('');
-  const [selectCollum, setSelectCollum] = useState('');
+  const [selectCollum, setSelectCollum] = useState('population');
   const [selectNumber, setSelectNumber] = useState('');
   const [inputNumber, setNumber] = useState(0);
   const [switchh, setSwitch] = useState(false);
@@ -38,8 +38,15 @@ function Provider({ children }) {
     }));
   }, [input, selectCollum, selectNumber, inputNumber]);
 
+  const verifyLength = () => {
+    if (selectNumber !== '' && inputNumber !== 0) {
+      return true;
+    }
+    return false;
+  };
+
   const handleClickSearch = (planets, select, maq, value) => {
-    setSwitch(true);
+    setSwitch((prevState) => !prevState);
     switch (maq) {
     case 'maior que':
       setArrayFiltered(planets.filter((element) => element[select] > Number(value)));
@@ -51,7 +58,8 @@ function Provider({ children }) {
       setArrayFiltered(planets.filter((element) => element[select] === value));
       break;
     default:
-      return planets;
+      setArrayFiltered(planets);
+      break;
     }
   };
 
@@ -107,6 +115,7 @@ function Provider({ children }) {
     inputNumber,
     arrayFiltered,
     switchh,
+    verifyLength,
   };
 
   return (

@@ -11,7 +11,6 @@ function Table() {
     return <p>Loading...</p>;
   }
   const filteredByName = filterByName(data);
-  // const dataFinal = arrayFiltered === undefined ? data : arrayFiltered;
 
   return (
     <fieldset>
