@@ -135,7 +135,6 @@ export default function MainProvider({ children }) {
 
   const contextValue = {
     data,
-    // handleFilter,
     filters,
     handleFilterByName,
     hadlerFilterByComparison,
