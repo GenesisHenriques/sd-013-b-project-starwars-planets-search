@@ -19,8 +19,14 @@ const HEADERS = [
 ];
 
 function Table() {
-  const { data, filters: { filterByName } } = useContext(StarWarsContext);
+  const {
+    data,
+    filters: { filterByName, filterByNumericValues },
+    clicked,
+  } = useContext(StarWarsContext);
   const { name } = filterByName;
+  const numericFilter = filterByNumericValues[filterByNumericValues.length - 1];
+  const { column, comparison, value } = numericFilter;
 
   return (
     <table>
@@ -35,6 +41,19 @@ function Table() {
 
       <tbody>
         {data.filter((planet) => planet.name.includes(name))
+          .filter((planet) => {
+            if (clicked && comparison === 'maior que') {
+              return Number(planet[column]) > value;
+            }
+            if (clicked && comparison === 'menor que') {
+              return Number(planet[column] < value)
+              || planet[column] === 'unknown';
+            }
+            if (clicked && comparison === 'igual a') {
+              return Number(planet[column] === value);
+            }
+            return data;
+          })
           .map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
