@@ -3,21 +3,24 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  const [indexNumericFilter, setIndexNumericFilter] = useState(0);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
   const contextValue = {
     data,
     filters,
     setFilters,
+    indexNumericFilter,
+    setIndexNumericFilter,
   };
 
   const removeResidentsKey = (dataFromAPI) => {
     dataFromAPI.map((planet) => delete planet.residents);
-    console.log(dataFromAPI);
     setData(dataFromAPI);
   };
 

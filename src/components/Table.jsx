@@ -1,8 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 
 const Table = () => {
   const { data, filters } = useContext(AppContext);
+  const [auxData, setAuxData] = useState([]);
+
+  useEffect(() => {
+    setAuxData([...data]);
+  }, [data]);
+
+  useEffect(() => {
+    function comparisonHelper(filter) {
+      if (filter.comparison === 'maior que') {
+        setAuxData((prevAuxData) => (prevAuxData.filter(
+          (planet) => (Number(planet[filter.column])) > (Number(filter.value)),
+        )));
+      } if (filter.comparison === 'menor que') {
+        setAuxData((prevAuxData) => (prevAuxData.filter(
+          (planet) => (Number(planet[filter.column])) < (Number(filter.value)),
+        )));
+      } if (filter.comparison === 'igual a') {
+        setAuxData((prevAuxData) => (prevAuxData.filter(
+          (planet) => (Number(planet[filter.column])) === (Number(filter.value)),
+        )));
+      }
+    }
+    (filters.filterByNumericValues)
+      .map((currentNumericFilter) => comparisonHelper(currentNumericFilter));
+  },
+  [filters.filterByNumericValues]);
 
   function renderTableHeader() {
     return (
@@ -37,7 +63,6 @@ const Table = () => {
           </li>))}
       </ul>
     );
-
     return (
       <tr key={ planet.name }>
         <td>{planet.name}</td>
@@ -57,15 +82,20 @@ const Table = () => {
     );
   }
 
+  function renderTableBody() {
+    return (
+      <tbody>
+        {auxData
+          .filter((planet) => planet.name.includes(filters.filterByName.name))
+          .map((planet) => renderTableRow(planet))}
+      </tbody>);
+  }
+
   if (data.length > 0) {
     return (
       <table border="2">
         {renderTableHeader()}
-        <tbody>
-          {data
-            .filter((planet) => planet.name.includes(filters.filterByName.name))
-            .map((planet) => renderTableRow(planet))}
-        </tbody>
+        {renderTableBody()}
       </table>
     );
   }
