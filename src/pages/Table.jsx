@@ -20,6 +20,7 @@ function Table() {
       <Input />
       <button
         data-testid="button-filter"
+        /* Source: https://stackoverflow.com/questions/40359800/how-to-toggle-boolean-state-of-react-component */
         onClick={ () => setToggleSearch((prevState) => !prevState) }
         type="button"
       >

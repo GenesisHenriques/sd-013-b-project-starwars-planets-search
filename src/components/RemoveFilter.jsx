@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-function NewFilter() {
+function RemoveFilter() {
   const filterColum = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
   const filterNumber = ['escolhe', 'maior que', 'menor que', 'igual a'];
@@ -39,4 +39,4 @@ function NewFilter() {
   );
 }
 
-export default NewFilter;
+export default RemoveFilter;
