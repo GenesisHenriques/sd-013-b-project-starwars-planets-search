@@ -34,6 +34,9 @@ function Table() {
   }
 
   useEffect(() => {
+    if (filterByNumericValues.length === 0) {
+      setFilteredResults(results);
+    }
     filterByNumericValues
       .forEach((filter) => setFilteredResults((prevState) => prevState
         .filter((planet) => setNumericFilter(filter, planet))));

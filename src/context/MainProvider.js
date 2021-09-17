@@ -47,6 +47,14 @@ function MainProvider({ children }) {
     });
   }
 
+  function removeFilter(column) {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((filter) => filter.column !== column),
+    });
+  }
+
   return (
     <MainContext.Provider
       value={ {
@@ -54,7 +62,8 @@ function MainProvider({ children }) {
         filters,
         fetchPlanets,
         filterPlanetsByName,
-        filterPlanetsByNumericValue } }
+        filterPlanetsByNumericValue,
+        removeFilter } }
     >
       {children}
     </MainContext.Provider>

@@ -9,14 +9,18 @@ const columnFilters = ['population',
   'surface_water'];
 
 function NumberFilter() {
-  const { filterPlanetsByNumericValue,
-    filters: { filterByNumericValues } } = useContext(MainContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('bigger');
   const [value, setValue] = useState('');
   const [updatedColumns, setUpdatedColumns] = useState(columnFilters);
 
+  const { filterPlanetsByNumericValue,
+    filters: { filterByNumericValues } } = useContext(MainContext);
+
   useEffect(() => {
+    if (filterByNumericValues.length === 0) {
+      setUpdatedColumns(columnFilters);
+    }
     filterByNumericValues
       .forEach((filter) => setUpdatedColumns((prevState) => prevState
         .filter((updatedColumn) => updatedColumn !== filter.column)));
