@@ -2,25 +2,27 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 const Table = () => {
-  const { data } = useContext(AppContext);
+  const { data, filters } = useContext(AppContext);
 
   function renderTableHeader() {
     return (
-      <tr>
-        <th>Name</th>
-        <th>Período de Rotação</th>
-        <th>Período de Órbita</th>
-        <th>Diâmetro</th>
-        <th>Clima</th>
-        <th>Gravidade</th>
-        <th>Terreno</th>
-        <th>Água na superfície</th>
-        <th>População</th>
-        <th>Filmes</th>
-        <th>Criação</th>
-        <th>Edição</th>
-        <th>URL</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Período de Rotação</th>
+          <th>Período de Órbita</th>
+          <th>Diâmetro</th>
+          <th>Clima</th>
+          <th>Gravidade</th>
+          <th>Terreno</th>
+          <th>Água na superfície</th>
+          <th>População</th>
+          <th>Filmes</th>
+          <th>Criação</th>
+          <th>Edição</th>
+          <th>URL</th>
+        </tr>
+      </thead>
     );
   }
 
@@ -35,8 +37,9 @@ const Table = () => {
           </li>))}
       </ul>
     );
+
     return (
-      <tr>
+      <tr key={ planet.name }>
         <td>{planet.name}</td>
         <td>{planet.rotation_period}</td>
         <td>{planet.orbital_period}</td>
@@ -58,7 +61,11 @@ const Table = () => {
     return (
       <table border="2">
         {renderTableHeader()}
-        {data.map((planet) => renderTableRow(planet))}
+        <tbody>
+          {data
+            .filter((planet) => planet.name.includes(filters.filterByName.name))
+            .map((planet) => renderTableRow(planet))}
+        </tbody>
       </table>
     );
   }
