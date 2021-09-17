@@ -10,6 +10,13 @@ function PlanetsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   });
 
   useEffect(() => {
@@ -26,7 +33,7 @@ function PlanetsProvider({ children }) {
 
   return (
     <PlanetsContext.Provider
-      value={ { data, setFilter, filters, planets } }
+      value={ { data, setFilter, filters, planets, setPlanets } }
     >
       {children}
     </PlanetsContext.Provider>
