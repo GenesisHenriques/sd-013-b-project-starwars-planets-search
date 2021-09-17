@@ -78,7 +78,7 @@ function OrderFilter() {
           onChange={ (event) => setOrderForm(event.target.value) }
           id="asc"
           defaultChecked
-          name="orderBy"
+          name="ordeBy"
           value="ASC"
         />
       </label>
