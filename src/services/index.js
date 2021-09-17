@@ -34,6 +34,12 @@ const filterByPlanetName = (param, param2, { target }) => {
 
 const filterByNumericValues = (param) => {
   const { filterByNumericValues: [{ column, comparison, value }] } = param.filters;
+  const removeColumn = param.columnSelector.reduce((acc, e) => {
+    if (e !== column) {
+      acc.push(e);
+    }
+    return acc;
+  }, []);
   const comparing = (element, toCompare, thisValue) => {
     switch (toCompare) {
     case 'maior que':
@@ -55,6 +61,7 @@ const filterByNumericValues = (param) => {
     return {
       ...param,
       api: filter,
+      columnSelector: removeColumn,
     };
   }
   // console.clear();

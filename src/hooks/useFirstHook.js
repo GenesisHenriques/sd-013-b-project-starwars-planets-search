@@ -3,6 +3,10 @@ import func from '../services';
 
 const useFirstHook = () => {
   const globalState = {
+    columnSelector: ['population',
+      'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+    columnSelectorFull: ['population',
+      'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
     api: null,
     fullApi: null,
     bob: 'bob1',

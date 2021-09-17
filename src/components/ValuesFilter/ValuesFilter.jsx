@@ -3,16 +3,7 @@ import Context from '../../context/Context';
 import func from '../../services';
 
 function ValuesFilter() {
-  const { state } = useContext(Context);
-  const {
-    // state: {
-    //   filters:
-    //   {
-    //     filterByNumericValues,
-    //   },
-    // },
-    setState,
-  } = useContext(Context);
+  const { state, setState } = useContext(Context);
 
   const onChange = (e) => {
     setState(func.onChangeValues(
@@ -27,11 +18,7 @@ function ValuesFilter() {
         name="column"
         onChange={ onChange }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {state.columnSelector.map((e) => <option key={ e }>{ e }</option>)}
       </select>
       <select
         name="comparison"
