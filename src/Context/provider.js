@@ -5,6 +5,7 @@ import MyContext from './context';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [name, setName] = useState([]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -16,9 +17,13 @@ function PlanetsProvider({ children }) {
     fetchAPI();
   }, []);
 
+  function handleFilterChange({ target }) {
+    setName(target.value);
+  }
+
   return (
     <main>
-      <MyContext.Provider value={ { data } }>
+      <MyContext.Provider value={ { data, name, handleFilterChange } }>
         {children}
       </MyContext.Provider>
     </main>
@@ -26,7 +31,7 @@ function PlanetsProvider({ children }) {
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default PlanetsProvider;
