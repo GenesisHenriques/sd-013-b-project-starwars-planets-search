@@ -24,7 +24,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {/* {
+          {
             data.results.map((rowsPlanet, index0) => (
               <tr key={ index0 }>
                 {Object.values(rowsPlanet).map((info, index1) => (
@@ -34,7 +34,7 @@ function Table() {
                 ))}
               </tr>
             ))
-          } */}
+          }
         </tbody>
       </table>
     </div>

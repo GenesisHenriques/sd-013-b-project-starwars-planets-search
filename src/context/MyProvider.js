@@ -6,15 +6,18 @@ function MyProvider({ children }) {
   const [data, setData] = useState();
 
   const fetchApiPlanets = useCallback(async () => {
-    // const result = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-    // const response = await result.json();
-    // // response.results.forEach((objeto) => delete objeto.residents);
-    // setData(response);
+    // API DO PROJETO = https://swapi-trybe.herokuapp.com/api/planets/
+
+    //  API DE TESTE (quando ultrapassar limite de fetchs):
+    // https://swapi.dev/api/planets
 
     // const fetchApiPlanets = () => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
-      .then((response) => setData(response));
+      .then((response) => {
+        response.results.forEach((obj) => delete obj.residents);
+        setData(response);
+      });
     // };
   }, []);
 
