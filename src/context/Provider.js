@@ -5,11 +5,18 @@ import PlanetsContext from './PlanetsContext';
 
 const Provider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState('');
 
   // Agrupando leitura e escrita em um obj
   const contextPlanets = {
     data,
     setData,
+    filters: {
+      filterByName: {
+        name: filter,
+      },
+    },
+    setFilter,
   };
 
   // Guarda os dados do fetch no state
@@ -22,6 +29,10 @@ const Provider = ({ children }) => {
   useEffect(() => {
     keepPlanets();
   }, []);
+
+  useEffect(() => {
+    console.log(filter);
+  });
 
   return (
     <PlanetsContext.Provider value={ contextPlanets }>
