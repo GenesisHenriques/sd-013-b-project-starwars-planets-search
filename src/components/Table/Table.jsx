@@ -6,6 +6,7 @@ function Table() {
   return (
     <div>
       {api
+        && typeof api === 'object'
         ? (
           <table>
             <caption>Star Wars Planets</caption>

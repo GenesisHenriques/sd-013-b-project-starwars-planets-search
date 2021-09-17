@@ -4,7 +4,20 @@ import func from '../services';
 const useFirstHook = () => {
   const globalState = {
     api: null,
-    bob: 'bob',
+    bob: 'bob1',
+    filters:
+        {
+          filterByName: {
+            name: '',
+          },
+          filterByNumericValues: [
+            {
+              column: 'population',
+              comparison: 'maior que',
+              value: '100000',
+            },
+          ],
+        },
   };
   const [state, setState] = useState(globalState);
 
@@ -12,9 +25,10 @@ const useFirstHook = () => {
     const apiFetch = async () => {
       setState({ ...state, api: await func.fetchApi() });
     };
-    if (!state.api) {
+    if (!state.api || state.api.length < 1) {
       apiFetch();
     }
+    // console.log('hello', state);
   });
 
   return [state, setState];
