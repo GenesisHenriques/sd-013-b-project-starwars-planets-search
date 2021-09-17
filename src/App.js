@@ -1,12 +1,12 @@
 import React from 'react';
-import PlanetContext from './context/PlanetContext';
 import Table from './components/Table';
+import PlanetProvider from './context/PlanetProvider';
 
 function App() {
   return (
-    <PlanetContext.Provider>
+    <PlanetProvider>
       <Table />
-    </PlanetContext.Provider>
+    </PlanetProvider>
   );
 }
 export default App;
