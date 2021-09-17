@@ -82,7 +82,7 @@ function PlanetsProvider(props) {
   return (
 
     <PlanetsContext.Provider value={ context }>
-      { children }
+      {children}
     </PlanetsContext.Provider>
   );
 }
