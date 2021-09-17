@@ -4,9 +4,19 @@ import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 import getPlanets from '../services/planetsAPI';
 
+import {
+  applyNameFilter,
+  applyNumericFilter,
+  applyOrderFilter,
+} from '../utils/filterHelpers';
+
 const initialFilters = {
   filterByName: { name: '' },
   filterByNumericValues: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 const columnOptions = [
@@ -66,36 +76,14 @@ function PlanetsProvider({ children }) {
         ({ column }) => column !== filterColumn,
       ),
     });
-    setFilteredColumns([
-      ...filteredColumns,
-      filterColumn,
-    ]);
+    setFilteredColumns([...filteredColumns, filterColumn]);
   };
 
-  const applyNameFilter = (array, name) => (
-    array.filter(({ name: planetName }) => (
-      planetName.toLowerCase().includes(name.toLowerCase())
-    ))
-  );
-
-  const applyNumericFilter = (array, numericFilterArray) => {
-    let tempFilteredArray = [...array];
-    const comparisonTable = {
-      'maior que': (columnValue, comparisonValue) => columnValue > comparisonValue,
-      'menor que': (columnValue, comparisonValue) => columnValue < comparisonValue,
-      'igual a': (columnValue, comparisonValue) => columnValue === comparisonValue,
-    };
-
-    numericFilterArray.forEach(({ column, comparison, value }) => {
-      tempFilteredArray = tempFilteredArray.filter((planet) => {
-        const columnValue = Number(planet[column]);
-        const comparisonValue = Number(value);
-
-        return comparisonTable[comparison](columnValue, comparisonValue);
-      });
+  const setSortFilter = (order) => {
+    setFilter({
+      ...filters,
+      order,
     });
-
-    return tempFilteredArray;
   };
 
   useEffect(() => {
@@ -105,7 +93,7 @@ function PlanetsProvider({ children }) {
   useEffect(() => {
     if (data && data.results) {
       const { results } = data;
-      const { filterByName, filterByNumericValues } = filters;
+      const { filterByName, filterByNumericValues, order } = filters;
 
       let tempFilteredArray = [...results];
       tempFilteredArray = applyNameFilter(tempFilteredArray, filterByName.name);
@@ -113,6 +101,7 @@ function PlanetsProvider({ children }) {
         tempFilteredArray,
         filterByNumericValues,
       );
+      tempFilteredArray = applyOrderFilter(tempFilteredArray, order);
 
       setFilteredPlanets(tempFilteredArray);
     }
@@ -130,6 +119,7 @@ function PlanetsProvider({ children }) {
         setNameFilter,
         setNumericFilter,
         removeNumericFilter,
+        setSortFilter,
       } }
     >
       {children}

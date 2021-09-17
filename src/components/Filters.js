@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import NumericFilters from './NumericFilters';
 import ActiveFilters from './ActiveFilters';
+import SortFilters from './SortFilters';
 
 import PlanetsContext from '../context/PlanetsContext';
 
@@ -20,6 +21,7 @@ function Filters() {
         />
       </div>
       <NumericFilters />
+      <SortFilters />
       <ActiveFilters />
     </div>
   );
