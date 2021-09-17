@@ -18,23 +18,35 @@ export default function Table({ data }) {
   const filteredData = data.filter((planet) => {
     const { name } = planet;
     const { nameFilter } = filters;
-    const { columnFilter, comparisonFilter, valueFilter } = filters.numbersFilter;
     let numericMatch = true;
+    for (let index = 0; index < filters.numbersFilter.length; index += 1) {
+      const {
+        columnFilter,
+        comparisonFilter,
+        valueFilter } = filters.numbersFilter[index];
 
-    switch (comparisonFilter) {
-    case 'maior que':
-      numericMatch = planet[columnFilter] > valueFilter;
-      break;
-    case 'menor que':
-      numericMatch = planet[columnFilter] < valueFilter;
-      break;
-    case 'igual a':
-      numericMatch = planet[columnFilter] === valueFilter.toString();
-      break;
-    default:
+      // console.log(valueFilter);
+      const convertedColumn = Number(planet[columnFilter]);
+      const convertedValue = Number(valueFilter);
+
+      switch (comparisonFilter) {
+      case 'igual a':
+        numericMatch = convertedColumn === convertedValue;
+        break;
+      case 'menor que':
+        numericMatch = convertedColumn < convertedValue;
+        break;
+      case 'maior que':
+        numericMatch = convertedColumn > convertedValue;
+        break;
+      default:
+      }
+      if (!numericMatch) {
+        numericMatch = false;
+        break;
+      }
     }
-
-    return name.match(nameFilter) && numericMatch;
+    return name.toLowerCase().includes(nameFilter) && numericMatch;
   });
 
   return (

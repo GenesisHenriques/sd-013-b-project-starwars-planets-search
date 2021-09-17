@@ -7,11 +7,7 @@ function Provider({ children }) {
   const [data, setData] = useState(false);
   const [filters, setFilter] = useState({
     nameFilter: '',
-    numbersFilter: {
-      columnFilter: '',
-      comparisonFilter: '',
-      valueFilter: 0,
-    },
+    numbersFilter: [],
   });
 
   const contextValue = {
