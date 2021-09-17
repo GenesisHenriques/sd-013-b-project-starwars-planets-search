@@ -2,20 +2,60 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data, input, setInput, arrFiltered } = useContext(PlanetsContext);
-  if (data === undefined) {
+  const {
+    data,
+    text,
+    setText,
+    arrFiltered,
+    number,
+    setNumber,
+    handleClick,
+    setColumn,
+    setComparison,
+  } = useContext(PlanetsContext);
+  if (arrFiltered === undefined) {
     return <p>Loading...</p>;
   }
-  const dataFinal = (arrFiltered === undefined) ? data.results : arrFiltered;
+  const dataFinal = arrFiltered;
   return (
     <>
       <div>
         <input
           data-testid="name-filter"
           type="text"
-          value={ input }
-          onChange={ (e) => setInput(e.target.value) }
+          value={ text }
+          onChange={ (e) => setText(e.target.value) }
         />
+        <select data-testid="column-filter" onChange={ (e) => setColumn(e.target.value) }>
+          <option value="">Selecione</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+        <select
+          data-testid="comparison-filter"
+          onChange={ (e) => setComparison(e.target.value) }
+        >
+          <option value="">Selecione</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <input
+          data-testid="value-filter"
+          type="number"
+          value={ number }
+          onChange={ (e) => setNumber(e.target.value) }
+        />
+        <button
+          data-testid="button-filter"
+          type="button"
+          onClick={ () => handleClick() }
+        >
+          Filtrar
+        </button>
       </div>
       <table border="1">
         <thead>
