@@ -12,6 +12,7 @@ export default function MyProvider({ children }) {
       name: '',
     },
   });
+  const [comparisonArr, setComparisonArr] = useState([]);
 
   useEffect(() => {
     setFilters({
@@ -73,6 +74,8 @@ export default function MyProvider({ children }) {
     filtered,
     filters,
     setFilters,
+    comparisonArr,
+    setComparisonArr,
   };
 
   return (

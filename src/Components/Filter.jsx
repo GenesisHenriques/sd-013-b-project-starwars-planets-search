@@ -10,13 +10,31 @@ export default function Filter() {
     comparison: 'maior que',
     value: '',
   });
+  const { filters, setFilters, comparisonArr, setComparisonArr } = useContext(Context);
+
+  const columnsResult = columns
+    .filter((filter, index) => filter !== comparisonArr[index]);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFilterNumeric({ ...filterNumeric, [name]: value });
   };
 
-  const { filters, setFilters } = useContext(Context);
+  const onClickSubmit = () => {
+    if (filters.filterByNumericValues === undefined) {
+      setFilters(
+        { ...filters,
+          filterByNumericValues: [filterNumeric] },
+      );
+      setComparisonArr([...comparisonArr, filterNumeric.column]);
+      return undefined;
+    }
+    setComparisonArr([...comparisonArr, filterNumeric.column]);
+    return setFilters(
+      { ...filters,
+        filterByNumericValues: [...filters.filterByNumericValues, filterNumeric] },
+    );
+  };
 
   return (
     <div>
@@ -25,9 +43,11 @@ export default function Filter() {
         name="column"
         onChange={ handleChange }
       >
-        { columns.map((column, i) => (
-          <option key={ i } value={ column }>{ column }</option>
-        )) }
+        { columnsResult
+          .filter((colu, index) => colu !== comparisonArr[index])
+          .map((column, i) => (
+            <option key={ i } value={ column }>{ column }</option>
+          )) }
       </select>
       <select
         data-testid="comparison-filter"
@@ -47,9 +67,7 @@ export default function Filter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFilters(
-          { ...filters, filterByNumericValues: [filterNumeric] },
-        ) }
+        onClick={ onClickSubmit }
       >
         Filtrar
       </button>
