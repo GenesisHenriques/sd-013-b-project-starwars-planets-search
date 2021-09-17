@@ -6,15 +6,10 @@ import Context from './Context';
 export default function Provider({ children }) {
   const [planetsList, updatePlanetsList] = useState([]);
   const [name, setName] = useState('');
+  const [filterByNumericValues, setNumericFilter] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues,
   });
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const contextValue = {
@@ -22,6 +17,8 @@ export default function Provider({ children }) {
     updatePlanetsList,
     name,
     setName,
+    filterByNumericValues,
+    setNumericFilter,
     filters,
     setFilters,
     filteredPlanets,

@@ -7,6 +7,7 @@ export default function TableContents() {
   const { planetsList,
     updatePlanetsList,
     name,
+    filterByNumericValues,
     filteredPlanets,
     setFilteredPlanets } = useContext(Context);
 
@@ -17,11 +18,32 @@ export default function TableContents() {
       .then((results) => updatePlanetsList(results));
   }, [updatePlanetsList]);
 
+  const comparissonBoolean = (filterObj, planet) => {
+    switch (filterObj.comparison) {
+    case 'maior que':
+      return Number(filterObj.value) < Number(planet[filterObj.column]);
+    case 'menor que':
+      return Number(filterObj.value) > Number(planet[filterObj.column]);
+    case 'igual a':
+      return Number(filterObj.value) === Number(planet[filterObj.column]);
+    default:
+      return '';
+    }
+  };
+
   useEffect(() => {
-    const currentFilter = planetsList
-      .filter((planets) => planets.name.includes(name));
-    setFilteredPlanets(currentFilter);
-  }, [name, planetsList, setFilteredPlanets]);
+    let finalFilter = planetsList;
+    if (name !== '') {
+      finalFilter = finalFilter
+        .filter((planets) => planets.name.includes(name));
+    }
+    if (filterByNumericValues.length > 0) {
+      finalFilter = finalFilter
+        .filter((planet) => filterByNumericValues
+          .every((filter) => comparissonBoolean(filter, planet)));
+    }
+    setFilteredPlanets(finalFilter);
+  }, [planetsList, name, filterByNumericValues, setFilteredPlanets]);
 
   const planetsMap = (array) => (
     array.map((planet) => (
@@ -48,7 +70,6 @@ export default function TableContents() {
       <TableHeader />
       <tbody>
         { filteredPlanets.length > 0
-          // ? 'Filtro' : 'Lista' }
           ? planetsMap(filteredPlanets) : planetsMap(planetsList) }
       </tbody>
     </table>
