@@ -8,6 +8,13 @@ function MyProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   });
 
   const fetchApiPlanets = useCallback(async () => {
@@ -20,6 +27,7 @@ function MyProvider({ children }) {
     fetch('https://swapi.dev/api/planets')
       .then((response) => response.json())
       .then((response) => {
+        // remove residents pra ter apenas 13 colunas:
         response.results.forEach((obj) => delete obj.residents);
         setData(response);
       });
@@ -34,6 +42,10 @@ function MyProvider({ children }) {
       },
     });
   };
+
+  // const filterByValuesPlanet = (values) => {
+
+  // };
 
   return (
     <MyContext.Provider

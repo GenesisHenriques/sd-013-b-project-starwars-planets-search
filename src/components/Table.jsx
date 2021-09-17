@@ -3,13 +3,12 @@ import MyContext from '../context/MyContext';
 
 function Table() {
   const { data, filters } = useContext(MyContext);
-
   const { filterByName: { name } } = filters;
 
   if (data === undefined) {
     return <h3>Carregando...</h3>;
   }
-  console.log(data);
+  console.log(`console no Table: ${data}`);
   console.log(name);
 
   return (
