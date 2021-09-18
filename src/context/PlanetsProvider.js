@@ -110,7 +110,6 @@ function PlanetsProvider({ children }) {
   return (
     <PlanetsContext.Provider
       value={ {
-        columnOptions,
         comparisonOptions,
         filteredPlanets,
         filteredColumns,

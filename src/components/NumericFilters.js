@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import PlanetsContext from '../context/PlanetsContext';
 
@@ -7,12 +7,11 @@ import Select from './Select';
 const NumericFilters = () => {
   const {
     setNumericFilter,
-    columnOptions,
     comparisonOptions,
     filteredColumns,
   } = useContext(PlanetsContext);
 
-  const [column, setColumn] = useState(columnOptions[0]);
+  const [column, setColumn] = useState(filteredColumns[0]);
   const [comparison, setComparison] = useState(comparisonOptions[0]);
   const [value, setValue] = useState('');
 
@@ -20,7 +19,12 @@ const NumericFilters = () => {
     e.preventDefault();
 
     setNumericFilter({ column, comparison, value });
+    setValue('');
   };
+
+  useEffect(() => {
+    setColumn(filteredColumns[0]);
+  }, [filteredColumns]);
 
   return (
     <form className="numeric-filters" onSubmit={ handleSubmit }>
