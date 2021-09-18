@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { data, filters } = useContext(MyContext);
+  const { data, filters, filtered } = useContext(MyContext);
   const { filterByName: { name } } = filters;
 
   if (data === undefined) {
     return <h3>Carregando...</h3>;
   }
+
+  const renderData = (filtered === undefined ? data.results : filtered);
 
   return (
     <div>
@@ -16,18 +18,18 @@ function Table() {
         <thead>
           <tr>
             {
-              Object.keys(data.results[0]).map((column, index) => (
-                <th key={ index }>{column}</th>
+              Object.keys(data.results[0]).map((columnData, index) => (
+                <th key={ index }>{columnData}</th>
               ))
             }
           </tr>
         </thead>
         <tbody>
           {
-            data.results.filter((filterN) => filterN.name.includes(name))
-              .map((rowsPlanet, index0) => (
+            renderData.filter((planet) => planet.name.includes(name))
+              .map((infoPlanet, index0) => (
                 <tr key={ index0 }>
-                  {Object.values(rowsPlanet).map((info, index1) => (
+                  {Object.values(infoPlanet).map((info, index1) => (
                     <td key={ index1 }>
                       {info}
                     </td>

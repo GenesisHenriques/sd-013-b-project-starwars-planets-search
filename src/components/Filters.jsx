@@ -40,7 +40,7 @@ function Filters() {
           name="column"
           id="column"
           data-testid="column-filter"
-          onClick={ handleFilters }
+          onChange={ handleFilters }
         >
           {
             Object.keys(data.results[0]).map((columns, index) => (
@@ -61,7 +61,7 @@ function Filters() {
           name="comparison"
           id="comparison"
           data-testid="comparison-filter"
-          onClick={ handleFilters }
+          onChange={ handleFilters }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -83,7 +83,6 @@ function Filters() {
       <button
         type="button"
         data-testid="button-filter"
-        // onClick={ filterByValuesPlanet(filtersObj) }
         onClick={ () => setFilters(
           { ...filters, filterByNumericValues: [filtersObj] },
         ) }
