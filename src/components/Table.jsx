@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
+import sortList from '../services/sortList';
+import handleFilter from '../services/handleFilter';
 
 export default function Table() {
   const { data, planets, filters } = useContext(Context);
@@ -11,29 +13,15 @@ export default function Table() {
 
   const filterPlanets = () => {
     const { filterByName, filterByNumericValues } = filters;
+
     let filteredPlanets = planets.filter((planet) => (
       planet.name.toLowerCase().includes(filterByName.name.toLowerCase())
     ));
 
     if (filterByNumericValues.length) {
-      filterByNumericValues.forEach(({ column, comparison, value }) => {
-        if (comparison === 'igual a') {
-          filteredPlanets = filteredPlanets.filter((planet) => (
-            planet[column] === value));
-        }
-
-        if (comparison === 'menor que') {
-          filteredPlanets = filteredPlanets.filter((planet) => (
-            planet[column] < Number(value)));
-        }
-        if (comparison === 'maior que') {
-          filteredPlanets = filteredPlanets.filter((planet) => (
-            planet[column] > Number(value)));
-        }
-      });
+      filteredPlanets = handleFilter(filteredPlanets, filterByNumericValues);
     }
-
-    return filteredPlanets;
+    return sortList(filteredPlanets, filters.order.sort, filters.order.column);
   };
 
   return (
@@ -47,9 +35,12 @@ export default function Table() {
         <tbody>
           { filterPlanets().map((planet) => (
             <tr key={ planet.name }>
-              {tableHeadContent.map((key, index) => (
-                <td key={ index }>{ planet[key] }</td>
-              ))}
+              {tableHeadContent.map((key, index) => {
+                if (!index) {
+                  return <td data-testid="planet-name" key={ index }>{ planet[key] }</td>;
+                }
+                return <td key={ index }>{ planet[key] }</td>;
+              })}
             </tr>
           ))}
         </tbody>

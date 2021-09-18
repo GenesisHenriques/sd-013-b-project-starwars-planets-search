@@ -5,19 +5,10 @@ import ComparisonInput from './ComparisonInpputs';
 import NameInput from './NameInput';
 import ValueInput from './ValueInput';
 import ActiveFilters from './ActiveFilters';
+import OrderInput from './OrderInput';
 
 export default function Inputs() {
   const { actualFilter, filters, setFilters } = useContext(Context);
-
-  // const newFilter = {
-  //   ...filters,
-  //   filterByNumericValues: [
-  //     ...filters.filterByNumericValues,
-  //     actualFilter,
-  //   ],
-  // };
-
-  // console.log(filters.filterByNumericValues);
 
   const handleClick = () => {
     setFilters({
@@ -35,10 +26,10 @@ export default function Inputs() {
       <ColumnInput />
       <ComparisonInput />
       <ValueInput />
+      <OrderInput />
       <button
         data-testid="button-filter"
         type="button"
-        // onClick={ () => setFilters(newFilter) }
         onClick={ handleClick }
       >
         Filtrar
