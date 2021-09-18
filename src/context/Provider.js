@@ -4,30 +4,66 @@ import PlanetContext from './Context';
 
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
   const [filterData, setFilterDT] = useState([]);
+
+  function armazenarData(parametro) { setData(parametro); }
+  function armazenarApp(parametro) { setFilterDT(parametro); }
 
   useEffect(() => {
     const getPlanets = async () => {
       const endpoint = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const { results } = await endpoint.json();
       results.filter((result) => delete result.residents);
-      setData(results);
-      setFilterDT(results);
+      armazenarData(results);
+      armazenarApp(results);
     };
     getPlanets();
   }, []);
 
-  function handleChange({ target }) {
-    setFilters(target.value.toLowerCase());
+  useEffect(() => {
+    const { filterByName, filterByNumericValues } = filters;
     const search = data.filter(
-      (planet) => planet.name.toLowerCase().includes(target.value),
+      (planet) => planet.name.toLowerCase().includes(filterByName.name),
     );
-    setFilterDT(search);
+    const alteracao = search.length > 0 ? search : data;
+    setFilterDT(alteracao);
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
+      if (comparison === 'menor que') {
+        const filterMinus = alteracao.filter((arObj) => arObj[column] < value);
+        setFilterDT(filterMinus);
+      } else if (comparison === 'maior que') {
+        const filterPlus = alteracao.filter((arObj) => arObj[column] > value);
+        setFilterDT(filterPlus);
+      } else if (comparison === 'igual a') {
+        const filterEqual = alteracao.filter((arObj) => Number(arObj[column]) === value);
+        setFilterDT(filterEqual);
+      }
+    });
+  }, [data, filters]);
+
+  function handleChange({ target }) {
+    setFilters({ ...filters, filterByName: { name: target.value.toLowerCase() } });
+  }
+
+  function handleNumericValues(column, comparison, value) {
+    setFilters({ ...filters,
+      filterByNumericValues:
+      [...filters.filterByNumericValues, { column, comparison, value }] });
   }
 
   return (
-    <PlanetContext.Provider value={ { handleChange, filters, filterData, setFilterDT } }>
+    <PlanetContext.Provider
+      value={ {
+        handleChange,
+        filters,
+        filterData,
+        setFilterDT,
+        handleNumericValues } }
+    >
       { children }
     </PlanetContext.Provider>
   );
