@@ -6,7 +6,6 @@ const Table = () => {
   const planets = useContext(PlanetsContext);
   const { data: { results }, filters } = planets;
   const { filterByName: { name }, filterByNumericValues } = filters;
-  const { column, comparison, value } = filterByNumericValues[0];
 
   console.log(filterByNumericValues);
 
@@ -16,14 +15,19 @@ const Table = () => {
     filteredPlanets = results.filter((el) => el.name.includes(name.trim()));
   }
 
-  if (column && comparison && value) {
-    console.log(column, comparison, value, value * 1);
-    filteredPlanets = filteredPlanets.filter((el) => {
-      if (comparison === 'maior que') return el[column] * 1 > value * 1;
-      if (comparison === 'igual a') return el[column] * 1 === value * 1;
-      if (comparison === 'menor que') return el[column] * 1 < value * 1;
+  if (filterByNumericValues.length > 1) {
+    filterByNumericValues.forEach((filtr, i) => {
+      const { column, comparison, value } = filterByNumericValues[i];
 
-      return true;
+      filteredPlanets = filteredPlanets.filter((el) => {
+        if (comparison === 'maior que') return el[column] * 1 > value * 1;
+        if (comparison === 'igual a') return el[column] * 1 === value * 1;
+        if (comparison === 'menor que') return el[column] * 1 < value * 1;
+
+        return true;
+      });
+
+      console.log('aaaaaa', filteredPlanets);
     });
   }
 

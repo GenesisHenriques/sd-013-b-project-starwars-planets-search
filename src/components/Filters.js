@@ -2,12 +2,22 @@ import React, { useContext, useState } from 'react';
 
 import PlanetsContext from '../context/PlanetsContext';
 
+const columns = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+];
+
 const Filters = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
 
   const { filters, setFilters } = useContext(PlanetsContext);
+  const { filterByNumericValues } = filters;
+
+  const filteredColumns = (
+    columns
+      .filter((col) => !filterByNumericValues.some((el) => el.column === col))
+  );
 
   const textChangeHandler = (e) => {
     setFilters({ ...filters,
@@ -22,6 +32,7 @@ const Filters = () => {
 
     setFilters({ ...filters,
       filterByNumericValues: [
+        ...filterByNumericValues,
         {
           column,
           comparison,
@@ -43,11 +54,9 @@ const Filters = () => {
         onChange={ (e) => setColumn(e.target.value) }
         data-testid="column-filter"
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        { filteredColumns.map((col, i) => (
+          <option key={ i }>{col}</option>
+        )) }
       </select>
       <select
         onChange={ (e) => setComparison(e.target.value) }
