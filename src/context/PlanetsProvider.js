@@ -7,16 +7,14 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState();
   const [dataFiltered, setDataFiltered] = useState([]);
   const [filterByName, setFilterByName] = useState({name: ''});
-  const [filters, setFilters] = useState(false);
+  const [filters, setFilters] = useState({});
 
   const dataValue = {
     data,
     dataFiltered,
     setDataFiltered,
     setFilterByName,
-    filters: {
-      filterByName,
-    },
+    filterByName,
   };
 
   useEffect(() => {
@@ -37,17 +35,18 @@ function PlanetsProvider({ children }) {
   //   setLoading(false);
   // }, [data]);
 
-  const textFilter = () => {
-    const filtered = data.filter(filterByName.name);
-    setDataFiltered(filtered);
-    console.log(dataFiltered);
-  };
+  // const textFilter = () => {
+  //   const filtered = data.filter(filterByName.name);
+  //   setDataFiltered(filtered);
+  //   console.log(dataFiltered);
+  // };
 
-  useEffect(() => {
-    console.log(filterByName.name);
-    // setLoading(false);
-    // textFilter();
-  }, [filterByName]);
+  // useEffect(() => {
+  //   console.log(filterByName.name);
+  //   console.log(data);
+  //   // setLoading(false);
+  //   // textFilter();
+  // }, [filterByName]);
 
   return (
     <PlanetsContext.Provider value={ dataValue }>
