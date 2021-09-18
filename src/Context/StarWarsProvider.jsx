@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   filterByName: {
     name: '',
   },
+  filterByNumericValues: [],
 };
 
 function StarWarsProvider({ children }) {
@@ -30,9 +31,26 @@ function StarWarsProvider({ children }) {
 
   useEffect(() => {
     if (planets) {
-      const filterByName = planets
+      let filterArray = planets
         .filter(({ name }) => name.includes(filters.filterByName.name));
-      setFilteredPlanets(filterByName);
+
+      filters.filterByNumericValues.forEach(({ column, comparison, value }) => {
+        switch (comparison) {
+        case 'maior que':
+          filterArray = filterArray
+            .filter((planet) => Number(planet[column]) > Number(value));
+          break;
+        case 'menor que':
+          filterArray = filterArray
+            .filter((planet) => Number(planet[column]) < Number(value));
+          break;
+        default:
+          filterArray = filterArray
+            .filter((planet) => Number(planet[column]) === Number(value));
+        }
+      });
+
+      setFilteredPlanets(filterArray);
     }
   }, [filters, planets]);
 
