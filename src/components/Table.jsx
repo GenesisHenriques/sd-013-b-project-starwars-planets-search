@@ -1,38 +1,48 @@
 import React, { useContext } from 'react';
 import Context from '../context/context';
-// import fetchAPI from '../service/serviceAPI';
 
 function Table() {
-  const { data } = useContext(Context);
+  const { data, filterName, filterByPlanet } = useContext(Context);
+  const { name } = filterName.filterByName;
+
+  if (data === '') {
+    return <span> Loading </span>;
+  }
+
   return (
-    <div className="table">
+    <div>
+      <label htmlFor="planet-filter">
+        Name:
+        <input
+          type="text"
+          id="planet-filter"
+          data-testid="name-filter"
+          onChange={ ({ target }) => filterByPlanet(target.value) }
+          value={ name }
+        />
+      </label>
       <table>
         <thead>
           <tr>
-            { data[0]
+            {
+              data[0]
               && Object.keys(data[0])
                 .filter((key) => key !== 'residents')
-                .map((key) => <th key={ key }>{ key }</th>) }
+                .map((key) => <th key={ key }>{ key }</th>)
+            }
           </tr>
         </thead>
         <tbody>
-          { data.map((planet, index) => (
-            <tr key={ index }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-            </tr>
-          ))}
+          {data.filter((filterN) => filterN.name.includes(name))
+            .map((rowsPlanet, index0) => (
+              <tr key={ index0 }>
+                {Object.values(rowsPlanet).map((info, index1) => (
+                  <td key={ index1 }>
+                    {info}
+                  </td>
+                ))}
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

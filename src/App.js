@@ -1,14 +1,14 @@
 import React from 'react';
 import Provider from './context/Provider';
 import Table from './components/Table';
-import Filter from './components/Filter';
+// import Input from './components/Input';
 
 function App() {
   return (
     <div>
       <Provider>
-        <Filter />
         <Table />
+        {/* <Input /> */}
       </Provider>
     </div>
   );

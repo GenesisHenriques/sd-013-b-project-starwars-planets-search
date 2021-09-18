@@ -4,7 +4,7 @@ import Context from './context';
 import fetchAPI from '../service/serviceAPI';
 
 function Provider({ children }) {
-  const [filters, setFilters] = useState('');
+  const [filterName, setFilterName] = useState({ filterByName: { name: '' } });
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -16,9 +16,9 @@ function Provider({ children }) {
     fetchPlanets();
   }, []);
 
-  const filterByName = (name) => {
-    setFilters({
-      ...filters,
+  const filterByPlanet = (name) => {
+    setFilterName({
+      ...filterName,
       filterByName: {
         name,
       },
@@ -28,10 +28,9 @@ function Provider({ children }) {
   const contextValue = {
     data,
     setData,
-    filters: {
-      name: filterByName,
-    },
-    setFilters,
+    filterName,
+    setFilterName,
+    filterByPlanet,
   };
 
   return (
