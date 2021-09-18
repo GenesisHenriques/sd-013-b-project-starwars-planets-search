@@ -5,21 +5,18 @@ import MyContext from './MyContext';
 function MyProvider({ children }) {
   // ESTADOS -------------------------------
   const [data, setData] = useState();
+
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
     filterByNumericValues: [],
   });
+
   const [filtered, setFiltered] = useState();
 
   // FETCH PARA API ---------------------------------------
   const fetchApiPlanets = useCallback(async () => {
-    // API DO PROJETO = https://swapi-trybe.herokuapp.com/api/planets/
-
-    //  API DE TESTE (quando ultrapassar limite de fetchs):
-    // https://swapi.dev/api/planets
-
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
       .then((response) => {
@@ -41,7 +38,7 @@ function MyProvider({ children }) {
     });
   };
 
-  // Cria Dados de planetas novo apartir da filtragem:
+  // GUARDA ARRAY PARA RENDERIZAR DADOS DE PLANETAS ATRAVES DA FILTRAGEM: --------------------------------------------
   useEffect(() => {
     if (filters.filterByNumericValues.length > 0) {
       const { column, value, comparison } = filters.filterByNumericValues[0];
@@ -66,6 +63,8 @@ function MyProvider({ children }) {
     }
     console.log(filters);
   }, [filters.filterByNumericValues, data, filters]);
+
+  // -------------------------------------------------------
 
   return (
     <MyContext.Provider

@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 
 function Filters() {
   const {
     data, filterByNamePlanet,
-    filters, setFilters } = useContext(MyContext);
+    filters, setFilters,
+  } = useContext(MyContext);
 
   const [filtersObj, setFiltersObj] = useState({
     column: '',
@@ -21,28 +22,36 @@ function Filters() {
     'surface_water',
   ];
 
-  const checkColumnsSeleted = () => {
-    // checa se no filter do context existe mesma coluna do select de coluna do componente:
-    const filterByNVLength = filters.filterByNumericValues;
-    for (let i = 0; i <= filterByNVLength.length; i += 1) {
-      columnsSelectFilter.forEach((columnC, indexC) => {
-        if (filterByNVLength[i].column === columnC) {
-          return columnsSelectFilter.splice(indexC, 1);
-        }
-      });
-    }
-  };
+  // const checkColumnsSeleted = () => {
+  //   // checa se no filter do context existe mesma coluna do select de coluna do componente se tem ele deleta :
+  //   const filterByNuValues = filters.filterByNumericValues;
+  //   filterByNuValues.foEach((fc) => columnsSelectFilter.forEach((columnS, indexS) => {
+  //     if (fc.column === columnS) {
+  //       return columnsSelectFilter.splice(indexS, 1);
+  //     }
+  //   }));
+  //   console.log(columnsSelectFilter);
+  // };
+
+  useEffect(() => {
+    const filterByNuValues = filters.filterByNumericValues;
+    columnsSelectFilter.forEach((columnS, indexS) => {
+      if (filterByNuValues[indexS] === columnS) {
+        return columnsSelectFilter.splice(indexS, 1);
+      }
+    });
+    console.log(columnsSelectFilter);
+  }, [columnsSelectFilter, filters.filterByNumericValues]);
 
   const handleClickButtonFilter = async () => {
     // quando clicar em filtrar:
-    console.log(columnsSelectFilter);
-
     await setFilters(
       { ...filters,
         filterByNumericValues: [...filters.filterByNumericValues, filtersObj],
       },
     );
-    checkColumnsSeleted();
+    console.log(filters.filterByNumericValues);
+    // checkColumnsSeleted();
   };
 
   const handleFilters = ({ target }) => {
@@ -117,7 +126,7 @@ function Filters() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => handleClickButtonFilter() }
+        onClick={ handleClickButtonFilter }
       >
         Filtrar
 
