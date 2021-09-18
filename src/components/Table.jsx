@@ -40,34 +40,29 @@ function Table() {
   }
 
   function showFilteredPlanets(dado) {
-    const {
-      filterByName: { name },
-    } = filters;
-    return dado.filter(
+    const { filterByName: { name }, filterByNumericValues } = filters;
+    const filteredByName = dado.filter(
       (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
     );
-  }
-
-  function showFilteredPlanetsSelect(dado) {
-    const { filterByNumericValues } = filters;
     if (filterByNumericValues[0].comparison === 'maior') {
-      return dado.filter(
-        (planet) => planet.filterByNumericValues[0].column
-          > Number(filterByNumericValues[0].value),
+      return filteredByName.filter(
+        (planet) => planet[filterByNumericValues[0].column]
+          > parseInt(filterByNumericValues[0].value, 10),
       );
     }
     if (filterByNumericValues[0].comparison === 'menor') {
-      return dado.filter(
-        (planet) => planet.filterByNumericValues[0].column
-          < Number(filterByNumericValues[0].value),
+      return filteredByName.filter(
+        (planet) => planet[filterByNumericValues[0].column]
+          < parseInt(filterByNumericValues[0].value, 10),
       );
     }
     if (filterByNumericValues[0].comparison === 'igual') {
-      return dado.filter(
-        (planet) => planet.filterByNumericValues[0].column
-          === Number(filterByNumericValues[0].value),
+      return filteredByName.filter(
+        (planet) => planet[filterByNumericValues[0].column]
+          === parseInt(filterByNumericValues[0].value, 10),
       );
     }
+    return filteredByName;
   }
 
   return (
@@ -97,35 +92,39 @@ function Table() {
       >
         <option value="maior">maior que</option>
         <option value="menor">menor que</option>
-        <option value="igual">igual</option>
+        <option value="igual">igual a</option>
       </select>
       <input
         name="value"
         data-testid="value-filter"
         type="number"
         placeholder="type a number"
-        value={ filters.filterByNumericValues[0].value }
         onChange={ filterPlanets }
       />
+      <button type="button" data-testid="button-filter">
+        Filtrar
+      </button>
       <table>
-        <tr>
-          <th>Name</th>
-          <th>Rotation Period</th>
-          <th>Obrital Period</th>
-          <th>Diameter</th>
-          <th>Climate</th>
-          <th>Gravity</th>
-          <th>Terrain</th>
-          <th>Surface Water</th>
-          <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>url</th>
-        </tr>
-        {/* ajuda de como montar tabel vista aqui https://www.pluralsight.com/guides/dynamic-tables-from-editable-columns-in-react-html */}
-        {filters.filterByName.name.length
-          ? showFilteredPlanets(data).map((planet) => (
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rotation Period</th>
+            <th>Obrital Period</th>
+            <th>Diameter</th>
+            <th>Climate</th>
+            <th>Gravity</th>
+            <th>Terrain</th>
+            <th>Surface Water</th>
+            <th>Population</th>
+            <th>Films</th>
+            <th>Created</th>
+            <th>Edited</th>
+            <th>url</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* ajuda de como montar tabela vista aqui https://www.pluralsight.com/guides/dynamic-tables-from-editable-columns-in-react-html */}
+          {showFilteredPlanets(data).map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
@@ -141,24 +140,8 @@ function Table() {
               <td>{planet.edited}</td>
               <td>{planet.url}</td>
             </tr>
-          ))
-          : data.map((planet) => (
-            <tr key={ planet.url }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-            </tr>
           ))}
+        </tbody>
       </table>
     </main>
   );
