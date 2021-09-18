@@ -24,31 +24,25 @@ function Filters() {
   const checkColumnsSeleted = () => {
     // checa se no filter do context existe mesma coluna do select de coluna do componente:
     const filterByNVLength = filters.filterByNumericValues;
-    for (let i = 0; i <= filterByNVLength.lentgh; i += 1) {
-      columnsSelectFilter.forEach((column, indexC) => {
-        if (filterByNVLength[i].column === column) {
+    for (let i = 0; i <= filterByNVLength.length; i += 1) {
+      columnsSelectFilter.forEach((columnC, indexC) => {
+        if (filterByNVLength[i].column === columnC) {
           return columnsSelectFilter.splice(indexC, 1);
         }
       });
     }
   };
 
-  const handleClickButtonFilter = () => {
+  const handleClickButtonFilter = async () => {
     // quando clicar em filtrar:
-    // columnsSelectFilter.forEach((columnS, indexS) => {
-    //   if (filtersObj.column === columnS) {
-    //     return columnsSelectFilter.splice(indexS, 1);
-    //   }
-    // });
-    checkColumnsSeleted();
-
     console.log(columnsSelectFilter);
 
-    setFilters(
+    await setFilters(
       { ...filters,
         filterByNumericValues: [...filters.filterByNumericValues, filtersObj],
       },
     );
+    checkColumnsSeleted();
   };
 
   const handleFilters = ({ target }) => {
