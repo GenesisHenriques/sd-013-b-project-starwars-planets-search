@@ -17,7 +17,9 @@ function Tabela() {
   //   }
   //   handelApi();
   // }, []);
-  const { data } = useContext(DataContext);
+  const {
+    data,
+    planet: { filters: { filterByName: { name } } } } = useContext(DataContext);
   return (
     <span>
       <table border="1">
@@ -38,25 +40,27 @@ function Tabela() {
             <th>url</th>
           </tr>
         </thead>
-        {data.map((result) => (
-          <tbody key={ result.name }>
-            <tr>
-              <td>{result.name}</td>
-              <td>{result.rotation_period}</td>
-              <td>{result.orbital_period}</td>
-              <td>{result.diameter}</td>
-              <td>{result.climate}</td>
-              <td>{result.gravity}</td>
-              <td>{result.terrain}</td>
-              <td>{result.surface_water}</td>
-              <td>{result.population}</td>
-              <td>{result.films}</td>
-              <td>{result.created}</td>
-              <td>{result.edited}</td>
-              <td>{result.url}</td>
-            </tr>
-          </tbody>
-        ))}
+        {data.filter((item) => item.name.toLowerCase()
+          .includes(name.toLowerCase()))
+          .map((result) => (
+            <tbody key={ result.name }>
+              <tr>
+                <td>{result.name}</td>
+                <td>{result.rotation_period}</td>
+                <td>{result.orbital_period}</td>
+                <td>{result.diameter}</td>
+                <td>{result.climate}</td>
+                <td>{result.gravity}</td>
+                <td>{result.terrain}</td>
+                <td>{result.surface_water}</td>
+                <td>{result.population}</td>
+                <td>{result.films}</td>
+                <td>{result.created}</td>
+                <td>{result.edited}</td>
+                <td>{result.url}</td>
+              </tr>
+            </tbody>
+          ))}
       </table>
 
     </span>

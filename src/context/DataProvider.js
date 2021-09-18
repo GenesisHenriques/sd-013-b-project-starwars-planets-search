@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import DataContext from './DataContext';
 
 const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 function DataProvider({ children }) {
   const [data, setData] = useState([]);
+  const [planet, setPlanet] = useState(
+    {
+      filters: {
+        filterByName: {
+          name: '',
+        },
+      },
+    },
+  );
 
   useEffect(() => {
     async function handelApi() {
@@ -17,10 +27,14 @@ function DataProvider({ children }) {
   }, []);
 
   return (
-    <DataContext.Provider value={ { data } }>
+    <DataContext.Provider value={ { data, planet, setPlanet } }>
       {children}
     </DataContext.Provider>
   );
 }
+
+DataProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default DataProvider;

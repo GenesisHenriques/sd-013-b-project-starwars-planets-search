@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Tabela from './component/Tabela';
-import Test from './component/Test';
+import NamePlanet from './component/NamePlanet';
 import DataProvider from './context/DataProvider';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <DataProvider>
       <h1>Hello, Star Wars!</h1>
       <Tabela />
-      <Test />
+      <NamePlanet />
     </DataProvider>
   );
 }
