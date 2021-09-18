@@ -1,9 +1,18 @@
 import React from 'react';
 import './App.css';
+import Filters from './components/Filters';
+import Table from './components/Table';
+import SWProvider from './context/SWProvider';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <main>
+      <SWProvider>
+        <span>Hello, App!</span>
+        <Filters />
+        <Table />
+      </SWProvider>
+    </main>
   );
 }
 
