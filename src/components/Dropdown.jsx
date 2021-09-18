@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import Context from '../context/context';
-import fetchAPI from '../service/serviceAPI';
+import React from 'react';
+// import Context from '../context/context';
+// import fetchAPI from '../service/serviceAPI';
 
 function Dropdown() {
-  const { filterName, setFilterName } = useContext(Context);
-  const { name } = filterName.filterByName;
+  // const { filterName, setFilterName } = useContext(Context);
+  // const { name } = filterName.filterByName;
 
   const options = ['population',
     'orbital_period',
