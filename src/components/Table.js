@@ -4,15 +4,27 @@ import PlanetsContext from '../context/PlanetsContext';
 
 const Table = () => {
   const planets = useContext(PlanetsContext);
-  const { data, filters } = planets;
+  const { data: { results }, filters } = planets;
+  const { filterByName: { name }, filterByNumericValues } = filters;
+  const { column, comparison, value } = filterByNumericValues[0];
 
-  console.log(filters);
+  console.log(filterByNumericValues);
 
-  let filteredPlanets = data.results;
+  let filteredPlanets = results;
 
-  if (filters) {
-    const { filterByName: { name } } = filters;
-    filteredPlanets = data.results.filter((el) => el.name.includes(name));
+  if (name) {
+    filteredPlanets = results.filter((el) => el.name.includes(name.trim()));
+  }
+
+  if (column && comparison && value) {
+    console.log(column, comparison, value, value * 1);
+    filteredPlanets = filteredPlanets.filter((el) => {
+      if (comparison === 'maior que') return el[column] * 1 > value * 1;
+      if (comparison === 'igual a') return el[column] * 1 === value * 1;
+      if (comparison === 'menor que') return el[column] * 1 < value * 1;
+
+      return true;
+    });
   }
 
   return (
@@ -35,7 +47,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        { data.count > 0 && (
+        { results.length > 0 && (
           filteredPlanets.map((el, i) => (
             <tr key={ i }>
               <td>{el.name}</td>
