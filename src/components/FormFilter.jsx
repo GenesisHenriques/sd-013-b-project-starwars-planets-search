@@ -69,10 +69,11 @@ export default function FormFilter() {
             onChange={ handleChange }
             id="filtroNumerico"
           >
-            <option value="population">população</option>
-            <option value="orbital_period">perido de orbitação</option>
-            <option value="diameter">diametro</option>
-            <option value="rotation_period">perido de rotação</option>
+            <option value="population">population</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
           </select>
         </label>
         <label htmlFor="filtroComparacao">

@@ -11,19 +11,16 @@ export default function FilterTable(results) {
     const valor = objFilter.value;
     const comparacao = objFilter.comparsion;
     if (comparacao === 'maior que') {
-      return objFilter.value < objResult[chave];
+      return objFilter.value <= objResult[chave];
     }
-
     if (comparacao === 'menor que') {
-      return objFilter.value > objResult[chave];
+      return objFilter.value >= objResult[chave];
     }
     return objFilter.value === objResult[chave];
   }));
-  let Retorno = [...newArray];
-  newArray = [];
-  const UltimoIndexRetorno = Retorno.length-1;
-  
-  
+  const Retorno = [...newArray];
+  const UltimoIndexRetorno = Retorno.length - 1;
+
   // console.log(newArray);
   console.log(Retorno);
   return Retorno[UltimoIndexRetorno];
