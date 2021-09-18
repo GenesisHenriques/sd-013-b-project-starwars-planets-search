@@ -6,8 +6,8 @@ import fetchPlanetsApi from '../helpers/fecthPlanetsApi';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState();
   const [dataFiltered, setDataFiltered] = useState([]);
-  const [filterByName, setFilterByName] = useState({name: ''});
-  const [filters, setFilters] = useState({});
+  const [filterByName, setFilterByName] = useState({ name: '' });
+  // const [filters, setFilters] = useState({});
 
   const dataValue = {
     data,
@@ -18,35 +18,12 @@ function PlanetsProvider({ children }) {
   };
 
   useEffect(() => {
-    // setLoading(true);
     async function feth() {
       setData(await fetchPlanetsApi());
       setDataFiltered(await fetchPlanetsApi());
     }
     feth();
   }, []);
-
-  // const teste = () => {
-  //   console.log('teste');
-  // };
-
-  // useEffect(() => {
-  //   // console.log(data);
-  //   setLoading(false);
-  // }, [data]);
-
-  // const textFilter = () => {
-  //   const filtered = data.filter(filterByName.name);
-  //   setDataFiltered(filtered);
-  //   console.log(dataFiltered);
-  // };
-
-  // useEffect(() => {
-  //   console.log(filterByName.name);
-  //   console.log(data);
-  //   // setLoading(false);
-  //   // textFilter();
-  // }, [filterByName]);
 
   return (
     <PlanetsContext.Provider value={ dataValue }>
