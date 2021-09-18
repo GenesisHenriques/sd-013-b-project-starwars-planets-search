@@ -8,36 +8,13 @@ function FilterNumbers() {
   const { setFilters, filters } = useContext(AppContext);
   // const { filterByNumericValues } = filters;
 
-  // const handleChangeColumn = ({ target }) => {
-  //   setFilters(
-  //     { ...filters,
-  //       filterByNumericValues:
-  //       { ...filters.filterByNumericValues, setColumn: target.value } },
-  //   );
-  // };
-
-  // const handleChangeComparison = ({ target }) => {
-  //   setFilters(
-  //     { ...filters,
-  //       filterByNumericValues:
-  //       { ...filters.filterByNumericValues, comparison: target.value } },
-  //   );
-  // };
-
-  // const handleChangeValue = ({ target }) => {
-  //   setFilters(
-  //     { ...filters,
-  //       filterByNumericValues:
-  //        { ...filters.filterByNumericValues, value: target.value } },
-  //   );
-  // };
-
   const handleClick = () => {
     setFilters(
       { ...filters,
         filterByNumericValues: [...filters.filterByNumericValues,
           { column, comparison, value }] },
     );
+    console.log(setFilters());
   };
 
   return (
@@ -78,7 +55,7 @@ function FilterNumbers() {
         />
       </label>
       <button
-        onClick={ handleClick }
+        onClick={ (event) => { event.preventDefault(); handleClick(); } }
         type="button"
         data-testid="button-filter"
       >
