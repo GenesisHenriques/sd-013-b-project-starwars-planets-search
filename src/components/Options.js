@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import StarContext from '../context/StarContext';
 import Button from '../selectors/Button';
+import Filters from '../selectors/Filters';
 import InputText from '../selectors/InputText';
 import Select from '../selectors/Select';
 
@@ -89,6 +90,7 @@ function Options() {
       >
         Adicionar Filtro
       </Button>
+      <Filters />
     </div>
   );
 }
