@@ -13,7 +13,9 @@ export default function Selects() {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
 
-  const { hadlerFilterByComparison, hadlerClearFilter } = useContext(MainContext);
+  const {
+    hadlerFilterByComparison, hadlerClearFilter, filters: { filterByNumericValues },
+  } = useContext(MainContext);
 
   useEffect(() => {
     setOptionsSelect([
@@ -39,8 +41,8 @@ export default function Selects() {
     resetValues();
   };
 
-  function handleClearFilter() {
-    hadlerClearFilter();
+  function handleClearFilter(objc) {
+    hadlerClearFilter(objc);
     setOptionsSelect([
       'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
     ]);
@@ -52,13 +54,32 @@ export default function Selects() {
       <Comparison setComparison={ setComparison } />
       <Value setValue={ setValue } />
       <div data-testid="filter">
-        <button
+        <ul>
+          {
+            filterByNumericValues.map(({ column, comparison, value }) => (
+              <li key={ column }>
+                <p>{column}</p>
+                <p>{comparison}</p>
+                <p>{value}</p>
+                <button
+                  type="button"
+                  data-testid="filter"
+                  onClick={ () => handleClearFilter({ column, comparison, value }) }
+                >
+                  X
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+
+        {/* <button
           type="button"
           data-testid="filter"
           onClick={ handleClearFilter }
         >
           X
-        </button>
+        </button> */}
       </div>
 
       <button

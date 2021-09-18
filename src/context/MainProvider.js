@@ -97,19 +97,15 @@ export default function MainProvider({ children }) {
     }
   };
 
-  function hadlerFilterByComparison(newFilter) {
-    setFilters((oldState) => (
-      {
-        ...oldState,
-        filterByNumericValues: [...oldState.filterByNumericValues, newFilter],
-      }
-    ));
-
+  const filter = useCallback((filterByNumericValues) => {
     const { dataFilter } = filters;
-    const { column, comparison, value } = newFilter;
 
-    const newArray = dataFilter
-      .filter((planet) => functionComparison(comparison, planet[column], value));
+    const newArray = filterByNumericValues.reduce((acc, filterObj) => {
+      const { column, comparison, value } = filterObj;
+      acc = acc
+        .filter((planet) => functionComparison(comparison, planet[column], value));
+      return acc;
+    }, dataFilter);
 
     setFilters((oldState) => (
       {
@@ -117,21 +113,36 @@ export default function MainProvider({ children }) {
         dataFilter: newArray,
       }
     ));
+  }, [filters]);
+
+  function hadlerFilterByComparison(newFilter) {
+    setFilters(
+      {
+        ...filters,
+        filterByNumericValues: [...filters.filterByNumericValues, newFilter],
+      },
+    );
+    filter([...filters.filterByNumericValues, newFilter]);
   }
 
   const hadlerFilterData = useCallback((newArray = []) => {
     setFilters((oldState) => ({ ...oldState, dataFilter: newArray }));
   }, []);
 
-  const hadlerClearFilter = useCallback(() => {
+  const hadlerClearFilter = useCallback((objFind) => {
+    const newFilterValueNumbers = [...filters.filterByNumericValues];
+
+    const newArray = newFilterValueNumbers
+      .filter(({ column }) => column !== objFind.column);
+
     setFilters({
       dataFilter: data,
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [],
+      filterByNumericValues: [...newArray],
     });
-  }, [data]);
+  }, [data, filters.filterByNumericValues]);
 
   const contextValue = {
     data,
