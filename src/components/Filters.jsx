@@ -12,6 +12,45 @@ function Filters() {
     value: '',
   });
 
+  const columnsSelectFilter = [
+    '-',
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const checkColumnsSeleted = () => {
+    // checa se no filter do context existe mesma coluna do select de coluna do componente:
+    const filterByNVLength = filters.filterByNumericValues;
+    for (let i = 0; i <= filterByNVLength.lentgh; i += 1) {
+      columnsSelectFilter.forEach((column, indexC) => {
+        if (filterByNVLength[i].column === column) {
+          return columnsSelectFilter.splice(indexC, 1);
+        }
+      });
+    }
+  };
+
+  const handleClickButtonFilter = () => {
+    // quando clicar em filtrar:
+    // columnsSelectFilter.forEach((columnS, indexS) => {
+    //   if (filtersObj.column === columnS) {
+    //     return columnsSelectFilter.splice(indexS, 1);
+    //   }
+    // });
+    checkColumnsSeleted();
+
+    console.log(columnsSelectFilter);
+
+    setFilters(
+      { ...filters,
+        filterByNumericValues: [...filters.filterByNumericValues, filtersObj],
+      },
+    );
+  };
+
   const handleFilters = ({ target }) => {
     const { name, value } = target;
     setFiltersObj({ ...filtersObj, [name]: value });
@@ -43,7 +82,7 @@ function Filters() {
           onChange={ handleFilters }
         >
           {
-            Object.keys(data.results[0]).map((columns, index) => (
+            columnsSelectFilter.map((columns, index) => (
               <option
                 key={ index }
                 value={ columns }
@@ -63,6 +102,7 @@ function Filters() {
           data-testid="comparison-filter"
           onChange={ handleFilters }
         >
+          <option value="-">-</option>
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
@@ -83,9 +123,7 @@ function Filters() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFilters(
-          { ...filters, filterByNumericValues: [filtersObj] },
-        ) }
+        onClick={ () => handleClickButtonFilter() }
       >
         Filtrar
 

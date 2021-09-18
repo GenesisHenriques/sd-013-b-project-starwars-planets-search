@@ -64,7 +64,8 @@ function MyProvider({ children }) {
       default: console.log('');
       }
     }
-  }, [filters.filterByNumericValues, data]);
+    console.log(filters);
+  }, [filters.filterByNumericValues, data, filters]);
 
   return (
     <MyContext.Provider
