@@ -1,9 +1,13 @@
 import React from 'react';
+import PlanetProvider from './context/Provider';
 import './App.css';
+import Table from './components/Table';
 
 function App() {
   return (
-    <span>#VQV</span>
+    <PlanetProvider>
+      <Table />
+    </PlanetProvider>
   );
 }
 
