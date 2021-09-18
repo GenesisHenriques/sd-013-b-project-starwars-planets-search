@@ -69,7 +69,6 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        { console.log(filters.filterByName.name) }
         { filters.filterByName.name.length === 0 ? noFilter() : filterName() }
       </tbody>
     </table>
