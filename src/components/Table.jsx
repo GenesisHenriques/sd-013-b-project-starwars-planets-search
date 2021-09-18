@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import Context from '../context/context';
+import Dropdown from './Dropdown';
 
 function Table() {
   const { data, filterName, filterByPlanet } = useContext(Context);
   const { name } = filterName.filterByName;
-
-  if (data === '') {
-    return <span> Loading </span>;
-  }
 
   return (
     <div>
@@ -21,6 +18,7 @@ function Table() {
           value={ name }
         />
       </label>
+      <Dropdown />
       <table>
         <thead>
           <tr>
@@ -33,11 +31,11 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((filterN) => filterN.name.includes(name))
-            .map((rowsPlanet, index0) => (
-              <tr key={ index0 }>
-                {Object.values(rowsPlanet).map((info, index1) => (
-                  <td key={ index1 }>
+          {data.filter((filter) => filter.name.toLowerCase().includes(name))
+            .map((rowsPlanet, index) => (
+              <tr key={ index }>
+                {Object.values(rowsPlanet).map((info, key) => (
+                  <td key={ key }>
                     {info}
                   </td>
                 ))}
