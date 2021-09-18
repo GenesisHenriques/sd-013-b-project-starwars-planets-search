@@ -27,14 +27,18 @@ function Table() {
     setFilters({ ...filters, filterByName: { name: target.value } });
   }
 
-  function filterPlanets({ target }) {
+  function filterPlanets() {
     setFilters({
       ...filters,
       filterByNumericValues: [
         {
+          // como pegar os valores por tag e name http://jsfiddle.net/2ZL4G/1/
           ...filters.filterByNumericValues[0],
-          [target.name]: target.value,
+          column: document.querySelector('select[name="column"]').value,
+          comparison: document.querySelector('select[name="comparison"]').value,
+          value: document.querySelector('input[name="value"]').value,
         },
+        ...filters.filterByNumericValues,
       ],
     });
   }
@@ -44,22 +48,22 @@ function Table() {
     const filteredByName = dado.filter(
       (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
     );
-    if (filterByNumericValues[0].comparison === 'maior') {
+    if (filterByNumericValues[0].comparison === 'maior que') {
       return filteredByName.filter(
-        (planet) => planet[filterByNumericValues[0].column]
-          > parseInt(filterByNumericValues[0].value, 10),
+        (planet) => Number(planet[filterByNumericValues[0].column])
+          > Number(filterByNumericValues[0].value),
       );
     }
-    if (filterByNumericValues[0].comparison === 'menor') {
+    if (filterByNumericValues[0].comparison === 'menor que') {
       return filteredByName.filter(
-        (planet) => planet[filterByNumericValues[0].column]
-          < parseInt(filterByNumericValues[0].value, 10),
+        (planet) => Number(planet[filterByNumericValues[0].column])
+          < Number(filterByNumericValues[0].value),
       );
     }
-    if (filterByNumericValues[0].comparison === 'igual') {
+    if (filterByNumericValues[0].comparison === 'igual a') {
       return filteredByName.filter(
-        (planet) => planet[filterByNumericValues[0].column]
-          === parseInt(filterByNumericValues[0].value, 10),
+        (planet) => Number(planet[filterByNumericValues[0].column])
+          === Number(filterByNumericValues[0].value),
       );
     }
     return filteredByName;
@@ -77,7 +81,7 @@ function Table() {
       <select
         name="column"
         data-testid="column-filter"
-        onChange={ filterPlanets }
+        // onChange={ filterPlanets }
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
@@ -88,20 +92,20 @@ function Table() {
       <select
         name="comparison"
         data-testid="comparison-filter"
-        onChange={ filterPlanets }
+        // onChange={ filterPlanets }
       >
-        <option value="maior">maior que</option>
-        <option value="menor">menor que</option>
-        <option value="igual">igual a</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
       <input
         name="value"
         data-testid="value-filter"
         type="number"
         placeholder="type a number"
-        onChange={ filterPlanets }
+        // onChange={ filterPlanets }
       />
-      <button type="button" data-testid="button-filter">
+      <button type="button" data-testid="button-filter" onClick={ filterPlanets }>
         Filtrar
       </button>
       <table>
