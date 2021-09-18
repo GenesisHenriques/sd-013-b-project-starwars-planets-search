@@ -1,13 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 
 const Table = () => {
-  const { data, filters } = useContext(AppContext);
-  const [auxData, setAuxData] = useState([]);
+  const { data, filters,
+    auxData, setAuxData,
+  } = useContext(AppContext);
 
   useEffect(() => {
     setAuxData([...data]);
-  }, [data]);
+  }, [data, setAuxData]);
 
   useEffect(() => {
     function comparisonHelper(filter) {
@@ -28,7 +29,7 @@ const Table = () => {
     (filters.filterByNumericValues)
       .map((currentNumericFilter) => comparisonHelper(currentNumericFilter));
   },
-  [filters.filterByNumericValues]);
+  [filters.filterByNumericValues, setAuxData]);
 
   function renderTableHeader() {
     return (

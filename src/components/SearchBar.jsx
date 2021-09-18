@@ -1,17 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 function SearchBar() {
-  const { filters,
-    setFilters, indexNumericFilter, setIndexNumericFilter } = useContext(AppContext);
-  const [currentNumericFilter, setCurrentNumericFilter] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '',
-  });
-  const [availableColumns, setAvailableColumns] = useState(
-    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
-  );
+  const { filters, setFilters,
+    indexNumericFilter, setIndexNumericFilter,
+    availableColumns, setAvailableColumns,
+    currentNumericFilter, setCurrentNumericFilter,
+    disabled,
+  } = useContext(AppContext);
 
   const handleFilterNameChange = ({ target }) => {
     const filterByName = { name: target.value };
@@ -84,6 +80,7 @@ function SearchBar() {
       </label>
       <button
         type="button"
+        disabled={ disabled }
         data-testid="button-filter"
         onClick={ applyNumberFilter }
       >
