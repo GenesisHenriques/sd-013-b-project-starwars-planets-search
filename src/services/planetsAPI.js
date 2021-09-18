@@ -3,8 +3,8 @@ const planetsAPI = async () => {
   try {
     const response = await fetch(url);
     const data = await response.json();
+    // console.log(data);
     return data;
-    //   console.log(data);
   } catch (error) {
     return error;
   }

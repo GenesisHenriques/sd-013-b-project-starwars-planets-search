@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import planetsAPI from '../services/planetsAPI';
 import PlanetsContext from './PlanetsContext';
 
-function PlanetsProvider(props) {
+function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -77,10 +77,8 @@ function PlanetsProvider(props) {
     allTypes,
     addType,
     setOrderSort };
-  const { children } = props;
 
   return (
-
     <PlanetsContext.Provider value={ context }>
       {children}
     </PlanetsContext.Provider>

@@ -59,7 +59,8 @@ function Filters() {
 
   const disabled = types.length < 1;
   return (
-    <form>
+    <form className="App">
+      <h1>STAR WARS PLANET SEARCH</h1>
       <input
         type="text"
         data-testid="name-filter"

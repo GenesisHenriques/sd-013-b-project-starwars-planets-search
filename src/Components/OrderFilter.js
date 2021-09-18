@@ -15,7 +15,7 @@ function OrderFilter() {
   const [orderBy, setOrderBy] = useState('name');
   const [orderForm, setOrderForm] = useState('ASC');
 
-  const orderPlanets = (type, form) => {
+  const ordersPlanets = (type, form) => {
     if (type === 'name') {
       switch (form) {
       case 'ASC':
@@ -49,17 +49,17 @@ function OrderFilter() {
   };
 
   const getOrderForm = () => {
-    orderPlanets(orderBy, orderForm);
+    ordersPlanets(orderBy, orderForm);
   };
 
   useEffect(() => {
     setOrderSort(orderBy, orderForm);
     getOrderForm();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, orderBy, orderForm]);
 
   return (
     <div className="App">
-      <h1>STAR WAR PLANET SEARCH</h1>
       <span>Order By:</span>
       <select
         onChange={ (event) => setOrderBy(event.target.value) }

@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
+import '../styles/table.css';
 
 function Table() {
   const context = useContext(PlanetsContext);
@@ -60,14 +62,14 @@ function Table() {
 
   const infos = Object.keys(data[0]);
 
-  const filterInfo = infos.filter((item) => item !== 'url');
+  const filterInfo = infos.filter((item) => item !== 'residents');
 
   return (
-    <table>
+    <table className="table">
 
       <thead>
 
-        <tr>
+        <tr className="tr-thead">
           { filterInfo.map((item, index) => <th key={ index }>{item}</th>)}
         </tr>
 
@@ -80,7 +82,7 @@ function Table() {
           <tr key={ info.name }>
 
             <td data-testid="planet-name">{info.name}</td>
-            <td>{info.rotation_period}</td>
+            <td>{info.rotation_period }</td>
             <td>{info.orbital_period}</td>
             <td>{info.diameter}</td>
             <td>{info.climate}</td>
@@ -88,10 +90,10 @@ function Table() {
             <td>{info.terrain}</td>
             <td>{info.surface_water}</td>
             <td>{info.population}</td>
-            <td>{info.residents.map((resident) => resident)}</td>
-            <td>{info.films.map((film) => film)}</td>
+            <td className="td-films">{info.films.map((film) => ` ${film} `)}</td>
             <td>{info.created}</td>
             <td>{info.edited}</td>
+            <td className="td-url">{info.url}</td>
 
           </tr>
 
