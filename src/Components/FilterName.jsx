@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 import AppContext from '../Contexts/AppContext';
 
 function FilterName() {
-  const { setFilters, data, setSearch } = useContext(AppContext);
+  const { setFilters, data, setSearch, filters } = useContext(AppContext);
 
   const handleChange = ({ target }) => {
-    setFilters(target.value);
+    setFilters(
+      { ...filters, filterByName: { ...filters.filterByName, name: target.value } },
+    );
     setSearch(data
       .filter((planet) => planet.name.toLowerCase().includes(target.value)));
   };

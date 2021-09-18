@@ -5,9 +5,15 @@ import ApifetchPlanets from '../Services/ApifetchPlanets';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [{ column: 'Population', comparison: 'Maior que', value: 0 }],
+  });
   const [search, setSearch] = useState([]);
-  const contextValue = { data, setData, filters, setFilters, search, setSearch };
+
+  const contextValue = {
+    data, setData, filters, setFilters, search, setSearch };
 
   const fetchPlanets = async () => {
     const api = await ApifetchPlanets();
@@ -15,6 +21,7 @@ function Provider({ children }) {
     api.map((planet) => delete planet.residents);
     setData(api);
   };
+
   // DidMount
   useEffect(() => {
     fetchPlanets();
