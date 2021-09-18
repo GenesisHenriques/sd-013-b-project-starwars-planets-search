@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react';
 
 import PlanetsContext from '../context/PlanetsContext';
 
+import FilterList from './FilterList';
+
 const columns = [
   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
 ];
 
-const Filters = () => {
+const FilterMenu = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
@@ -79,8 +81,9 @@ const Filters = () => {
       >
         FILTRAR
       </button>
+      <FilterList />
     </div>
   );
 };
 
-export default Filters;
+export default FilterMenu;

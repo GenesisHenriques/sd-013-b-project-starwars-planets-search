@@ -3,12 +3,12 @@ import './App.css';
 
 import PlanetsProvider from './context/PlanetsProvider';
 import Table from './components/Table';
-import Filters from './components/Filters';
+import FilterMenu from './components/FilterMenu';
 
 function App() {
   return (
     <PlanetsProvider>
-      <Filters />
+      <FilterMenu />
       <Table />
     </PlanetsProvider>
   );

@@ -9,13 +9,7 @@ const INITIAL_FILTERS = {
   filterByName: {
     name: '',
   },
-  filterByNumericValues: [
-    {
-      column: '',
-      comparison: '',
-      value: '',
-    },
-  ],
+  filterByNumericValues: [],
 };
 
 const PlanetsProvider = (props) => {

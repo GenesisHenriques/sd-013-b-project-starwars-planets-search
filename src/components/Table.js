@@ -15,7 +15,7 @@ const Table = () => {
     filteredPlanets = results.filter((el) => el.name.includes(name.trim()));
   }
 
-  if (filterByNumericValues.length > 1) {
+  if (filterByNumericValues.length > 0) {
     filterByNumericValues.forEach((filtr, i) => {
       const { column, comparison, value } = filterByNumericValues[i];
 
