@@ -14,16 +14,16 @@ function SearchByNameInput() {
   }
 
   return (
-    <label
-      htmlFor="name-filter"
-    >
-      Busque planeta pelo nome
+    <fieldset>
+      <legend>
+        Filtre pelo nome:
+      </legend>
       <input
         type="text"
         data-testid="name-filter"
         onChange={ handleChange }
       />
-    </label>
+    </fieldset>
   );
 }
 

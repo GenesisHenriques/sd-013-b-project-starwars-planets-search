@@ -6,15 +6,7 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [requestError, setRequestError] = useState('');
   const [filterMethod, setFilterMethod] = useState('noFilter');
-  const [filters, setFilters] = useState(
-    {
-      filters: {
-        filterByName: {
-          name: '',
-        },
-      },
-    },
-  );
+  const [filters, setFilters] = useState();
 
   const contextValue = {
     data,
@@ -50,7 +42,7 @@ function PlanetsProvider({ children }) {
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.any).isRequired,
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default PlanetsProvider;
