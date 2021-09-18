@@ -6,6 +6,7 @@ function Header() {
   return (
     <header>
       <label htmlFor="name">
+        Planets Filter
         <input
           data-testid="name-filter"
           type="text"
@@ -14,7 +15,6 @@ function Header() {
           onChange={ ({ target }) => handleName(target.value) }
         />
       </label>
-      <p>Xablau</p>
     </header>
   );
 }
