@@ -1,13 +1,12 @@
 body {
   background-image: url('./styles/EmpireStrikesBack-1980-001.gif');
   background-size: 130vw 160vh;
-  
 }
 
 .App {
   color: white;
-  text-align: center;
   height: 150px;
+  text-align: center;
 }
 
 .App-logo {

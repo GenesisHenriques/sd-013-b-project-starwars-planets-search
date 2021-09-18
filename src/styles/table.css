@@ -1,41 +1,30 @@
 .table {
-  background-color:  transparent;
-  /* border: 5px solid #020004; */
-  text-align: center;
-  width: 10px;
+  background-color: transparent;
+  border-radius: 10px;
   height: 10px;
   margin-left: 60px;
-  border-radius: 10px;
+  text-align: center;
+  width: 10px;
 }
 
 thead {
   background-color: black;
-  /* width: 100px;
-  height: 100px; */
   border-radius: 10px;
 }
 
 .tr-thead {
-    /* text-align: center; */
-    color: white;
-    border-radius: 10px;
+  border-radius: 10px;
+  color: white;
 }
 
 td {
-    color: white;
-    border: 5px solid black;
-    border-radius: 10px;
-    width: auto;
+  border: 5px solid black;
+  border-radius: 10px;
+  color: white;
+  width: auto;
 }
 
-/* .td-url {
- display: flex;
- flex-direction: column;
- flex-wrap: wrap;
- height: 100%;
-} */
-
 th {
-    border-radius: 8px;
-    margin: 10px;
+  border-radius: 8px;
+  margin: 10px;
 }
