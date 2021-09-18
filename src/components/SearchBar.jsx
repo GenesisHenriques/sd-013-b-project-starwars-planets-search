@@ -9,6 +9,9 @@ function SearchBar() {
     comparison: 'maior que',
     value: '',
   });
+  const [availableColumns, setAvailableColumns] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
 
   const handleFilterNameChange = ({ target }) => {
     const filterByName = { name: target.value };
@@ -25,9 +28,19 @@ function SearchBar() {
   const applyNumberFilter = () => {
     const auxArray = [...filters.filterByNumericValues];
     auxArray[indexNumericFilter] = currentNumericFilter;
+    const auxAvailableColumns = [...availableColumns];
+    const secondAuxAvailableColumns = auxAvailableColumns
+      .filter((column) => column !== currentNumericFilter.column);
+    setAvailableColumns(secondAuxAvailableColumns);
     setIndexNumericFilter(indexNumericFilter + 1);
     setFilters({ ...filters, filterByNumericValues: auxArray });
   };
+
+  const renderSelectOptions = () => (
+    availableColumns.map((column) => (
+      <option key={ column } value={ column }>{column}</option>
+    ))
+  );
 
   return (
     <form>
@@ -41,19 +54,15 @@ function SearchBar() {
         />
       </label>
       <select
-        value={ filters.filterByNumericValues.column }
+        value={ currentNumericFilter.column }
         id="column"
         onChange={ handleNumberChange }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {renderSelectOptions()}
       </select>
       <select
-        value={ filters.filterByNumericValues.comparison }
+        value={ currentNumericFilter.comparison }
         id="comparison"
         onChange={ handleNumberChange }
         data-testid="comparison-filter"
@@ -64,7 +73,7 @@ function SearchBar() {
       </select>
       <label htmlFor="value">
         <input
-          value={ filters.filterByNumericValues.value }
+          value={ currentNumericFilter.value }
           onChange={ handleNumberChange }
           data-testid="value-filter"
           type="number"

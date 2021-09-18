@@ -11,6 +11,7 @@ function Provider({ children }) {
     },
     filterByNumericValues: [],
   });
+
   const contextValue = {
     data,
     filters,
