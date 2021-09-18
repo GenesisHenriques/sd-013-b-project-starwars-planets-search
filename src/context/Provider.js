@@ -10,16 +10,16 @@ function PlanetProvider({ children }) {
   });
   const [filterData, setFilterDT] = useState([]);
 
-  function armazenarData(parametro) { setData(parametro); }
-  function armazenarApp(parametro) { setFilterDT(parametro); }
+  function getData(parametro) { setData(parametro); }
+  function getApp(parametro) { setFilterDT(parametro); }
 
   useEffect(() => {
     const getPlanets = async () => {
       const endpoint = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const { results } = await endpoint.json();
       results.filter((result) => delete result.residents);
-      armazenarData(results);
-      armazenarApp(results);
+      getData(results);
+      getApp(results);
     };
     getPlanets();
   }, []);

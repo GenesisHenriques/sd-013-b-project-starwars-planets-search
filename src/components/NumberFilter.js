@@ -6,6 +6,15 @@ function NumberFilter() {
   const [comparisonFilter, handleChangeComparison] = useState('menor que');
   const [valueFilter, handleChangeValue] = useState(0);
   const { handleNumericValues } = useContext(PlanetContext);
+  const [newFilter, handleChangeFilter] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
+
+  function removeItemArray(column) {
+    const remColumn = [...newFilter];
+    remColumn.splice(remColumn.indexOf(column), 1);
+    handleChangeFilter(remColumn);
+  }
 
   return (
     <div>
@@ -13,11 +22,7 @@ function NumberFilter() {
         data-testid="column-filter"
         onChange={ ({ target }) => { handleChangeColumn(target.value); } }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {newFilter.map((item) => <option value={ item } key={ item }>{item}</option>)}
       </select>
 
       <select
@@ -37,7 +42,10 @@ function NumberFilter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => handleNumericValues(columnFilter, comparisonFilter, valueFilter) }
+        onClick={ () => {
+          handleNumericValues(columnFilter, comparisonFilter, valueFilter);
+          removeItemArray(columnFilter);
+        } }
       >
         Enviar
       </button>
