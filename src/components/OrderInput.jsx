@@ -32,7 +32,10 @@ export default function OrderInput() {
 
   return (
     <div>
-      <select onChange={ ({ target }) => setColumnSort(target.value) } data-testid="column-sort">
+      <select
+        onChange={ ({ target }) => setColumnSort(target.value) }
+        data-testid="column-sort"
+      >
         {options.map((option, index) => (
           <option key={ index }>{ option }</option>
         ))}
@@ -40,14 +43,31 @@ export default function OrderInput() {
       <div onChange={ ({ target }) => setradioSort(target.value) }>
         <label htmlFor="sort-radio">
           Ascendente
-          <input data-testid="column-sort-input-asc" type="radio" name="sort-radio" checked="checked" value="ASC" />
+          <input
+            data-testid="column-sort-input-asc"
+            type="radio"
+            name="sort-radio"
+            checked="checked"
+            value="ASC"
+          />
         </label>
         <label htmlFor="sort-radio">
           Descendente
-          <input data-testid="column-sort-input-desc" type="radio" name="sort-radio" value="DESC" />
+          <input
+            data-testid="column-sort-input-desc"
+            type="radio"
+            name="sort-radio"
+            value="DESC"
+          />
         </label>
       </div>
-      <button data-testid="column-sort-button" onClick={ handleClick } type="button">Ordenar</button>
+      <button
+        data-testid="column-sort-button"
+        onClick={ handleClick }
+        type="button"
+      >
+        Ordenar
+      </button>
     </div>
   );
 }
