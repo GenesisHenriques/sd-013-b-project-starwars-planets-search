@@ -12,6 +12,7 @@ function PlanetsProvider({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
+  const [removedFilters, setRemovedFilters] = useState([]);
 
   useEffect(() => {
     async function getPlanets() {
@@ -35,7 +36,14 @@ function PlanetsProvider({ children }) {
 
   return (
     <PlanetsContext.Provider
-      value={ { data, dataTitle, filtersArray, filters, setFilters } }
+      value={ {
+        data,
+        dataTitle,
+        filtersArray,
+        filters,
+        setFilters,
+        removedFilters,
+        setRemovedFilters } }
     >
       { children }
     </PlanetsContext.Provider>

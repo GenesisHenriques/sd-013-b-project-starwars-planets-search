@@ -1,6 +1,6 @@
 import React from 'react';
 import NameFilters from './filters/NameFIlters';
-import NumericFilters from './filters/NumericFilters';
+import NumericFilters from './filters/Numeric/NumericFilters';
 
 export default function FiltersHeader() {
   return (
