@@ -1,9 +1,18 @@
 import React from 'react';
+
+// import Routes from './Routes';
+import TableProvider from './context';
+
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from './Pages/Home';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <TableProvider>
+      {/* <Routes /> */}
+      <Home />
+    </TableProvider>
   );
 }
 
