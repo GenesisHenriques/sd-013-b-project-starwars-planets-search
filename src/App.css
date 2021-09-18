@@ -45,14 +45,13 @@
   background-color: black;
   padding: 0.5rem 1rem;
   text-transform: uppercase;
+  word-wrap: break-word;
 }
 
 .table td {
   overflow: hidden;
   padding: 0.5rem;
   text-overflow: ellipsis;
-
-  /* word-wrap: break-word; */
 }
 
 .table td:nth-of-type( 1 ) {

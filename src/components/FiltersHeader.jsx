@@ -1,29 +1,13 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import NameFilters from './filters/NameFIlters';
+import NumericFilters from './filters/NumericFilters';
 
 export default function FiltersHeader() {
-  const { filters, setFilters } = useContext(PlanetsContext);
-
-  function handleChange({ target: { value } }) {
-    setFilters({
-      ...filters,
-      filterByName: {
-        name: value.toLowerCase(),
-      },
-    });
-  }
-
   return (
     <header className="header">
       <h1>Star Wars Planets</h1>
-      <form>
-        <input
-          data-testid="name-filter"
-          type="text"
-          onChange={ handleChange }
-          placeholder="Buscar..."
-        />
-      </form>
+      <NameFilters />
+      <NumericFilters />
     </header>
   );
 }

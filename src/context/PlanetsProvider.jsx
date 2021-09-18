@@ -5,10 +5,12 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [dataTitle, setDataTitle] = useState([]);
+  const [filtersArray] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
   const [filters, setFilters] = useState({
-    filterByName: {
-      name: '',
-    },
+    filterByName: { name: '' },
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -23,9 +25,17 @@ function PlanetsProvider({ children }) {
     getPlanets();
   }, []);
 
+  // DEFINE OS TÍTULOS DA TABELA DE ACORDO COM AS INFORMAÇÕES EM DATA( MENOS URL, MANTENDO 13 COLUNAS NO TOTAL )
+  useEffect(() => {
+    if (data[0]) {
+      setDataTitle(Object.keys(data[0])
+        .filter((key) => key !== 'url'));
+    }
+  }, [data]);
+
   return (
     <PlanetsContext.Provider
-      value={ { data, filters, setFilters } }
+      value={ { data, dataTitle, filtersArray, filters, setFilters } }
     >
       { children }
     </PlanetsContext.Provider>
