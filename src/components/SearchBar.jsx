@@ -32,6 +32,8 @@ function SearchBar() {
     const secondAuxAvailableColumns = auxAvailableColumns
       .filter((column) => column !== currentNumericFilter.column);
     setAvailableColumns(secondAuxAvailableColumns);
+    const auxObj = { ...currentNumericFilter, column: secondAuxAvailableColumns[0] };
+    setCurrentNumericFilter(auxObj);
     setIndexNumericFilter(indexNumericFilter + 1);
     setFilters({ ...filters, filterByNumericValues: auxArray });
   };
