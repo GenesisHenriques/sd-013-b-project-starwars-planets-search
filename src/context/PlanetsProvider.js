@@ -22,10 +22,10 @@ function PlanetsProvider({ children }) {
   useEffect(() => {
     setPlanets(data);
     function filterPlanetsByName(filter) {
-      const filteredPlanets = (data.filter((planet) => planet.name.includes(filter)));
+      const filteredPlanets = data.filter((planet) => (planet.name.toLowerCase())
+        .includes(filter.toLowerCase()));
       return filter && filteredPlanets.length
-        ? setPlanets(data
-          .filter((planet) => planet.name.includes(filter)))
+        ? setPlanets(filteredPlanets)
         : setPlanets(data);
     }
     filterPlanetsByName(filters.filterByName.name);

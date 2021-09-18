@@ -56,13 +56,13 @@ function valueFilter(filters, setFilter) {
 }
 
 export default function FilterNumberSelect() {
-  const { setFilter, filters, setPlanets, data } = useContext(PlanetsContext);
+  const { setFilter, filters, setPlanets, planets, data } = useContext(PlanetsContext);
   const { filterByNumericValues } = filters;
   const [columnParams, setColumn] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
   );
 
-  function handleClick() {
+  function filterPlanets() {
     const comparisons = {
       'maior que': (
         (planet, filter) => Number(planet[filter.column]) > Number(filter.value)),
@@ -72,10 +72,14 @@ export default function FilterNumberSelect() {
         (planet, filter) => Number(planet[filter.column]) === Number(filter.value)),
     };
 
-    filterByNumericValues.map((filter) => data.filter(
+    filterByNumericValues.map((filter) => planets.filter(
       (planet) => comparisons[filter.comparison](planet, filter),
     ))
       .map((item) => setPlanets(item));
+  }
+
+  function handleClick() {
+    filterPlanets();
 
     const newColumn = columnParams.filter(
       (item) => filterByNumericValues[filterByNumericValues.length - 1].column !== item,
@@ -87,6 +91,30 @@ export default function FilterNumberSelect() {
         comparison: 'maior que',
         value: '100000',
       }] });
+  }
+
+  function filterButtons() {
+    const LAST_POSITION = -1;
+    const arrayButtons = [...filterByNumericValues.slice(0, LAST_POSITION)];
+    return (
+      arrayButtons.map((item) => (
+        <div data-testid="filter" key={ item.column }>
+          <button
+            name={ item.column }
+            type="button"
+            onClick={ ({ target: { name } }) => {
+              const filtered = filterByNumericValues
+                .filter(({ column }) => column !== name);
+              setFilter({ ...filters, filterByNumericValues: filtered });
+              setColumn([...columnParams, name]);
+              setPlanets(data);
+            } }
+          >
+            X
+          </button>
+        </div>
+      ))
+    );
   }
 
   return (
@@ -101,6 +129,7 @@ export default function FilterNumberSelect() {
       >
         Filter
       </button>
+      {filterButtons()}
     </>
   );
 }
