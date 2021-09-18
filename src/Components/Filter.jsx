@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../Context/StarWarsContext';
 
-let columnDropdown = [
+const INITIAL_COLUMN_DROPDOWN = [
   'population',
   'orbital_period',
   'diameter',
@@ -22,6 +22,7 @@ function Filter() {
     filters: { filterByName },
     setFilters,
   } = useContext(StarWarsContext);
+  const [columnDropdown, setColumnDropdown] = useState(INITIAL_COLUMN_DROPDOWN);
   const [state, setState] = useState(INITIAL_STATE);
   const { column, comparison, value: inputValue } = state;
 
@@ -64,7 +65,7 @@ function Filter() {
         newColumn.push(columnValue);
       });
 
-      columnDropdown = newColumn;
+      setColumnDropdown(newColumn);
 
       setState({
         ...state,
