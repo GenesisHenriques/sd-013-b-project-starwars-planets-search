@@ -8,6 +8,13 @@ function Search() {
     filterByNumericValues,
   } = useContext(PlanetsContext);
 
+  //  const [filteredByNumericValues, setFilteredByNumericValues] = useState(
+  // {
+  //   column: 'population',
+  //   comparison: 'maior que',
+  //   value: '100000',
+  // }
+
   return (
     <div>
       <p> Search </p>
@@ -15,8 +22,9 @@ function Search() {
         Type the planet name:
         <input
           data-testid="name-filter"
-          type="text"
+          name="name"
           onChange={ (e) => filterPlanetName(e.target.value) }
+          type="text"
         />
       </label>
       <div>
@@ -24,7 +32,8 @@ function Search() {
           Choose an option:
           <select
             data-testid="column-filter"
-            onChange={ (e) => filterByNumericValues(e.target.value) }
+            name="column"
+            onChange={ (event) => filterByNumericValues(event.target) }
           >
             <option value="population">population</option>
             <option value="orbital_period">orbital_period</option>
@@ -33,6 +42,31 @@ function Search() {
             <option value="surface_water">surface_water</option>
           </select>
         </label>
+
+        <select
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ (event) => filterByNumericValues(event.target) }
+        >
+          <option value="bigger_than">maior que</option>
+          <option value="less_than">menor que</option>
+          <option value="equal_to">igual a</option>
+        </select>
+
+        <input
+          data-testid="value-filter"
+          name="value"
+          onChange={ (event) => filterByNumericValues(event.target) }
+          type="number"
+          placeholder="digite um número"
+        />
+
+        <button
+          data-testid="button-filter"
+          type="button"
+        >
+          Search
+        </button>
       </div>
       <hr />
     </div>

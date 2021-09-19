@@ -7,13 +7,13 @@ import getPlanets from '../services/API';
 function PlanetsProvider({ children }) {
   const [state, setState] = useState([]);
   const [filteredPlanetName, setFilteredPlanetName] = useState('');
-  const [filteredByNumericValues, setFilteredByNumericValues] = useState([
+  const [filteredByNumericValues, setFilteredByNumericValues] = useState(
     {
       column: 'population',
       comparison: 'maior que',
       value: '100000',
     },
-  ]);
+  );
 
   // Summer Paulinha me deu essa dica
   useEffect(() => {
@@ -30,8 +30,11 @@ function PlanetsProvider({ children }) {
     setFilteredPlanetName(planetName);
   }
 
-  function filterByNumericValues(objeto) {
-    setFilteredByNumericValues(objeto);
+  function filterByNumericValues({ name, value }) {
+    setFilteredByNumericValues({
+      ...filteredByNumericValues,
+      [name]: value,
+    });
   }
 
   // Dica da Paulinha, como boas práticas
