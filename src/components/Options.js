@@ -3,6 +3,7 @@ import StarContext from '../context/StarContext';
 import Button from '../selectors/Button';
 import Filters from '../selectors/Filters';
 import InputText from '../selectors/InputText';
+import Order from '../selectors/Order';
 import Select from '../selectors/Select';
 
 function Options() {
@@ -34,6 +35,17 @@ function Options() {
     }));
   };
 
+  const reloadStateInitial = (newOption) => {
+    setSelectedColumn((prevState) => ({
+      ...prevState,
+      column: newOption[0],
+    }));
+  };
+
+  const recoveredOption = (recovered) => {
+    setoptionColumn(recovered);
+  };
+
   const handleClick = () => {
     handleFilterNumeric(selectedColumn);
 
@@ -43,6 +55,7 @@ function Options() {
     const newOption = [...optionColumn];
     newOption.splice(index, 1);
     setoptionColumn(newOption);
+    reloadStateInitial(newOption);
   };
 
   const selectionOne = {
@@ -55,6 +68,11 @@ function Options() {
     selectColumn: handleSelectColumn,
     selectedColumn,
     filterColumn: COMPARE_FILTER,
+  };
+
+  const optionsState = {
+    optionColumn,
+    recoveredOption,
   };
 
   return (
@@ -90,7 +108,8 @@ function Options() {
       >
         Adicionar Filtro
       </Button>
-      <Filters />
+      <Filters optionsState={ optionsState } />
+      <Order />
     </div>
   );
 }
