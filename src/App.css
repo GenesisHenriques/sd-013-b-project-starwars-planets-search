@@ -1,41 +1,58 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+* {
+  background-color: #222;
+  color: yellow;
+  font-family: 'Titillium Web', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* Header */
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+.header-name {
+  align-content: center;
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
+  height: 100px;
   justify-content: center;
-  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.header-name h1 {
+  align-self: center;
+  color: #222;
+  text-shadow: 2px 0 0 yellow, -2px 0 0 yellow, 0 2px 0 yellow, 0 -2px 0 yellow, 1px 1px yellow, -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow;
+  font-size: 60px;
 }
 
-@keyframes App-logo-spin {
+/* Search Bar */
 
-  from {
-    transform: rotate(0deg);
-  }
+.bar-Search {  
+  border-top: yellow 1px solid;
+  box-shadow: 0 0 20px 1px yellow;
+  margin-top: 30px;
+  height: 150px;
+  width: 100%;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+.bar-Search .search-filters {
+  border: 1px red solid;
+  height: 50px;
+  width: 100%;
+}
+
+/* Tabela */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid whitesmoke;
+  height: 100px;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 5px;
+  text-align: center;
+  width: 100px;
 }

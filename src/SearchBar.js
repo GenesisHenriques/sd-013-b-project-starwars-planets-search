@@ -78,100 +78,103 @@ function SearchBar() {
   };
 
   return (
-    <div>
-      <label htmlFor="search-input">
-        <input
-          data-testid="name-filter"
-          onChange={ handleChangeName }
-          value={ search.filters.filterByName.name }
-          type="text"
-          name="search"
-          id="search-input"
-        />
-      </label>
-      <label htmlFor="select-colum">
-        <select
-          marked="column"
-          data-testid="column-filter"
-          name="column"
-          id="select-colum"
+    <div className="bar-Search">
+        <div className="search-filters">
+        <label htmlFor="search-input">
+          <input
+            data-testid="name-filter"
+            onChange={ handleChangeName }
+            value={ search.filters.filterByName.name }
+            type="text"
+            name="search"
+            id="search-input"
+          />
+        </label>
+        <label htmlFor="select-colum">
+          <select
+            marked="column"
+            data-testid="column-filter"
+            name="column"
+            id="select-colum"
+          >
+            {
+              OPTIONS_COLUMN.filter((option) => filterByNumericValues
+                .every((filter) => !filter.column.includes(option)))
+                .map((filterColumn) => (
+                  <option
+                    key={ filterColumn }
+                    value={ filterColumn }
+                  >
+                    {filterColumn}
+                  </option>))
+            }
+          </select>
+        </label>
+        <label htmlFor="select-comparison">
+          <select
+            data-testid="comparison-filter"
+            name="comparison"
+            id="select-comparison"
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+        </label>
+        <label htmlFor="value-text">
+          <input data-testid="value-filter" type="text" name="value" id="value-text" />
+        </label>
+        <button
+          data-testid="button-filter"
+          onClick={ handleClickColumn }
+          type="button"
         >
-          {
-            OPTIONS_COLUMN.filter((option) => filterByNumericValues
-              .every((filter) => !filter.column.includes(option)))
-              .map((filterColumn) => (
-                <option
-                  key={ filterColumn }
-                  value={ filterColumn }
-                >
-                  {filterColumn}
-                </option>))
-          }
-        </select>
-      </label>
-      <label htmlFor="select-comparison">
-        <select
-          data-testid="comparison-filter"
-          name="comparison"
-          id="select-comparison"
-        >
-          <option value="maior que">maior que</option>
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
-        </select>
-      </label>
-      <label htmlFor="value-text">
-        <input data-testid="value-filter" type="text" name="value" id="value-text" />
-      </label>
-      <button
-        data-testid="button-filter"
-        onClick={ handleClickColumn }
-        type="button"
-      >
-        Search
-      </button>
-      <label htmlFor="sort-select">
-        Ordenação:
-        <select data-testid="column-sort" name="sort" id="sort-select">
-          <option value="name">name</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="climate">climate</option>
-          <option value="gravity">gravity</option>
-          <option value="terrain">terrain</option>
-          <option value="surface_water">surface_water</option>
-          <option value="population">population</option>
-        </select>
-      </label>
-      <label htmlFor="ascendente">
-        <input
-          defaultChecked
-          value="ASC"
-          data-testid="column-sort-input-asc"
-          type="radio"
-          name="sort"
-          id="ascendente"
-        />
-        Ascendente
-      </label>
-      <label htmlFor="decrescente">
-        <input
-          value="DESC"
-          data-testid="column-sort-input-desc"
-          type="radio"
-          name="sort"
-          id="decrescente"
-        />
-        Decrescente
-      </label>
-      <button
+          Search
+        </button>
+        <label htmlFor="sort-select">
+          Ordenação:
+          <select data-testid="column-sort" name="sort" id="sort-select">
+            <option value="name">name</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="climate">climate</option>
+            <option value="gravity">gravity</option>
+            <option value="terrain">terrain</option>
+            <option value="surface_water">surface_water</option>
+            <option value="population">population</option>
+          </select>
+        </label>
+        <label htmlFor="ascendente">
+          <input
+            defaultChecked
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            type="radio"
+            name="sort"
+            id="ascendente"
+          />
+          Ascendente
+        </label>
+        <label htmlFor="decrescente">
+          <input
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            type="radio"
+            name="sort"
+            id="decrescente"
+          />
+          Decrescente
+        </label>
+        <button
         onClick={ handleClickSort }
         type="button"
         data-testid="column-sort-button"
       >
         Ordenar
       </button>
+      </div>
+      <div className="search-filter-box">
       {
         filterByNumericValues.length > 0
         && filterByNumericValues.map(({ column, comparison, value }, index) => (
@@ -187,6 +190,7 @@ function SearchBar() {
           </div>
         ))
       }
+      </div>
     </div>
   );
 }
