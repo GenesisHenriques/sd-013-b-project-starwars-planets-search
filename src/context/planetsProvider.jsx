@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import planetsContext from './planetsContext';
 
 function PlanetsProvider({ children }) {
+  const filterByName = {
+    name: '',
+  };
+
   const [planets, setPlanets] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingFetch, setLoadingFetch] = useState(false);
+  const [filters, setFilters] = useState({ filterByName });
   const STARWARS_PLANETS_URL = 'https://swapi.dev/api/planets';
 
   useEffect(() => {
@@ -12,7 +17,7 @@ function PlanetsProvider({ children }) {
       const { results } = await fetch(STARWARS_PLANETS_URL)
         .then((response) => response.json());
       setPlanets(results);
-      setLoading(true);
+      setLoadingFetch(true);
     }
 
     fetchPlanets();
@@ -20,7 +25,14 @@ function PlanetsProvider({ children }) {
 
   return (
     <div>
-      <planetsContext.Provider value={ { planets, loading } }>
+      <planetsContext.Provider
+        value={
+          { planets,
+            loadingFetch,
+            filters,
+            setFilters }
+        }
+      >
         { children }
       </planetsContext.Provider>
     </div>
