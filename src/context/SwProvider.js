@@ -16,8 +16,14 @@ function SwProvider({ children }) {
     getPlanetsStarWars();
   }, []);
 
+  const [filters, setFiltersByName] = useState([{
+    filterByName: {
+      name: '',
+    },
+  }]);
+
   return (
-    <SwContext.Provider value={ { planets } }>
+    <SwContext.Provider value={ { planets, filters, setFiltersByName } }>
       { children }
     </SwContext.Provider>
   );

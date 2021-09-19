@@ -46,15 +46,24 @@ function linePlanetTable(planet, index) {
 }
 
 function Table() {
-  const { planets } = useContext(SwContext);
-  return (
-    <>
-      <h1>H1 TABLE</h1>
+  const { planets, filters } = useContext(SwContext);
+  const { filterByName: { name } } = filters[0];
+  if (name.length > 0) {
+    return (
       <table>
         { lineTitleTable() }
-        { planets.map((planet, index) => (linePlanetTable(planet, index)))}
+        { planets
+          .filter((planet) => (planet.name.toLowerCase().includes(name.toLowerCase())))
+          .map((planet, index) => (linePlanetTable(planet, index)))}
       </table>
-    </>
+    );
+  }
+  return (
+    <table>
+      { lineTitleTable() }
+      { planets
+        .map((planet, index) => (linePlanetTable(planet, index)))}
+    </table>
   );
 }
 
