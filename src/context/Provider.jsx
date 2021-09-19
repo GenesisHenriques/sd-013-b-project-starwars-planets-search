@@ -5,6 +5,7 @@ import Context from './Context';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [header, setHeader] = useState([]);
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -21,10 +22,11 @@ function Provider({ children }) {
     };
     fetchPlanets();
   }, []);
-
   const contextValue = {
     data,
     header,
+    name,
+    setName,
   };
 
   return (
@@ -33,9 +35,7 @@ function Provider({ children }) {
     </Context.Provider>
   );
 }
-
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
 export default Provider;
