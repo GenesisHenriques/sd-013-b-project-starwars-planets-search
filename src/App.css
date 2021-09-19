@@ -4,7 +4,7 @@ table, th, td {
   overflow-wrap: break-word;
 }
 
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -44,4 +44,4 @@ table, th, td {
   to {
     transform: rotate(360deg);
   }
-}
+} */
