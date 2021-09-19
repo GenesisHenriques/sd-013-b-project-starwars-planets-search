@@ -2,12 +2,15 @@ import React from 'react';
 import './App.css';
 import PlanetsProvider from './Context/PlanetsProvider';
 import PlanetsTable from './Pages/PlanetsTable';
-import PlanetsFilter from './Pages/PlanetsFilter';
+import PlanetsNameFilter from './Pages/PlanetsNameFilter';
+import PlanetsColumnFilter from './Pages/PlanetsColumnFilter';
+// import PlanetsFilter from './Pages/PlanetsFilter';
 
 function App() {
   return (
     <PlanetsProvider>
-      <PlanetsFilter />
+      <PlanetsNameFilter />
+      <PlanetsColumnFilter />
       <PlanetsTable />
     </PlanetsProvider>
   );

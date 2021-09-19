@@ -3,21 +3,23 @@ import React, { useEffect, useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 
 const apiURL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+const defaultState = {
+  filter: { filterByName: '', filterByNumericValues: [] }, planetsList: [] };
 
 function PlanetsProvider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [globalState, setGlobalState] = useState(defaultState);
 
   useEffect(() => {
     async function fetchData() {
       const apiRequest = await fetch(apiURL).then((res) => res.json());
       const data = apiRequest.results;
-      setPlanets(data);
+      setGlobalState(() => ({ ...globalState, planetsList: data, setGlobalState }));
     }
     fetchData();
   }, []);
 
   return (
-    <PlanetsContext.Provider value={ { planets } }>
+    <PlanetsContext.Provider value={ globalState }>
       {children}
     </PlanetsContext.Provider>
   );
