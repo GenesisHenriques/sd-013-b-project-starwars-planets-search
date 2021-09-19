@@ -4,7 +4,6 @@ import PlanetsContext from '../context/PlanetsContext';
 function Table() {
   const {
     state,
-    filterPlanetName, // função filtrarNomePlaneta()
     filteredPlanetName, // nome do planeta filtrado
   } = useContext(PlanetsContext);
 
@@ -36,12 +35,6 @@ function Table() {
 
   return (
     <main>
-      Type the planet name:
-      <input
-        data-testid="name-filter"
-        type="text"
-        onChange={ (e) => filterPlanetName(e.target.value) }
-      />
       <table>
         <thead>
           <tr>
