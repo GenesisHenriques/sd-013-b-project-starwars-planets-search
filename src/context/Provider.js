@@ -4,11 +4,11 @@ import Context from './Context';
 
 function PlanetProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-
-  const contextValue = {
-    planets,
-    setPlanets,
-  };
+  const [filterName, setFilterName] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     async function fetchAPI() {
@@ -20,8 +20,24 @@ function PlanetProvider({ children }) {
     fetchAPI();
   }, []);
 
+  const filterByName = (eventName) => {
+    setFilterName({
+      ...filterName,
+      filterByName: {
+        name: eventName,
+      },
+    });
+  };
+
   return (
-    <Context.Provider value={ contextValue }>
+    <Context.Provider
+      value={ {
+        planets,
+        setPlanets,
+        filterName,
+        setFilterName,
+        filterByName } }
+    >
       {children}
     </Context.Provider>
   );
