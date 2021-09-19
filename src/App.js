@@ -1,9 +1,15 @@
 import React from 'react';
+import PlanetProvider from './Context/PlanetProvider';
+
 import './App.css';
+
+import Planets from './Pages/Planets';
 
 function App() {
   return (
-    <span>Hello, App!</span> // Initial Commit
+    <PlanetProvider>
+      <Planets />
+    </PlanetProvider>
   );
 }
 
