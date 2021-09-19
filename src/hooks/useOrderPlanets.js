@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import StarContext from '../context/StarContext';
 
 function useOrderPlanets() {
