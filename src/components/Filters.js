@@ -1,24 +1,12 @@
-import React, { useContext } from 'react';
-import { Context } from '../context/Provider';
+import React from 'react';
+import TextFilter from './SelectFilters';
+import SelectFilters from './TextFilter';
 
-const Filters = () => {
-  const { handleName, filters } = useContext(Context);
-  const { filterByName } = filters;
-  const { name } = filterByName;
-  return (
-    <div>
-      <label htmlFor="name">
-        <input
-          type="text"
-          id="name"
-          name="name"
-          onChange={ handleName }
-          value={ name }
-          data-testid="name-filter"
-        />
-      </label>
-    </div>
-  );
-};
+const Filters = () => (
+  <div>
+    <TextFilter />
+    <SelectFilters />
+  </div>
+);
 
 export default Filters;

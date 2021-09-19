@@ -11,6 +11,7 @@ const Provider = ({ children }) => {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
 
   const fetchData = async () => {
@@ -21,7 +22,17 @@ const Provider = ({ children }) => {
   };
 
   const handleName = ({ target }) => {
-    setFilter({ filterByName: { name: target.value } });
+    setFilter({
+      ...filters,
+      filterByName: { ...filters.filterByName, name: target.value },
+    });
+  };
+
+  const handleSubmit = (state) => {
+    setFilter({
+      ...filters,
+      filterByNumericValues: [state],
+    });
   };
 
   useEffect(() => {
@@ -29,14 +40,37 @@ const Provider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const { filterByNumericValues } = filters;
     const { filterByName: { name } } = filters;
-    const filtered = planets.filter((planet) => planet.name
+    const nameFilter = planets.filter((planet) => planet.name
       .toLocaleLowerCase()
       .includes(name.toLocaleLowerCase()));
-    setPlanetsCopy(filtered);
+    let selectFilter = [];
+    if (filterByNumericValues.length !== 0) {
+      const { column, comparison, value } = filterByNumericValues[0];
+      selectFilter = nameFilter.filter((planet) => {
+        if (comparison === 'maior que') {
+          return Number(planet[column]) > Number(value);
+        } if (comparison === 'menor que') {
+          return Number(planet[column]) < Number(value);
+        }
+        return Number(planet[column]) === Number(value);
+      });
+      setPlanetsCopy(selectFilter);
+    } else {
+      setPlanetsCopy(nameFilter);
+    }
   }, [filters, planets]);
 
-  const context = { planets, planetsCopy, setPlanets, filters, setFilter, handleName };
+  const context = {
+    planets,
+    planetsCopy,
+    setPlanets,
+    filters,
+    setFilter,
+    handleName,
+    handleSubmit,
+  };
   return (
     <Context.Provider value={ context }>
       { children }
