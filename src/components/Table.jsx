@@ -5,13 +5,14 @@ function Table() {
   const {
     state,
     filteredPlanetName, // nome do planeta filtrado
+    filteredByNumericValues,
   } = useContext(PlanetsContext);
 
   function table() {
     if (state) {
       return (
         state
-          .filter((planet) => planet.name.includes(filteredPlanetName))
+          .filter((planet) => planet.name.includes(filteredByNumericValues))
           .map((item) => (
             <tr key={ item.name }>
               <td>{ item.name }</td>

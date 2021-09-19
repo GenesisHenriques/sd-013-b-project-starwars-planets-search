@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import PlanetsContext from './PlanetsContext';
 import getPlanets from '../services/API';
 
 function PlanetsProvider({ children }) {
   const [state, setState] = useState([]);
   const [filteredPlanetName, setFilteredPlanetName] = useState('');
+  const [filteredByNumericValues, setFilteredByNumericValues] = useState([
+    {
+      column: 'population',
+      comparison: 'maior que',
+      value: '100000',
+    },
+  ]);
 
   // Summer Paulinha me deu essa dica
   useEffect(() => {
@@ -22,16 +30,24 @@ function PlanetsProvider({ children }) {
     setFilteredPlanetName(planetName);
   }
 
+  function filterByNumericValues(objeto) {
+    setFilteredByNumericValues(objeto);
+  }
+
   // Dica da Paulinha, como boas práticas
   const contextValue = {
+    // Estados
     state,
-    filterPlanetName,
     filteredPlanetName,
+    filteredByNumericValues,
+    // Funções set
+    filterPlanetName,
+    filterByNumericValues,
   };
 
   return (
     <PlanetsContext.Provider value={ contextValue }>
-      { children }
+      {children}
     </PlanetsContext.Provider>
   );
 }
