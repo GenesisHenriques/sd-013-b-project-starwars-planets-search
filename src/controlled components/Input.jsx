@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Input({ text, type, handleChange, name, testId }) {
+function Input({ text, type, handleChange, name, testId, min }) {
   return (
     <label htmlFor={ name }>
       <input
@@ -11,6 +11,7 @@ function Input({ text, type, handleChange, name, testId }) {
         id={ name }
         data-testid={ testId }
         placeholder={ text }
+        min={ min }
       />
     </label>
   );
@@ -18,6 +19,7 @@ function Input({ text, type, handleChange, name, testId }) {
 
 Input.defaultProps = {
   testId: '',
+  min: 0,
 };
 
 Input.propTypes = {
@@ -26,6 +28,7 @@ Input.propTypes = {
   handleChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   testId: PropTypes.string,
+  min: PropTypes.number,
 };
 
 export default Input;

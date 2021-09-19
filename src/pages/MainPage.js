@@ -5,7 +5,7 @@ import Table from '../component/Table';
 import Filter from '../component/Filter';
 
 function Main() {
-  const { setPlanets } = useContext(PlanetContext);
+  const { setData } = useContext(PlanetContext);
 
   useEffect(() => {
     async function getPlanets() {
@@ -15,14 +15,14 @@ function Main() {
         results.forEach((planet) => {
           delete planet.residents;
         });
-        setPlanets(results);
+        setData(results);
         console.log('Renderizou');
       } catch (error) {
-        setPlanets(error);
+        setData(error);
       }
     }
     getPlanets();
-  }, [setPlanets]);
+  }, [setData]);
 
   return (
     <>
