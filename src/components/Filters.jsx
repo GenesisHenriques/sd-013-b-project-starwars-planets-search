@@ -35,8 +35,8 @@ function Filters() {
             <option value="igual a">igual a</option>
           </select>
         </label>
-        <label htmlFor="value" data-testid="value-filter">
-          <input type="number" name="value" id="value" />
+        <label htmlFor="value">
+          <input type="number" name="value" id="value" data-testid="value-filter" />
         </label>
         <button type="submit" data-testid="button-filter">Filtrar</button>
       </div>
