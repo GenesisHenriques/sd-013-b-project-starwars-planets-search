@@ -4,12 +4,14 @@ import Input from '../controlled components/Input';
 import Select from '../controlled components/Select';
 
 function Filter() {
-  const { filters, setFilter } = useContext(PlanetContext);
-  const { filterByNumericValues } = filters;
+  const {
+    filters, setFilter, columnOptions, modifyColumnOptions } = useContext(PlanetContext);
+  const { filterByNumericValues, filterByName: { name: inputName } } = filters;
+  const [comparisonOptions] = useState(['maior que', 'igual a', 'menor que']);
   const [columnFilter, setColumnFilter] = useState({
     column: 'population',
     comparison: 'maior que',
-    value: '0',
+    value: '',
   });
 
   const handleChange = ({ target: { value, name } }) => {
@@ -28,11 +30,12 @@ function Filter() {
     });
   };
 
-  const columnOptions = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
-
-  const comparisonOptions = ['maior que', 'igual a', 'menor que'];
+  const removeColumnOptions = () => {
+    const newColumns = [...columnOptions];
+    newColumns.splice(newColumns.indexOf(columnFilter.column), 1);
+    modifyColumnOptions(newColumns);
+    setColumnFilter({ ...columnFilter, column: newColumns[0], value: '' });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,6 +46,7 @@ function Filter() {
         columnFilter,
       ],
     });
+    removeColumnOptions();
   };
 
   return (
@@ -53,6 +57,7 @@ function Filter() {
         name="search-name"
         testId="name-filter"
         handleChange={ handleNameFilter }
+        value={ inputName }
       />
       <Select
         name="column"
@@ -74,6 +79,7 @@ function Filter() {
         name="value"
         testId="value-filter"
         handleChange={ handleChange }
+        value={ columnFilter.value }
       />
       <button type="submit" data-testid="button-filter">Search</button>
     </form>

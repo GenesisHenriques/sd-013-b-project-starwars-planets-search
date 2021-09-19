@@ -10,6 +10,9 @@ function PlanetProvider({ children }) {
     },
     filterByNumericValues: [],
   });
+  const [columnOptions, modifyColumnOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [filtredData, setFiltredData] = useState([]);
   const [planets, setPlanets] = useState([]);
 
@@ -56,7 +59,9 @@ function PlanetProvider({ children }) {
           filtredData,
           setFiltredData,
           planets,
-          setPlanets }
+          setPlanets,
+          columnOptions,
+          modifyColumnOptions }
       }
     >
       {children}
