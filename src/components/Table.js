@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import StarContext from '../context/StarContext';
+import useOrderPlanets from '../hooks/useOrderPlanets';
 import useSearchPlanets from '../hooks/useSearchPlanets';
 
 function Table() {
+  useOrderPlanets();
   useSearchPlanets();
   const { data: { isLoading }, filters: { dataFiltered } } = useContext(StarContext);
   return (
@@ -44,7 +46,7 @@ function Table() {
           url,
         }) => (
           <tr key={ name }>
-            <td>{ name }</td>
+            <td data-testid="planet-name">{ name }</td>
             <td>{ rotationPeriod }</td>
             <td>{ orbitalPeriod }</td>
             <td>{ diameter }</td>

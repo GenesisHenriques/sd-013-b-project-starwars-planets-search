@@ -26,7 +26,6 @@ function useSearchPlanets() {
     if (filterByNumericValues.length > 0) {
       const newData = data.filter((planet) => filterByNumericValues
         .every((filter) => comparison(filter, planet)));
-
       handleSetData(newData);
     }
   }, [data, filterByNumericValues, handleSetData]);

@@ -15,7 +15,7 @@ function StarProvider({ children }) {
     },
     filterByNumericValues: [],
     order: {
-      column: 'Name',
+      column: 'name',
       sort: 'ASC',
     },
     dataFiltered: [],
@@ -27,6 +27,10 @@ function StarProvider({ children }) {
 
   const handleFilterName = useCallback((name) => {
     setFilters((prevState) => ({ ...prevState, filterByName: { name } }));
+  }, []);
+
+  const handleSetOrder = useCallback((newOrder) => {
+    setFilters((prevState) => ({ ...prevState, order: newOrder }));
   }, []);
 
   const handleFilterNumeric = useCallback((select) => {
@@ -51,6 +55,7 @@ function StarProvider({ children }) {
     data,
     filters,
     handleSetData,
+    handleSetOrder,
     handleFilterName,
     handleFilterNumeric,
     handleNewFilterNumeric,
