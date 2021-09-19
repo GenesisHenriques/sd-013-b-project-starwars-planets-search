@@ -2,7 +2,14 @@ import React, { useContext } from 'react';
 import ContextCreat from '../context/ContextCreat';
 
 function Header() {
-  const { handleName, handleValueFilter, handleFilterClick } = useContext(ContextCreat);
+  const {
+    handleName,
+    handleValueFilter,
+    columnsFilter,
+    filters,
+  } = useContext(ContextCreat);
+  const { optionValue } = filters;
+
   return (
     <header>
       <label htmlFor="name">
@@ -24,11 +31,9 @@ function Header() {
           id="filterNumeric"
           onChange={ ({ target }) => handleValueFilter(target.value, 'columFilter') }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { optionValue.map((option, index) => (
+            <option key={ index } value={ option }>{ option }</option>
+          )) }
         </select>
       </label>
       <label htmlFor="filterBiggerSmallerEqual">
@@ -54,7 +59,7 @@ function Header() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ handleFilterClick }
+        onClick={ columnsFilter }
       >
         Filter
       </button>

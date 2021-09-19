@@ -4,17 +4,27 @@ import ContextCreat from './ContextCreat';
 
 const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
+const optionNoFilter = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 export default function ContextProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filterName, setFilterByName] = useState([]);
+  const [optionFilter, setOptionFilter] = useState(optionNoFilter);
   const [filterColumn, setFilterColumn] = useState('population');
-  const [filterComparison, setFilterComparison] = useState('maior');
+  const [filterComparison, setFilterComparison] = useState('maior que');
   const [filterValue, setFilterValue] = useState('');
 
   const filters = {
     filterByName: {
       name: filterName,
     },
+    optionValue: optionFilter,
     filterByNumericValues: [
       {
         column: filterColumn,
@@ -24,9 +34,15 @@ export default function ContextProvider({ children }) {
     ],
   };
 
+  function removeOption() {
+    const { filterByNumericValues: [{ column }], optionValue } = filters;
+    const newOption = optionValue.filter((option) => option !== column);
+    setOptionFilter(newOption);
+  }
+
   function columnsFilter() {
     const { filterByNumericValues: [{ comparison, column, value }] } = filters;
-    console.log(comparison);
+    removeOption();
     switch (comparison) {
     case 'maior que':
       return setFilterByName(planets
@@ -41,17 +57,13 @@ export default function ContextProvider({ children }) {
     }
   }
 
-  function handleFilterClick() {
-    columnsFilter();
-  }
-
   useEffect(() => {
     async function fetchApi() {
       const { results } = await (await fetch(PLANETS_URL)).json();
       setPlanets(results);
     }
     fetchApi();
-  }, handleFilterClick);
+  }, []);
 
   function handleName(value) {
     if (value === '') {
@@ -76,7 +88,8 @@ export default function ContextProvider({ children }) {
         planets,
         handleName,
         handleValueFilter,
-        handleFilterClick } }
+        columnsFilter,
+      } }
     >
       { children }
     </ContextCreat.Provider>
