@@ -5,6 +5,7 @@ import fetchPlanets from '../services/Api';
 
 function PlanetsProvider({ children }) {
   const [dados, setDados] = useState([]);
+  const [name, setName] = useState('');
 
   useEffect(() => {
     async function dadosGS() {
@@ -17,7 +18,7 @@ function PlanetsProvider({ children }) {
   }, []);
 
   return (
-    <MyContext.Provider value={ { dados } }>
+    <MyContext.Provider value={ { dados, setName, name } }>
       {children}
     </MyContext.Provider>
   );
