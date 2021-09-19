@@ -5,19 +5,28 @@ import getPlanets from '../services/API';
 
 function PlanetsProvider({ children }) {
   const [state, setState] = useState([]);
+  const [filteredPlanetName, setFilteredPlanetName] = useState('');
 
   // Summer Paulinha me deu essa dica
   useEffect(() => {
     async function requestGetPlanets() {
       const data = await getPlanets();
+      // Dica do Rod! (thanks)
       setState(data.results);
     }
 
     requestGetPlanets();
   }, []);
 
+  function filterPlanetName(planetName) {
+    setFilteredPlanetName(planetName);
+  }
+
+  // Dica da Paulinha, como boas práticas
   const contextValue = {
     state,
+    filterPlanetName,
+    filteredPlanetName,
   };
 
   return (
