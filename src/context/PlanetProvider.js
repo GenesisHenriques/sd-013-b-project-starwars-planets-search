@@ -23,6 +23,7 @@ function PlanetProvider({ children }) {
 
   useEffect(() => {
     const { filterByNumericValues } = filters;
+    setFiltredData(data);
     console.log('table');
     filterByNumericValues.forEach(({ comparison, column, value }) => {
       switch (comparison) {
@@ -44,8 +45,9 @@ function PlanetProvider({ children }) {
   useEffect(() => {
     setPlanets(filtredData);
     setPlanets(filtredData
-      .filter((planet) => planet.name.includes(filters.filterByName.name)));
+      .filter((planet) => planet.name.toLowerCase().includes(filters.filterByName.name)));
     console.log('FilterName');
+    // console.log(filtredData);
   }, [filters.filterByName.name, filtredData]);
 
   return (
