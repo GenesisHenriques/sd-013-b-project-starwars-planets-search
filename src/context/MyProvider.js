@@ -69,7 +69,6 @@ function MyProvider({ children }) {
       default: console.log('');
       }
     }
-    console.log(filters);
   }, [filters.filterByNumericValues, data, filters]);
 
   // -------------------------------------------------------
@@ -81,7 +80,6 @@ function MyProvider({ children }) {
       options.splice(options.indexOf(column), 1);
       setColumnsOptions(options);
     });
-    console.log(columnsOptions);
   }, [filters.filterByNumericValues, columnsOptions, filters]);
 
   //---------------------------------------------------------

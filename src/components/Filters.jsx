@@ -20,8 +20,6 @@ function Filters() {
         filterByNumericValues: [...filters.filterByNumericValues, filtersObj],
       },
     );
-    console.log(filters.filterByNumericValues);
-    // checkColumnsSeleted();
   };
 
   const handleFilters = ({ target }) => {
@@ -29,7 +27,7 @@ function Filters() {
     setFiltersObj({ ...filtersObj, [name]: value });
   };
 
-  // esse if é para que de o filter de colunas usando data funcione, pois o fetch demora um pouco:
+  // espera o fetch de data
   if (data === undefined) {
     return <h3>Carregando...</h3>;
   }
