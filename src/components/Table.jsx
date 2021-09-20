@@ -45,9 +45,34 @@ function linePlanetTable(planet, index) {
   );
 }
 
+function filterColumn(planets, filterByNumericValues) {
+  const { column, comparison, value } = filterByNumericValues[0];
+  if (comparison === 'maior que') {
+    return (
+      planets
+        .filter((planet) => (Number(planet[column]) > Number(value)))
+        .map((planet, index) => (linePlanetTable(planet, index)))
+    );
+  }
+  if (comparison === 'menor que') {
+    return (
+      planets
+        .filter((planet) => (Number(planet[column]) < Number(value)))
+        .map((planet, index) => (linePlanetTable(planet, index)))
+    );
+  }
+
+  return (
+    planets
+      .filter((planet) => (Number(planet[column]) === Number(value)))
+      .map((planet, index) => (linePlanetTable(planet, index)))
+  );
+}
+
 function Table() {
   const { planets, filters } = useContext(SwContext);
-  const { filterByName: { name } } = filters[0];
+  const { filterByName: { name }, filter, filterByNumericValues } = filters[0];
+
   if (name.length > 0) {
     return (
       <table>
@@ -55,6 +80,15 @@ function Table() {
         { planets
           .filter((planet) => (planet.name.toLowerCase().includes(name.toLowerCase())))
           .map((planet, index) => (linePlanetTable(planet, index)))}
+      </table>
+    );
+  }
+
+  if (filter) {
+    return (
+      <table>
+        { lineTitleTable() }
+        { filterColumn(planets, filterByNumericValues) }
       </table>
     );
   }
