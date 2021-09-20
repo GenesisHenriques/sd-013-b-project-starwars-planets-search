@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext , useEffect , useState } from 'react';
 import MyContext from '../MyContext/MyContext';
 
 export default function FilterTable(results) {
@@ -11,12 +11,12 @@ export default function FilterTable(results) {
     const valor = objFilter.value;
     const comparacao = objFilter.comparsion;
     if (comparacao === 'maior que') {
-      return objFilter.value <= objResult[chave];
+      return Number(objFilter.value) < Number(objResult[chave]);
     }
     if (comparacao === 'menor que') {
-      return objFilter.value >= objResult[chave];
+      return Number(objFilter.value) > Number(objResult[chave]);
     }
-    return objFilter.value === objResult[chave];
+    return Number(objFilter.value) === Number(objResult[chave]);
   }));
   const Retorno = [...newArray];
   const UltimoIndexRetorno = Retorno.length - 1;
