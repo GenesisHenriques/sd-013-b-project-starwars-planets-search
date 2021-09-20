@@ -56,11 +56,13 @@ export default function Selects() {
       <div data-testid="filter">
         <ul>
           {
-            filterByNumericValues.map(({ column, comparison, value }) => (
-              <li key={ column }>
-                <p>{column}</p>
-                <p>{comparison}</p>
-                <p>{value}</p>
+            filterByNumericValues.map((
+              { column: columnFilter, comparison: comparisonFilter, value: valueFilter },
+            ) => (
+              <li key={ columnFilter }>
+                <p>{columnFilter}</p>
+                <p>{comparisonFilter}</p>
+                <p>{valueFilter}</p>
                 <button
                   type="button"
                   data-testid="filter"
