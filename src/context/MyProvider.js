@@ -1,24 +1,31 @@
-import React, { useState, useCallback } from 'react';
-import propTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
-function MyProvider({ children }) {
-  const [data, setData] = useState();
-  const fetchApiPlanets = useCallback(async () => {
-    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-      .then((response) => response.json())
-      .then((response) => setData(response));
+const API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
+function MyProvider({ children }) { // children = props
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchApiPlanets() {
+      const { results } = await fetch(API_URL).then((response) => response.json());
+      setData(results);
+    }
+    fetchApiPlanets();
   }, []);
 
   return (
-    <MyContext.Provider value={ { data, fetchApiPlanets } }>
+    <MyContext.Provider
+      value={ data }
+    >
       {children}
     </MyContext.Provider>
   );
 }
 
 MyProvider.propTypes = {
-  children: propTypes.objectOf(propTypes.any).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default MyProvider;

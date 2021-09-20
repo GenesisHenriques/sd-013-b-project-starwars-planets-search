@@ -1,16 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import MyContext from '../context/MyContext';
+import React from 'react';
+import Table from './Table';
 
 function App() {
-  const { fetchApiPlanets } = useContext(MyContext);
-
-  useEffect(() => {
-    fetchApiPlanets();
-  }, [fetchApiPlanets]);
-
   return (
     <header>
-      <h2>StarWars Planets</h2>
+      <Table />
     </header>
   );
 }
