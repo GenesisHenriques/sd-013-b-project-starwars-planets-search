@@ -30,7 +30,7 @@ function Filters() {
   useEffect(() => {
     function newNumericFilters() {
       const index = NUMERIC_FILTERS.indexOf(column);
-      if(column !== '') {
+      if (column !== '') {
         NUMERIC_FILTERS.splice(index, 1);
       }
       console.log(NUMERIC_FILTERS);
