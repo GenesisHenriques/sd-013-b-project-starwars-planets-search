@@ -15,6 +15,14 @@ function MyProvider({ children }) {
 
   const [filtered, setFiltered] = useState();
 
+  const [columnsOptions, setColumnsOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   // FETCH PARA API ---------------------------------------
   const fetchApiPlanets = useCallback(async () => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -65,6 +73,18 @@ function MyProvider({ children }) {
   }, [filters.filterByNumericValues, data, filters]);
 
   // -------------------------------------------------------
+  // REMOVE COLUNAS OPTIONS DO SELECT JA USADOS
+  useEffect(() => {
+    const options = columnsOptions;
+    filters.filterByNumericValues.forEach(({ column }) => {
+      // indefof retorna indice daquela palavra, e p spclice remove onde esta esse indice e quantas vezes
+      options.splice(options.indexOf(column), 1);
+      setColumnsOptions(options);
+    });
+    console.log(columnsOptions);
+  }, [filters.filterByNumericValues, columnsOptions, filters]);
+
+  //---------------------------------------------------------
 
   return (
     <MyContext.Provider
@@ -72,6 +92,7 @@ function MyProvider({ children }) {
         data,
         filters,
         filtered,
+        columnsOptions,
         setFilters,
         fetchApiPlanets,
         filterByNamePlanet,

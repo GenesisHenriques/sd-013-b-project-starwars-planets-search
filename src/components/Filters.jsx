@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import MyContext from '../context/MyContext';
 
 function Filters() {
   const {
     data, filterByNamePlanet,
-    filters, setFilters,
+    filters, setFilters, columnsOptions,
   } = useContext(MyContext);
 
   const [filtersObj, setFiltersObj] = useState({
@@ -12,36 +12,6 @@ function Filters() {
     comparison: '',
     value: '',
   });
-
-  const columnsSelectFilter = [
-    '-',
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
-
-  // const checkColumnsSeleted = () => {
-  //   // checa se no filter do context existe mesma coluna do select de coluna do componente se tem ele deleta :
-  //   const filterByNuValues = filters.filterByNumericValues;
-  //   filterByNuValues.foEach((fc) => columnsSelectFilter.forEach((columnS, indexS) => {
-  //     if (fc.column === columnS) {
-  //       return columnsSelectFilter.splice(indexS, 1);
-  //     }
-  //   }));
-  //   console.log(columnsSelectFilter);
-  // };
-
-  useEffect(() => {
-    const filterByNuValues = filters.filterByNumericValues;
-    columnsSelectFilter.forEach((columnS, indexS) => {
-      if (filterByNuValues[indexS] === columnS) {
-        return columnsSelectFilter.splice(indexS, 1);
-      }
-    });
-    console.log(columnsSelectFilter);
-  }, [columnsSelectFilter, filters.filterByNumericValues]);
 
   const handleClickButtonFilter = async () => {
     // quando clicar em filtrar:
@@ -85,7 +55,7 @@ function Filters() {
           onChange={ handleFilters }
         >
           {
-            columnsSelectFilter.map((columns, index) => (
+            columnsOptions.map((columns, index) => (
               <option
                 key={ index }
                 value={ columns }
