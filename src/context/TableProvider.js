@@ -4,7 +4,21 @@ import TableContext from './TableContext';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  // const [columnState, setColumnState] = useState([]);
+  const [nameColumn, setNameColumn] = useState('population');
+  const [comparisonState, setComparisonState] = useState('maior que');
+  const [valueState, setValueState] = useState('');
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [
+      {
+        column: nameColumn,
+        comparison: comparisonState,
+        value: valueState,
+      },
+    ],
+  });
+
   const [dataFiltered, setDataFiltered] = useState([]);
 
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -31,6 +45,36 @@ function TableProvider({ children }) {
     setFilters({ filterByName: { name: target.value.toLocaleLowerCase() } });
   }
 
+  function handleFilterColumn({ target }) {
+    // setColumnState(dataFiltered.map((planet) => planet[target.value]));
+    setNameColumn(target.value);
+  }
+
+  function handleFilterValue({ target }) {
+    setValueState(target.value);
+  }
+
+  function handleFilterComparison({ target }) {
+    setComparisonState(target.value);
+  }
+
+  function handleClick() {
+    switch (comparisonState) {
+    case 'maior que':
+      setDataFiltered(data
+        .filter((planet) => Number(planet[nameColumn]) > Number(valueState)));
+      break;
+    case 'menor que':
+      setDataFiltered(data
+        .filter((planet) => Number(planet[nameColumn]) < Number(valueState)));
+      break;
+    default:
+      setDataFiltered(data
+        .filter((planet) => Number(planet[nameColumn]) === Number(valueState)));
+      break;
+    }
+  }
+
   return (
     <TableContext.Provider
       value={ {
@@ -38,6 +82,10 @@ function TableProvider({ children }) {
         data,
         filters,
         dataFiltered,
+        handleFilterColumn,
+        handleFilterComparison,
+        handleFilterValue,
+        handleClick,
       } }
     >
       {children}
