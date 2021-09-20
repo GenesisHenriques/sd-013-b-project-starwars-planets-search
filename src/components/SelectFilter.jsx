@@ -19,7 +19,7 @@ function SelectFilter(props) {
 
 SelectFilter.propTypes = {
   name: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf[PropTypes.string].isRequired,
+  options: PropTypes.arrayOf.isRequired,
   onChange: PropTypes.func.isRequired,
   testId: PropTypes.string.isRequired,
 };
