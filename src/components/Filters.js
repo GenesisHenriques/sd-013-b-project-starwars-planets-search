@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const NUMERIC_FILTERS = [
@@ -22,7 +22,21 @@ function Filters() {
     setComparison,
     setValue,
     handleButton,
+    filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
+
+  const { column } = filterByNumericValues[0];
+
+  useEffect(() => {
+    function newNumericFilters() {
+      const index = NUMERIC_FILTERS.indexOf(column);
+      if(column !== '') {
+        NUMERIC_FILTERS.splice(index, 1);
+      }
+      console.log(NUMERIC_FILTERS);
+    }
+    newNumericFilters();
+  }, [column]);
 
   return (
     <>

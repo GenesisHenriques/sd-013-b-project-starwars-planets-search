@@ -9,13 +9,11 @@ function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: 0,
+    }],
   });
   const [clicked, setClicked] = useState(false);
 
@@ -94,7 +92,8 @@ function StarWarsProvider({ children }) {
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  // troquei element por node. dica dos colegas da turma;
+  children: PropTypes.node.isRequired,
 };
 
 export default StarWarsProvider;
