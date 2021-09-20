@@ -1,4 +1,4 @@
-import { useContext , useEffect , useState } from 'react';
+import { useContext } from 'react';
 import MyContext from '../MyContext/MyContext';
 
 export default function FilterTable(results) {
@@ -6,18 +6,18 @@ export default function FilterTable(results) {
   // const { name } = value.filters.filterByName;
   const { filterByNumericValues } = value.filters;
 
-  let newArray = filterByNumericValues.map((objFilter) => results.filter((objResult) => {
-    const chave = objFilter.colum;
-    const valor = objFilter.value;
-    const comparacao = objFilter.comparsion;
-    if (comparacao === 'maior que') {
-      return Number(objFilter.value) < Number(objResult[chave]);
-    }
-    if (comparacao === 'menor que') {
-      return Number(objFilter.value) > Number(objResult[chave]);
-    }
-    return Number(objFilter.value) === Number(objResult[chave]);
-  }));
+  const newArray = filterByNumericValues
+    .map((objFilter) => results.filter((objResult) => {
+      const chave = objFilter.colum;
+      const comparacao = objFilter.comparsion;
+      if (comparacao === 'maior que') {
+        return Number(objFilter.value) < Number(objResult[chave]);
+      }
+      if (comparacao === 'menor que') {
+        return Number(objFilter.value) > Number(objResult[chave]);
+      }
+      return Number(objFilter.value) === Number(objResult[chave]);
+    }));
   const Retorno = [...newArray];
   const UltimoIndexRetorno = Retorno.length - 1;
 
