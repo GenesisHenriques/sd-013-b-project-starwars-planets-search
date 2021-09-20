@@ -30,7 +30,7 @@ export default function Tbody({ results }) {
   const value = useContext(MyContext);
   const { name } = value.filters.filterByName;
   const { filterByNumericValues } = value.filters;
-  if (filterByNumericValues.length !== undefined && filterByNumericValues.length > 0) {
+  if (filterByNumericValues !== undefined && filterByNumericValues.length > 0) {
     const newTable = FilterTable(results);
     return (
       newTable.map((resultMap))
