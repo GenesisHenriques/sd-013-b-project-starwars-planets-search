@@ -1,16 +1,18 @@
 import React from 'react';
-import './App.css';
-import Table from './Components/Table';
-import Filter from './Components/Filter';
-import DataProvider from './context/DataProvider';
+
+import Provider from './context/Provider';
+
+import Input from './components/Input';
+import Table from './components/Table';
+import Select from './components/Select';
 
 function App() {
   return (
-    <DataProvider>
-      <span>Find a Star Wars Planet!</span>
-      <Filter />
+    <Provider>
+      <Input />
+      <Select />
       <Table />
-    </DataProvider>
+    </Provider>
   );
 }
 
