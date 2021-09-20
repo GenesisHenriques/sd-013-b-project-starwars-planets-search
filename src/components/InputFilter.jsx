@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function InputFilter(props) {
   const { name, type, onChange, testId } = props;
@@ -14,5 +15,12 @@ function InputFilter(props) {
     </label>
   );
 }
+
+InputFilter.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  testId: PropTypes.string.isRequired,
+};
 
 export default InputFilter;
