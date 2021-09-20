@@ -1,18 +1,90 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import MyContext from '../Context/MyContext';
-import inputFilter from '../Hooks/filter';
 
 function Table() {
-  const { data } = useContext(MyContext);
-  const valueArray = Object.keys(data[0]);
-  const planets = inputFilter();
+  const { data, newData, setFilters, filters, options, column, setColumn, comparison,
+    setComparison, value, setValue } = useContext(MyContext);
+  const [columnState, setColumnState] = useState('population');
+  const [comparisonState, setComparisonState] = useState('maior que');
+  const [valueState, setValueState] = useState(0);
+  const [inputName, setInputName] = useState('');
+  const valueArray = Object.keys(newData[0]);
+  const filterMaior = data.filter((planet) => planet[column] > Number(value));
+  const filterMenor = data.filter((planet) => planet[column] < Number(value));
+  const filterIgual = data.filter((planet) => Number(planet[column]) === Number(value));
+  const filterData = inputName ? data.filter((planet) => planet.name.includes(inputName))
+    : data;
+
+  function renderFilter() {
+    if (inputName) {
+      return filterData;
+    }
+    if (comparison === 'maior que') {
+      return filterMaior;
+    }
+    if (comparison === 'menor que') {
+      return filterMenor;
+    }
+    if (comparison === 'igual a') {
+      return filterIgual;
+    }
+    return data;
+  }
+
+  function handleClick() {
+    setColumn(columnState);
+    setComparison(comparisonState);
+    setValue(valueState);
+    const newObject = {
+      columnState,
+      comparisonState,
+      valueState,
+    };
+    setFilters({ ...filters,
+      filterNumbers: [...filters.filterNumbers, newObject],
+    });
+  }
+
   return (
     <table>
+      <select
+        data-testid="column-filter"
+        onChange={ ({ target }) => setColumnState(target.value) }
+      >
+        {options.map((option) => <option key={ option }>{option}</option>)}
+      </select>
+      <select
+        data-testid="comparison-filter"
+        onChange={ ({ target }) => setComparisonState(target.value) }
+      >
+        <option>maior que</option>
+        <option>menor que</option>
+        <option>igual a</option>
+      </select>
+      <input
+        type="number"
+        data-testid="value-filter"
+        onChange={ ({ target }) => setValueState(target.value) }
+      />
+      <button type="button" data-testid="button-filter" onClick={ handleClick }>
+        Filter
+      </button>
       <tr>
-        {valueArray.map((value, index) => <th key={ index }>{value}</th>)}
+        <td>
+          <input
+            type="text"
+            data-testid="name-filter"
+            placeholder="search the name of the planet"
+            onChange={ ({ target }) => {
+              setInputName(target
+                .value); setFilters({ ...filters, filterByName: { name: target.value } });
+            } }
+          />
+        </td>
+        {valueArray.map((values, index) => <th key={ index }>{values}</th>)}
       </tr>
-      {planets.map((planet, index) => (
-        <tr key={ index }>
+      {renderFilter().map((planet) => (
+        <tr key={ planet }>
           <td>{ planet.name }</td>
           <td>{ planet.orbital_period }</td>
           <td>{ planet.rotation_period }</td>

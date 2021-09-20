@@ -5,18 +5,26 @@ import starWarsAPI from '../Services/StarwarsAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [newData, setNewData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     filterName: {
       name: '',
     },
+    filterNumbers: [],
   });
+  const [options, setOptions] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     async function api() {
       const { results } = await starWarsAPI();
       results.map((object) => delete object.residents);
       setData(results);
+      setNewData(results);
       setLoading(false);
     }
     api();
@@ -24,9 +32,19 @@ function StarWarsProvider({ children }) {
 
   const store = {
     data,
+    newData,
+    setNewData,
     loading,
     filters,
     setFilters,
+    options,
+    setOptions,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
   };
 
   return (
