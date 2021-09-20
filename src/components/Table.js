@@ -26,6 +26,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
+        {/* Ajuda para finalizar requisito 2, retirada da monitoria de sexta(17/09) */}
         {
           data
             .filter((planet) => planet.name.toLowerCase().includes(name))
