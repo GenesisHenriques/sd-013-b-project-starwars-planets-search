@@ -15,21 +15,18 @@ function Table() {
         state
           .filter((planet) => planet.name.includes(filteredPlanetName))
           /* .filter((planet) => planet.population.includes(filteredByNumericValues.value)) */
-          // Muito confusa neste momento, #frustada define :,(
+          // Bom, consegui passar no teste. Pelo menos
           .filter((planet) => {
-            if (filtroNumericoOpcoesEscolhidas.comparison === 'maior que') {
-              return parseFloat(
-                planet[filtroNumericoOpcoesEscolhidas.column],
-              ) > parseFloat(
-                filtroNumericoOpcoesEscolhidas.value,
-              );
+            const { comparison, column, value } = filtroNumericoOpcoesEscolhidas;
+            if (comparison === 'maior que') {
+              return parseFloat(planet[column]) > parseFloat(value);
             }
-            // if (filtroNumericoOpcoesEscolhidas.comparison === 'menor que') {
-            //   return parseFloat(planet[filtroNumericoOpcoesEscolhidas.column]) > parseFloat(filtroNumericoOpcoesEscolhidas.value);
-            // }
-            // if (filtroNumericoOpcoesEscolhidas.comparison === 'igual a') {
-            //   return parseFloat(planet[filtroNumericoOpcoesEscolhidas.column]) === parseFloat(filtroNumericoOpcoesEscolhidas.value);
-            // }
+            if (comparison === 'menor que') {
+              return parseFloat(planet[column]) < parseFloat(value);
+            }
+            if (comparison === 'igual a') {
+              return parseFloat(planet[column]) === parseFloat(value);
+            }
             return console.log('cheguei aqui');
           })
           .map((item) => (
@@ -55,7 +52,7 @@ function Table() {
 
   return (
     <main>
-      <table>
+      <table border="1">
         <thead>
           <tr>
             <th>name</th>

@@ -48,9 +48,9 @@ function Search() {
           name="comparison"
           onChange={ (event) => filterByNumericValues(event.target) }
         >
-          <option value="bigger_than">maior que</option>
-          <option value="less_than">menor que</option>
-          <option value="equal_to">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
 
         <input
