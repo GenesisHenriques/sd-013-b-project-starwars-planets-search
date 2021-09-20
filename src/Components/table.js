@@ -3,7 +3,7 @@ import MyContext from '../Context/MyContext';
 
 function Table() {
   const { data, newData, setFilters, filters, options, column, setColumn, comparison,
-    setComparison, value, setValue } = useContext(MyContext);
+    setComparison, value, setValue, setOptions } = useContext(MyContext);
   const [columnState, setColumnState] = useState('population');
   const [comparisonState, setComparisonState] = useState('maior que');
   const [valueState, setValueState] = useState(0);
@@ -43,6 +43,7 @@ function Table() {
     setFilters({ ...filters,
       filterNumbers: [...filters.filterNumbers, newObject],
     });
+    setOptions(options.filter((option) => option !== columnState));
   }
 
   return (
@@ -51,7 +52,7 @@ function Table() {
         data-testid="column-filter"
         onChange={ ({ target }) => setColumnState(target.value) }
       >
-        {options.map((option) => <option key={ option }>{option}</option>)}
+        {options.map((option, index) => <option key={ index }>{option}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
@@ -69,6 +70,12 @@ function Table() {
       <button type="button" data-testid="button-filter" onClick={ handleClick }>
         Filter
       </button>
+      { filters.filterNumbers && filters.filterNumbers.map((filter, index) => (
+        <div key={ index }>
+          <span>{filter.column}</span>
+          <button type="button">X</button>
+        </div>
+      )) }
       <tr>
         <td>
           <input
