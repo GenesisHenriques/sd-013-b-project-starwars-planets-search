@@ -2,7 +2,35 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetsContext';
 
 function UsedFilters() {
-  const { filters } = useContext(PlanetContext);
+  const {
+    availableColumns, filters, setAvailableColumns, setFilterMethod, setFilters,
+  } = useContext(PlanetContext);
+
+  function handleClick({ target }) {
+    const grandParentDiv = target.parentElement.parentElement;
+    const columnToRestore = grandParentDiv.querySelector('select').value;
+    setAvailableColumns(
+      [
+        ...availableColumns,
+        columnToRestore,
+      ],
+    );
+    let newFiltersAfterExclude = [];
+    newFiltersAfterExclude = filters.filterByNumericValues
+      .filter((filter) => filter.column !== columnToRestore);
+    if (newFiltersAfterExclude.length > 0) {
+      setFilters({
+        filterByNumericValues: newFiltersAfterExclude,
+      });
+    } else {
+      setFilters({
+        filterByName: {
+          name: '',
+        },
+      });
+      setFilterMethod('noFilter');
+    }
+  }
 
   if (filters.filterByNumericValues) {
     const { filterByNumericValues } = filters;
@@ -13,6 +41,8 @@ function UsedFilters() {
           key={ index }
         >
           <select
+            className="column"
+            name="name"
             disabled
           >
             <option>{ usedFilter.column }</option>
@@ -27,6 +57,16 @@ function UsedFilters() {
             value={ usedFilter.value }
             disabled
           />
+          <span
+            data-testid="filter"
+          >
+            <button
+              type="button"
+              onClick={ handleClick }
+            >
+              X
+            </button>
+          </span>
         </div>
       ));
   }
