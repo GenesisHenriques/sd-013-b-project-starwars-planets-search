@@ -27,17 +27,25 @@ function MyProvider({ children }) {
     setAllPlanets(response.results);
   }, []);
 
-  const handleChange = ({ target }) => {
+  const addFilterByName = ({ target }) => {
     setFilter({
       ...filters,
       filterByName: { name: target.value },
     });
   };
 
-  const handleClick = (filter) => {
+  const addFilterByNumericValues = (filter) => {
     setFilter({
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues, filter],
+    });
+  };
+
+  const removeFilterByNumericValues = (value) => {
+    setFilter({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((filter) => filter.column !== value),
     });
   };
 
@@ -70,13 +78,19 @@ function MyProvider({ children }) {
     setFilteredPlanets(filterPlanets());
   }, [allPlanets, filters]);
 
+  const context = {
+    data,
+    fetchApi,
+    filters,
+    filteredPlanets,
+    addFilterByName,
+    addFilterByNumericValues,
+    removeFilterByNumericValues,
+  };
+
   return (
     <div>
-      <MyContext.Provider
-        value={
-          { data, fetchApi, filters, handleChange, handleClick, filteredPlanets }
-        }
-      >
+      <MyContext.Provider value={ context }>
         {children}
       </MyContext.Provider>
     </div>

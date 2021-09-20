@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import MyContext from '../context/MyContext';
 
@@ -9,12 +9,12 @@ import Select from './Select';
 function Filters() {
   const {
     filters: { filterByName: { name } },
-    handleChange,
-    handleClick,
+    filters: { filterByNumericValues },
+    addFilterByName,
+    addFilterByNumericValues,
+    removeFilterByNumericValues,
   } = useContext(MyContext);
   const [column, setColumn] = useState('');
-  const [columns, setColumns] = useState(OPTIONS_COLUMN);
-  const [counterFilters, setCounterFilters] = useState(0);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
@@ -30,14 +30,21 @@ function Filters() {
     setValue(target.value);
   };
 
-  useEffect(() => {
-    setColumns((prevState) => prevState.filter((element) => element !== column));
-  }, [column, counterFilters]);
-
   const handleButton = () => {
-    handleClick({ column, comparison, value });
-    setCounterFilters((prevState) => prevState + 1);
+    addFilterByNumericValues({ column, comparison, value });
   };
+
+  const removeFilter = ({ target }) => {
+    removeFilterByNumericValues(target.name);
+  };
+
+  const columnsList = () => (
+    filterByNumericValues.length
+      ? OPTIONS_COLUMN
+        .filter((opt) => filterByNumericValues
+          .some((filter) => filter.column !== opt))
+      : OPTIONS_COLUMN
+  );
 
   return (
     <div className="form">
@@ -46,13 +53,13 @@ function Filters() {
         name="name"
         value={ name }
         placeholder="Search name"
-        onchange={ handleChange }
+        onchange={ addFilterByName }
       />
       <div>
         <Select
           name="column"
           onChange={ handleColumn }
-          options={ columns }
+          options={ columnsList() }
         />
         <Select
           name="comparison"
@@ -74,6 +81,18 @@ function Filters() {
         >
           Filtrar
         </button>
+        { filterByNumericValues.map((filter) => (
+          <div key={ filter.column } data-testid="filter">
+            {filter.column}
+            <button
+              name={ filter.column }
+              type="button"
+              onClick={ removeFilter }
+            >
+              X
+            </button>
+          </div>
+        )) }
       </div>
     </div>
   );
