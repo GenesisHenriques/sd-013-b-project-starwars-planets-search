@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
-// import fetchApi from '../service/planestsApi';
 
 function ContextProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     async function fetchApi() {
@@ -15,7 +19,7 @@ function ContextProvider({ children }) {
     fetchApi();
   }, []);
 
-  const contextValue = { data, setData };
+  const contextValue = { data, setData, filters, setFilters };
 
   return (
     <Context.Provider value={ contextValue }>
