@@ -6,10 +6,6 @@ import SelectFilter from './SelectFilter';
 function Filter() {
   const { filters, setFilters } = useContext(SwContext);
 
-  const column = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
-  const comparison = ['maior que', 'menor que', 'igual a'];
-
   function handleChange(event) {
     const { target: { value, name } } = event;
     if (name === 'name') {
@@ -37,6 +33,9 @@ function Filter() {
   }
 
   function onClickFilter() {
+    const { column, filterByNumericValues } = filters[0];
+    const { column: element } = filterByNumericValues[0];
+    column.splice(column.indexOf(element), 1);
     setFilters([
       {
         ...filters[0],
@@ -55,13 +54,13 @@ function Filter() {
       />
       <SelectFilter
         name="column"
-        options={ column }
+        options={ filters[0].column }
         onChange={ handleChange }
         testId="column-filter"
       />
       <SelectFilter
         name="comparison"
-        options={ comparison }
+        options={ filters[0].comparison }
         onChange={ handleChange }
         testId="comparison-filter"
       />

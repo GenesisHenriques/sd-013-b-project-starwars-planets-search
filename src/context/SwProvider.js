@@ -27,6 +27,9 @@ function SwProvider({ children }) {
       value: 0,
     }],
     filter: false,
+    column: ['population', 'orbital_period', 'diameter',
+      'rotation_period', 'surface_water'],
+    comparison: ['maior que', 'menor que', 'igual a'],
   }]);
 
   return (
@@ -37,7 +40,7 @@ function SwProvider({ children }) {
 }
 
 SwProvider.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf([PropTypes.string]).isRequired,
 };
 
 export default SwProvider;
