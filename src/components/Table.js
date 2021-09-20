@@ -1,51 +1,55 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import Context from '../context/Context';
+import Context from '../context/Context';
 
 function Table({ data }) {
-  // console.log(data);
-  // const header = Object.keys(data[0]);
-  // console.log(header);
-  const header = [
-    'Name',
-    'Rotation Period',
-    'Orbital Period',
-    'Diameter',
-    'Climate',
-    'Gravity',
-    'Terrain',
-    'Surface Water',
-    'Population',
-    'Films',
-    'Created',
-    'Edited',
-    'Url',
-  ];
+  const { setFilterName } = useContext(Context);
+  const [name, setName] = useState('');
 
-  const planets = data.map((planet, index) => (
+  useEffect(() => {
+    setFilterName(name);
+  }, [name, setFilterName]);
+
+  let header = [];
+  if (data.length > 0) {
+    header = Object.keys(data[0]);
+  }
+
+  function handleChange({ target }) {
+    setName(target.value);
+  }
+
+  const filteredPlanets = data.filter((filteredPlanet) => (
+    filteredPlanet.name
+      .toLowerCase()
+      .includes(name)));
+  const planets = filteredPlanets.map((planet, index) => (
     <tr key={ index }>
-      { Object.values(planet).map((element) => (
-        <td key={ element }>{element}</td>
-      ))}
-
+      { Object.values(planet).map((element) => <td key={ element }>{element}</td>)}
     </tr>
   ));
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {header.map((item) => <th key={ item }>{item}</th>)}
-        </tr>
-        {/* <th>Name</th> */}
-
-      </thead>
-      <tbody>
-
-        {planets}
-
-      </tbody>
-    </table>
+    <div>
+      <label htmlFor="planetFilter">
+        <input
+          type="text"
+          data-testid="name-filter"
+          id="planetFilter"
+          onChange={ handleChange }
+        />
+      </label>
+      <table>
+        <thead>
+          <tr>
+            {header.map((item) => <th key={ item }>{item}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {planets}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
