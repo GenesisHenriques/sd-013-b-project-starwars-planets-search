@@ -6,6 +6,7 @@ function Table() {
     state,
     filteredPlanetName, // nome do planeta filtrado
     /* filteredByNumericValues, */
+    filtroNumericoOpcoesEscolhidas,
   } = useContext(PlanetsContext);
 
   function table() {
@@ -14,6 +15,23 @@ function Table() {
         state
           .filter((planet) => planet.name.includes(filteredPlanetName))
           /* .filter((planet) => planet.population.includes(filteredByNumericValues.value)) */
+          // Muito confusa neste momento, #frustada define :,(
+          .filter((planet) => {
+            if (filtroNumericoOpcoesEscolhidas.comparison === 'maior que') {
+              return parseFloat(
+                planet[filtroNumericoOpcoesEscolhidas.column],
+              ) > parseFloat(
+                filtroNumericoOpcoesEscolhidas.value,
+              );
+            }
+            // if (filtroNumericoOpcoesEscolhidas.comparison === 'menor que') {
+            //   return parseFloat(planet[filtroNumericoOpcoesEscolhidas.column]) > parseFloat(filtroNumericoOpcoesEscolhidas.value);
+            // }
+            // if (filtroNumericoOpcoesEscolhidas.comparison === 'igual a') {
+            //   return parseFloat(planet[filtroNumericoOpcoesEscolhidas.column]) === parseFloat(filtroNumericoOpcoesEscolhidas.value);
+            // }
+            return console.log('cheguei aqui');
+          })
           .map((item) => (
             <tr key={ item.name }>
               <td>{ item.name }</td>

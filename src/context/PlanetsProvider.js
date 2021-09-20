@@ -7,11 +7,11 @@ import getPlanets from '../services/API';
 function PlanetsProvider({ children }) {
   const [state, setState] = useState([]);
   const [filteredPlanetName, setFilteredPlanetName] = useState('');
-  const [filteredByNumericValues, setFilteredByNumericValues] = useState(
+  const [filtroNumericoOpcoesEscolhidas, setFiltroNumericoOpcoesEscolhidas] = useState(
     {
-      column: 'population',
+      column: 'diameter',
       comparison: 'maior que',
-      value: '100000',
+      value: 0,
     },
   );
 
@@ -31,8 +31,8 @@ function PlanetsProvider({ children }) {
   }
 
   function filterByNumericValues({ name, value }) {
-    setFilteredByNumericValues({
-      ...filteredByNumericValues,
+    setFiltroNumericoOpcoesEscolhidas({
+      ...filtroNumericoOpcoesEscolhidas,
       [name]: value,
     });
   }
@@ -42,7 +42,7 @@ function PlanetsProvider({ children }) {
     // Estados
     state,
     filteredPlanetName,
-    filteredByNumericValues,
+    filtroNumericoOpcoesEscolhidas,
     // Funções set
     filterPlanetName,
     filterByNumericValues,
