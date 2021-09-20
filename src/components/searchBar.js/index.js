@@ -2,16 +2,28 @@ import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 
 export default function SearchBar() {
-  const { setFilterSearch } = useContext(PlanetsContext);
+  const { setFilterSearch, filters, setFilter } = useContext(PlanetsContext);
   const [searchedText, setSearchedText] = useState('');
 
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState(0);
+  // console.log(filters.filterByNumericValues[0].column);
+
+  const [inputColumn, setInputColumn] = useState('population');
+  const [inputComparison, setInputComparison] = useState('maior que');
+  const [inputValue, setInputValue] = useState(0);
+
+  const newArray = [{
+    column: inputColumn,
+    comparison: inputComparison,
+    value: inputValue,
+  }];
 
   useEffect(() => {
     setFilterSearch(searchedText);
   }, [searchedText, setFilterSearch]);
+
+  useEffect(() => {
+    setFilter(newArray);
+  }, [inputColumn, inputComparison, inputValue]);
 
   return (
     <form>
@@ -30,7 +42,7 @@ export default function SearchBar() {
         <select
           data-testid="column-filter"
           id="select-column"
-          onChange={ ({ target }) => setColumn(target.value) }
+          onChange={ ({ target }) => setInputColumn(target.value) }
         >
           <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
@@ -45,7 +57,7 @@ export default function SearchBar() {
         <select
           data-testid="comparison-filter"
           id="comparison-filter"
-          onChange={ ({ target }) => setComparison(target.value) }
+          onChange={ ({ target }) => setInputComparison(target.value) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -59,7 +71,7 @@ export default function SearchBar() {
           type="number"
           data-testid="value-filter"
           id="value-filter"
-          onChange={ ({ target }) => setValue(target.value) }
+          onChange={ ({ target }) => setInputValue(target.value) }
         />
       </label>
       <button type="button" data-testid="button-filter">Filtrar</button>

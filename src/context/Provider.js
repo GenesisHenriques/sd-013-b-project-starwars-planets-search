@@ -6,7 +6,11 @@ import PlanetsContext from './PlanetsContext';
 const Provider = ({ children }) => {
   const [data, setData] = useState([]);
   const [filterSearch, setFilterSearch] = useState('');
-  const [ filter, setFilter ] = useState();
+  const [filter, setFilter] = useState([{
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  }]);
 
   // Agrupando leitura e escrita em um obj
   const contextPlanets = {
@@ -16,15 +20,10 @@ const Provider = ({ children }) => {
       filterByName: {
         name: filterSearch,
       },
-      filterByNumericValues: [
-        {
-          column: 'population',
-          comparison: 'maior que',
-          value: '100000',
-        },
-      ],
+      filterByNumericValues: filter,
     },
     setFilterSearch,
+    setFilter,
   };
 
   // Guarda os dados do fetch no state
@@ -37,8 +36,6 @@ const Provider = ({ children }) => {
   useEffect(() => {
     keepPlanets();
   }, []);
-
-  console.log(contextPlanets);
 
   // Essa parte estava entrando em um loop muito doido, fiz esse codigo em outro lugar
   // Crédito ao Rodrigo que me ajudou tirando uma dúvida

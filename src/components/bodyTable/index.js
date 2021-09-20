@@ -12,7 +12,6 @@ export default function BodyTable() {
     return newData;
   };
 
-
   return (
     <tbody>
       {
