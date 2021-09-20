@@ -4,6 +4,7 @@ import PlanetsContext from '../Context/PlanetsContext';
 export default function PlanetsColumnFilter() {
   const globalState = useContext(PlanetsContext);
   const { setGlobalState, filter } = useContext(PlanetsContext);
+  const test = filter.filterByNumericValues;
 
   const options = { population: 'population',
     orbital_period: 'orbital_period',
@@ -14,10 +15,19 @@ export default function PlanetsColumnFilter() {
   filter.filterByNumericValues.forEach((specs) => delete options[specs.column]);
 
   const optionsToMap = Object.keys(options);
+  console.log(optionsToMap);
 
   const columnsCompare = ['maior que', 'igual a', 'menor que'];
   const numericValues = {
     column: optionsToMap[0], comparison: 'maior que', value: null };
+
+  const removeGlobalSpecs = (index) => {
+    const temporaryGLobal = globalState.filter.filterByNumericValues;
+    temporaryGLobal.splice(index, 1);
+    setGlobalState(
+      { filter: { filterByNumericValues: temporaryGLobal }, ...globalState },
+    );
+  };
 
   return (
     <>
@@ -61,6 +71,20 @@ export default function PlanetsColumnFilter() {
       >
         Filtrar
       </button>
+      {test.map((specs, index) => (
+        <>
+          <p key={ `Specs${index}` }>{specs.column}</p>
+          <p>{specs.comparison}</p>
+          <p>{specs.value}</p>
+          <div data-testid="filter">
+            <button
+              onClick={ () => removeGlobalSpecs(index) }
+              type="button"
+            >
+              X
+            </button>
+          </div>
+        </>))}
     </>
   );
 }

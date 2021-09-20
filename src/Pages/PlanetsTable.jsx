@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
 import compareCases from './Utils/CompareCases';
-// import PlanetsColumnFilter from './PlanetsColumnFilter';
-// import PlanetsNameFilter from './PlanetsNameFilter';
 
 export default function PlanetsTable() {
   let { planetsList } = useContext(PlanetsContext);
@@ -18,11 +16,11 @@ export default function PlanetsTable() {
           const planetValue = Number(planet[specs.column]);
           const filterValue = Number(specs.value);
           return compareCases(specs.comparison, filterValue, planetValue);
-        // Number(planet[specs.column]) > Number(specs.value),
         },
       );
     });
   }
+  console.log(planetsList.length + 1);
 
   return (
     <table>

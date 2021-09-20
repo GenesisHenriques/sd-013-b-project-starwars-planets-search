@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 
 const apiURL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
 const defaultState = {
   filter: { filterByName: '', filterByNumericValues: [] }, planetsList: [] };
 
